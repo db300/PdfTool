@@ -27,6 +27,7 @@ namespace PdfSplitter
         #region property
         private readonly List<string> _inputPdfFileList = new List<string>();
         private TextBox _txtLog;
+        private NumericUpDown _numPagePerDoc;
         #endregion
 
         #region event handler
@@ -53,7 +54,7 @@ namespace PdfSplitter
             }
             foreach (var fileName in _inputPdfFileList)
             {
-                SplitPdf(fileName);
+                SplitPdf(fileName, (int)_numPagePerDoc.Value);
                 _txtLog.AppendText($"{fileName} 拆分完成\r\n");
             }
             _txtLog.AppendText("拆分完成\r\n");
@@ -77,6 +78,35 @@ namespace PdfSplitter
                 // Add the page and save it
                 outputDocument.AddPage(inputDocument.Pages[i]);
                 outputDocument.Save($"{prefixFileName} - Page {i + 1}.pdf");
+            }
+        }
+
+        /// <summary>
+        /// 拆分PDF(按页数)
+        /// </summary>
+        /// <param name="inputPdfFileName"></param>
+        /// <param name="pageCountPerDoc">拆分后每个文档页数</param>
+        private void SplitPdf(string inputPdfFileName, int pageCountPerDoc)
+        {
+            var inputDocument = PdfReader.Open(inputPdfFileName, PdfDocumentOpenMode.Import);
+            var pageCount = inputDocument.PageCount;
+            var path = Path.GetDirectoryName(inputPdfFileName);
+            var fileName = Path.GetFileNameWithoutExtension(inputPdfFileName);
+            var prefixFileName = Path.Combine(path, fileName);
+            for (var i = 0; i < pageCount;)
+            {
+                var subPageCount = Math.Min(pageCountPerDoc, pageCount - i);
+                var pageLabel = subPageCount > 1
+                    ? $"{i + 1} - {i + subPageCount}"
+                    : $"{i + 1}";
+                // Create new document
+                var outputDocument = new PdfDocument { Version = inputDocument.Version };
+                outputDocument.Info.Title = $"Page {pageLabel} of {inputDocument.Info.Title}";
+                outputDocument.Info.Creator = inputDocument.Info.Creator;
+                // Add the page and save it
+                for (var j = 0; j < subPageCount; j++) outputDocument.AddPage(inputDocument.Pages[i + j]);
+                outputDocument.Save($"{prefixFileName} - Page {pageLabel}.pdf");
+                i += subPageCount;
             }
         }
         #endregion
@@ -107,10 +137,38 @@ namespace PdfSplitter
             };
             btnSplit.Click += BtnSplit_Click;
 
+            var gpOptions = new GroupBox
+            {
+                Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right,
+                Location = new Point(btnAddFile.Left, btnAddFile.Bottom + 12),
+                Parent = this,
+                Size = new Size(ClientSize.Width - 2 * btnAddFile.Left, 50),
+                Text = "拆分选项"
+            };
+
+            _numPagePerDoc = new NumericUpDown
+            {
+                AutoSize = true,
+                Location = new Point(20, 20),
+                Maximum = 1000,
+                Minimum = 1,
+                Parent = gpOptions,
+                TextAlign = HorizontalAlignment.Right,
+                Value = 1,
+                Width = 50
+            };
+            var lbl = new Label
+            {
+                AutoSize = true,
+                Parent = gpOptions,
+                Text = "页/文档"
+            };
+            lbl.Location = new Point(_numPagePerDoc.Right + 6, _numPagePerDoc.Top + (_numPagePerDoc.Height - lbl.Height) / 2);
+
             _txtLog = new TextBox
             {
                 Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
-                Location = new Point(btnAddFile.Left, btnAddFile.Bottom + 12),
+                Location = new Point(btnAddFile.Left, gpOptions.Bottom + 12),
                 Multiline = true,
                 Parent = this,
                 ReadOnly = true,

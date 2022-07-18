@@ -83,5 +83,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PdfHelperLibrary\PdfHelperLibrary.csproj">
+      <Project>{64485278-a143-453e-a1d6-2400d010ff61}</Project>
+      <Name>PdfHelperLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

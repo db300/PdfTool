@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfSplitter", "PdfSplitter\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfMerger", "PdfMerger\PdfMerger.csproj", "{7B14F02C-A40A-46F8-80AC-484E79628F6E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PdfToolX", "PdfToolX\PdfToolX.csproj", "{DBD944F7-1AA1-41EA-944F-58F7A0AFD3EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{7B14F02C-A40A-46F8-80AC-484E79628F6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B14F02C-A40A-46F8-80AC-484E79628F6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B14F02C-A40A-46F8-80AC-484E79628F6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBD944F7-1AA1-41EA-944F-58F7A0AFD3EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBD944F7-1AA1-41EA-944F-58F7A0AFD3EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBD944F7-1AA1-41EA-944F-58F7A0AFD3EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBD944F7-1AA1-41EA-944F-58F7A0AFD3EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

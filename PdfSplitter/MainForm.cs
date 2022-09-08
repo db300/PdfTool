@@ -22,6 +22,8 @@ namespace PdfSplitter
         private readonly List<string> _inputPdfFileList = new List<string>();
         private TextBox _txtLog;
         private NumericUpDown _numPagePerDoc;
+        private NumericUpDown _numPageFrom;
+        private NumericUpDown _numPageTo;
 
         private const int ControlMargin = 20;
         private const int ControlPadding = 12;
@@ -56,6 +58,22 @@ namespace PdfSplitter
             }
             _txtLog.AppendText("拆分完成\r\n");
         }
+
+        private void BtnExtract_Click(object sender, EventArgs e)
+        {
+            if (_inputPdfFileList.Count == 0)
+            {
+                _txtLog.Text = "未添加需要提取的PDF文件";
+                return;
+            }
+            if (_inputPdfFileList.Count != 1)
+            {
+                _txtLog.Text = "添加了多个PDF文件，只对第一个文件进行提取";
+                return;
+            }
+            PdfHelperLibrary.ExtractHelper.ExtractPdf(_inputPdfFileList[0], (int)_numPageFrom.Value, (int)_numPageTo.Value);
+            _txtLog.AppendText($"{_inputPdfFileList[0]} 提取完成\r\n");
+        }
         #endregion
 
         #region ui
@@ -75,47 +93,69 @@ namespace PdfSplitter
             };
             btnAddFile.Click += BtnAddFile_Click;
 
-            var btnSplit = new Button
+            var page1 = new TabPage { BorderStyle = BorderStyle.None, Name = "tpDefault", Text = "常规拆分" };
+            var page2 = new TabPage { BorderStyle = BorderStyle.None, Name = "tpSpecialPage", Text = "指定页提取" };
+            var tab4SplitMode = new TabControl
             {
-                AutoSize = true,
-                Location = new Point(btnAddFile.Right + ControlPadding, btnAddFile.Top),
-                Parent = this,
-                Text = "开始拆分"
-            };
-            btnSplit.Click += BtnSplit_Click;
-
-            var gpOptions = new GroupBox
-            {
-                Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right,
+                Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
                 Location = new Point(btnAddFile.Left, btnAddFile.Bottom + ControlPadding),
                 Parent = this,
-                Size = new Size(ClientSize.Width - 2 * btnAddFile.Left, 50),
-                Text = "拆分选项"
+                Size = new Size(ClientSize.Width - 2 * btnAddFile.Left, 150)
             };
+            tab4SplitMode.TabPages.Add(page1);
+            tab4SplitMode.TabPages.Add(page2);
 
+            //常规拆分
             _numPagePerDoc = new NumericUpDown
             {
                 AutoSize = true,
                 Location = new Point(ControlMargin, ControlMargin),
                 Maximum = 1000,
                 Minimum = 1,
-                Parent = gpOptions,
+                Parent = page1,
                 TextAlign = HorizontalAlignment.Right,
                 Value = 1,
                 Width = 50
             };
-            var lbl = new Label
+            var lbl = new Label { AutoSize = true, Parent = page1, Text = "页/文档" };
+            lbl.Location = new Point(_numPagePerDoc.Right + 6, _numPagePerDoc.Top + (_numPagePerDoc.Height - lbl.Height) / 2);
+            var btnSplit = new Button { Anchor = AnchorStyles.Left | AnchorStyles.Bottom, AutoSize = true, Parent = page1, Text = "开始拆分" };
+            btnSplit.Location = new Point(ControlMargin, page1.ClientSize.Height - ControlMargin - btnSplit.Height);
+            btnSplit.Click += BtnSplit_Click;
+
+            //指定页提取
+            lbl = new Label { AutoSize = true, Location = new Point(ControlMargin, ControlMargin), Parent = page2, Text = "从：" };
+            _numPageFrom = new NumericUpDown
             {
                 AutoSize = true,
-                Parent = gpOptions,
-                Text = "页/文档"
+                Location = new Point(lbl.Right, lbl.Top - 3),
+                Maximum = 1000,
+                Minimum = 1,
+                Parent = page2,
+                TextAlign = HorizontalAlignment.Right,
+                Value = 1,
+                Width = 50
             };
-            lbl.Location = new Point(_numPagePerDoc.Right + 6, _numPagePerDoc.Top + (_numPagePerDoc.Height - lbl.Height) / 2);
+            lbl = new Label { AutoSize = true, Location = new Point(_numPageFrom.Right + ControlPadding, lbl.Top), Parent = page2, Text = "到：" };
+            _numPageTo = new NumericUpDown
+            {
+                AutoSize = true,
+                Location = new Point(lbl.Right, lbl.Top - 3),
+                Maximum = 1000,
+                Minimum = 1,
+                Parent = page2,
+                TextAlign = HorizontalAlignment.Right,
+                Value = 1,
+                Width = 50
+            };
+            var btnExtract = new Button { Anchor = AnchorStyles.Left | AnchorStyles.Bottom, AutoSize = true, Parent = page2, Text = "开始提取" };
+            btnExtract.Location = new Point(ControlMargin, page2.ClientSize.Height - ControlMargin - btnExtract.Height);
+            btnExtract.Click += BtnExtract_Click;
 
             _txtLog = new TextBox
             {
                 Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
-                Location = new Point(btnAddFile.Left, gpOptions.Bottom + ControlPadding),
+                Location = new Point(btnAddFile.Left, tab4SplitMode.Bottom + ControlPadding),
                 Multiline = true,
                 Parent = this,
                 ReadOnly = true,

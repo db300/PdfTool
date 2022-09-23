@@ -129,24 +129,24 @@ namespace PdfSplitter
             {
                 AutoSize = true,
                 Location = new Point(lbl.Right, lbl.Top - 3),
-                Maximum = 1000,
+                Maximum = 100000,
                 Minimum = 1,
                 Parent = page2,
                 TextAlign = HorizontalAlignment.Right,
                 Value = 1,
-                Width = 50
+                Width = 60
             };
             lbl = new Label { AutoSize = true, Location = new Point(_numPageFrom.Right + ControlPadding, lbl.Top), Parent = page2, Text = "到：" };
             _numPageTo = new NumericUpDown
             {
                 AutoSize = true,
                 Location = new Point(lbl.Right, lbl.Top - 3),
-                Maximum = 1000,
+                Maximum = 100000,
                 Minimum = 1,
                 Parent = page2,
                 TextAlign = HorizontalAlignment.Right,
                 Value = 1,
-                Width = 50
+                Width = 60
             };
             var btnExtract = new Button { Anchor = AnchorStyles.Left | AnchorStyles.Bottom, AutoSize = true, Parent = page2, Text = "开始提取" };
             btnExtract.Location = new Point(ControlMargin, page2.ClientSize.Height - ControlMargin - btnExtract.Height);

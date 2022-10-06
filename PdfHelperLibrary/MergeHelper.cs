@@ -13,23 +13,31 @@ namespace PdfHelperLibrary
     /// </summary>
     public static class MergeHelper
     {
-        public static void MergePdf(List<string> inputPdfFilenameList)
+        public static string MergePdf(List<string> inputPdfFilenameList)
         {
-            var outputDocument = new PdfDocument();
-            foreach (var file in inputPdfFilenameList)
+            try
             {
-                var inputDocument = PdfReader.Open(file, PdfDocumentOpenMode.Import);
-                var pageCount = inputDocument.PageCount;
-                for (var i = 0; i < pageCount; i++)
+                var outputDocument = new PdfDocument();
+                foreach (var file in inputPdfFilenameList)
                 {
-                    outputDocument.AddPage(inputDocument.Pages[i]);
+                    var inputDocument = PdfReader.Open(file, PdfDocumentOpenMode.Import);
+                    var pageCount = inputDocument.PageCount;
+                    for (var i = 0; i < pageCount; i++)
+                    {
+                        outputDocument.AddPage(inputDocument.Pages[i]);
+                    }
                 }
+                var path = Path.GetDirectoryName(inputPdfFilenameList.First());
+                if (!path.EndsWith(@"\")) path = $@"{path}\";
+                var filename = $"{path}MergedFile - {DateTime.Now:yyyyMMddHHmmssfff}.pdf";
+                outputDocument.Save(filename);
+                Process.Start(filename);
+                return "";
             }
-            var path = Path.GetDirectoryName(inputPdfFilenameList.First());
-            if (!path.EndsWith(@"\")) path = $@"{path}\";
-            var filename = $"{path}MergedFile - {DateTime.Now:yyyyMMddHHmmssfff}.pdf";
-            outputDocument.Save(filename);
-            Process.Start(filename);
+            catch (Exception ex)
+            {
+                return $"合并失败，原因：{ex.Message}";
+            }
         }
     }
 }

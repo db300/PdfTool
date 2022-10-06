@@ -34,27 +34,35 @@ namespace PdfHelperLibrary
         /// </summary>
         /// <param name="inputPdfFileName"></param>
         /// <param name="pageCountPerDoc">拆分后每个文档页数</param>
-        public static void SplitPdf(string inputPdfFileName, int pageCountPerDoc)
+        public static string SplitPdf(string inputPdfFileName, int pageCountPerDoc)
         {
-            var inputDocument = PdfReader.Open(inputPdfFileName, PdfDocumentOpenMode.Import);
-            var pageCount = inputDocument.PageCount;
-            var path = Path.GetDirectoryName(inputPdfFileName);
-            var fileName = Path.GetFileNameWithoutExtension(inputPdfFileName);
-            var prefixFileName = Path.Combine(path, fileName);
-            for (var i = 0; i < pageCount;)
+            try
             {
-                var subPageCount = Math.Min(pageCountPerDoc, pageCount - i);
-                var pageLabel = subPageCount > 1
-                    ? $"{i + 1} - {i + subPageCount}"
-                    : $"{i + 1}";
-                // Create new document
-                var outputDocument = new PdfDocument { Version = inputDocument.Version };
-                outputDocument.Info.Title = $"Page {pageLabel} of {inputDocument.Info.Title}";
-                outputDocument.Info.Creator = inputDocument.Info.Creator;
-                // Add the page and save it
-                for (var j = 0; j < subPageCount; j++) outputDocument.AddPage(inputDocument.Pages[i + j]);
-                outputDocument.Save($"{prefixFileName} - Page {pageLabel}.pdf");
-                i += subPageCount;
+                var inputDocument = PdfReader.Open(inputPdfFileName, PdfDocumentOpenMode.Import);
+                var pageCount = inputDocument.PageCount;
+                var path = Path.GetDirectoryName(inputPdfFileName);
+                var fileName = Path.GetFileNameWithoutExtension(inputPdfFileName);
+                var prefixFileName = Path.Combine(path, fileName);
+                for (var i = 0; i < pageCount;)
+                {
+                    var subPageCount = Math.Min(pageCountPerDoc, pageCount - i);
+                    var pageLabel = subPageCount > 1
+                        ? $"{i + 1} - {i + subPageCount}"
+                        : $"{i + 1}";
+                    // Create new document
+                    var outputDocument = new PdfDocument { Version = inputDocument.Version };
+                    outputDocument.Info.Title = $"Page {pageLabel} of {inputDocument.Info.Title}";
+                    outputDocument.Info.Creator = inputDocument.Info.Creator;
+                    // Add the page and save it
+                    for (var j = 0; j < subPageCount; j++) outputDocument.AddPage(inputDocument.Pages[i + j]);
+                    outputDocument.Save($"{prefixFileName} - Page {pageLabel}.pdf");
+                    i += subPageCount;
+                }
+                return "";
+            }
+            catch (Exception ex)
+            {
+                return $"拆分失败，原因：{ex.Message}";
             }
         }
     }

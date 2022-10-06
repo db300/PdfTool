@@ -1,4 +1,5 @@
 ﻿using PdfSharp.Pdf.IO;
+using PdfSplitter.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -27,6 +28,7 @@ namespace PdfSplitter
 
         private const int ControlMargin = 20;
         private const int ControlPadding = 12;
+        private const string Url4Appreciate = "https://www.yuque.com/docs/share/4d2ad434-a4fe-40a1-b530-c61811d5226e?# 《打赏说明》";
         #endregion
 
         #region event handler
@@ -74,6 +76,11 @@ namespace PdfSplitter
             PdfHelperLibrary.ExtractHelper.ExtractPdf(_inputPdfFileList[0], (int)_numPageFrom.Value, (int)_numPageTo.Value);
             _txtLog.AppendText($"{_inputPdfFileList[0]} 提取完成\r\n");
         }
+
+        private void PicAppreciate_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(Url4Appreciate);
+        }
         #endregion
 
         #region ui
@@ -110,7 +117,7 @@ namespace PdfSplitter
             {
                 AutoSize = true,
                 Location = new Point(ControlMargin, ControlMargin),
-                Maximum = 1000,
+                Maximum = 100000,
                 Minimum = 1,
                 Parent = page1,
                 TextAlign = HorizontalAlignment.Right,
@@ -163,6 +170,17 @@ namespace PdfSplitter
                 WordWrap = false
             };
             _txtLog.Size = new Size(ClientSize.Width - _txtLog.Left * 2, ClientSize.Height - _txtLog.Left - _txtLog.Top);
+
+            var picAppreciate = new PictureBox
+            {
+                Cursor = Cursors.Hand,
+                Image = Resources.appreciatesmall,
+                Location = new Point(ClientSize.Width - 32 - 6, 6),
+                Parent = this,
+                Size = new Size(32, 32),
+                SizeMode = PictureBoxSizeMode.Zoom
+            };
+            picAppreciate.Click += PicAppreciate_Click;
         }
         #endregion
     }

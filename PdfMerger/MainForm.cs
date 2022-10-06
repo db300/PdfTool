@@ -1,4 +1,5 @@
-﻿using PdfSharp.Pdf.IO;
+﻿using PdfMerger.Properties;
+using PdfSharp.Pdf.IO;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -23,6 +24,7 @@ namespace PdfMerger
 
         private const int ControlMargin = 20;
         private const int ControlPadding = 12;
+        private const string Url4Appreciate = "https://www.yuque.com/docs/share/4d2ad434-a4fe-40a1-b530-c61811d5226e?# 《打赏说明》";
         #endregion
 
         #region event handler
@@ -50,6 +52,11 @@ namespace PdfMerger
             }
             PdfHelperLibrary.MergeHelper.MergePdf(inputPdfFilenameList);
             _txtLog.AppendText("合并完成\r\n");
+        }
+
+        private void PicAppreciate_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(Url4Appreciate);
         }
         #endregion
 
@@ -101,6 +108,17 @@ namespace PdfMerger
                 Size = new Size(ClientSize.Width - 2 * btnAddFile.Left, _txtLog.Top - btnAddFile.Bottom - 2 * ControlPadding),
                 WordWrap = false
             };
+
+            var picAppreciate = new PictureBox
+            {
+                Cursor = Cursors.Hand,
+                Image = Resources.appreciatesmall,
+                Location = new Point(ClientSize.Width - 32 - 6, 6),
+                Parent = this,
+                Size = new Size(32, 32),
+                SizeMode = PictureBoxSizeMode.Zoom
+            };
+            picAppreciate.Click += PicAppreciate_Click;
         }
         #endregion
     }

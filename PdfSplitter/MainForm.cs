@@ -55,8 +55,9 @@ namespace PdfSplitter
             }
             foreach (var fileName in _inputPdfFileList)
             {
-                PdfHelperLibrary.SplitHelper.SplitPdf(fileName, (int)_numPagePerDoc.Value);
-                _txtLog.AppendText($"{fileName} 拆分完成\r\n");
+                var s = PdfHelperLibrary.SplitHelper.SplitPdf(fileName, (int)_numPagePerDoc.Value);
+                if (string.IsNullOrWhiteSpace(s)) _txtLog.AppendText($"{fileName} 拆分完成\r\n");
+                else _txtLog.AppendText($"{fileName} {s}\r\n");
             }
             _txtLog.AppendText("拆分完成\r\n");
         }

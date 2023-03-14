@@ -16,7 +16,7 @@ namespace PdfHelperLibrary
         /// <param name="inputPdfFileName"></param>
         /// <param name="pageFrom"></param>
         /// <param name="pageTo"></param>
-        public static void ExtractPdf(string inputPdfFileName, int pageFrom, int pageTo)
+        public static void ExtractPdf(string inputPdfFileName, int pageFrom, int pageTo, out string outputPdfFileName)
         {
             var inputDocument = PdfReader.Open(inputPdfFileName, PdfDocumentOpenMode.Import);
             var pageCount = inputDocument.PageCount;
@@ -30,7 +30,8 @@ namespace PdfHelperLibrary
             outputDocument.Info.Creator = inputDocument.Info.Creator;
             // Add the page and save it
             for (var i = pageFrom - 1; i < maxPageTo; i++) outputDocument.AddPage(inputDocument.Pages[i]);
-            outputDocument.Save($"{prefixFileName} - Page {pageFrom} to {maxPageTo}.pdf");
+            outputPdfFileName = $"{prefixFileName} - Page {pageFrom} to {maxPageTo}.pdf";
+            outputDocument.Save(outputPdfFileName);
         }
     }
 }

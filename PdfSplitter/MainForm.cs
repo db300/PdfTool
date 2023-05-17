@@ -72,7 +72,6 @@ namespace PdfSplitter
             if (_inputPdfFileList.Count != 1)
             {
                 _txtLog.Text = "添加了多个PDF文件，只对第一个文件进行提取";
-                return;
             }
             PdfHelperLibrary.ExtractHelper.ExtractPdf(_inputPdfFileList[0], (int)_numPageFrom.Value, (int)_numPageTo.Value, out var outputPdfFile);
             _txtLog.AppendText($"{_inputPdfFileList[0]} 提取完成\r\n");

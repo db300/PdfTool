@@ -28,8 +28,7 @@ namespace PdfHelperLibrary
                     }
                 }
                 var path = Path.GetDirectoryName(inputPdfFilenameList.First());
-                if (!path.EndsWith(@"\")) path = $@"{path}\";
-                var filename = $"{path}MergedFile - {DateTime.Now:yyyyMMddHHmmssfff}.pdf";
+                var filename = Path.Combine(path, $"MergedFile - {DateTime.Now:yyyyMMddHHmmssfff}.pdf");
                 outputDocument.Save(filename);
                 Process.Start(filename);
                 return "";

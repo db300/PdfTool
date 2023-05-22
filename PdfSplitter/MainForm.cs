@@ -162,14 +162,14 @@ namespace PdfSplitter
             _txtLog = new TextBox
             {
                 Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
-                Location = new Point(btnAddFile.Left, tab4SplitMode.Bottom + ControlPadding),
+                Location = new Point(ControlMargin, tab4SplitMode.Bottom + ControlPadding),
                 Multiline = true,
                 Parent = this,
                 ReadOnly = true,
                 ScrollBars = ScrollBars.Both,
                 WordWrap = false
             };
-            _txtLog.Size = new Size(ClientSize.Width - _txtLog.Left * 2, ClientSize.Height - _txtLog.Left - _txtLog.Top);
+            _txtLog.Size = new Size(ClientSize.Width - ControlMargin * 2, ClientSize.Height - ControlMargin - _txtLog.Top);
 
             var picAppreciate = new PictureBox
             {

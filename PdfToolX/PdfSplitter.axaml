@@ -4,5 +4,44 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="PdfToolX.PdfSplitter">
-  这是PDF拆分器模块
+  <DockPanel>
+    <StackPanel Orientation="Horizontal" Spacing="12" Margin="10" DockPanel.Dock="Top">
+      <Button Click="BtnAddFile_Click">添加文件</Button>
+    </StackPanel>
+    <DockPanel Margin="10 0 10 20" DockPanel.Dock="Bottom" Height="300">
+      <Border BorderBrush="Black" BorderThickness="1">
+        <ScrollViewer>
+          <TextBlock Name="_txtLog"/>
+        </ScrollViewer>
+      </Border>
+    </DockPanel>
+    <DockPanel Margin="10 0 10 10">
+      <TabControl>
+        <TabItem Header="常规拆分" FontSize="14">
+          <StackPanel Orientation="Vertical" Spacing="20" Margin="10">
+            <StackPanel Orientation="Horizontal" Height="30">
+              <NumericUpDown Name="_numPagePerDoc" Value="1" Increment="1" Minimum="1" Maximum="100000" Width="150"/>
+              <Label VerticalAlignment="Center">页/文档</Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+              <Button Click="BtnSplit_Click">开始拆分</Button>
+            </StackPanel>
+          </StackPanel>
+        </TabItem>
+        <TabItem Header="指定页提取" FontSize="14">
+          <StackPanel Orientation="Vertical" Spacing="20" Margin="10">
+            <StackPanel Orientation="Horizontal" Height="30">
+              <Label VerticalAlignment="Center">从：</Label>
+              <NumericUpDown Name="_numPageFrom" Value="1" Increment="1" Minimum="1" Maximum="100000" Width="150"/>
+              <Label VerticalAlignment="Center">到：</Label>
+              <NumericUpDown Name="_numPageTo" Value="1" Increment="1" Minimum="1" Maximum="100000" Width="150"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+              <Button Click="BtnExtract_Click">开始提取</Button>
+            </StackPanel>
+          </StackPanel>
+        </TabItem>
+      </TabControl>
+    </DockPanel>
+  </DockPanel>
 </UserControl>

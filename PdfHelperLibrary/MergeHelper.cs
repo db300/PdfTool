@@ -13,7 +13,7 @@ namespace PdfHelperLibrary
     /// </summary>
     public static class MergeHelper
     {
-        public static string MergePdf(List<string> inputPdfFilenameList)
+        public static string MergePdf(List<string> inputPdfFilenameList, out string outputPdfFilename)
         {
             try
             {
@@ -28,13 +28,14 @@ namespace PdfHelperLibrary
                     }
                 }
                 var path = Path.GetDirectoryName(inputPdfFilenameList.First());
-                var filename = Path.Combine(path, $"MergedFile - {DateTime.Now:yyyyMMddHHmmssfff}.pdf");
-                outputDocument.Save(filename);
-                Process.Start(filename);
+                outputPdfFilename = Path.Combine(path, $"MergedFile - {DateTime.Now:yyyyMMddHHmmssfff}.pdf");
+                outputDocument.Save(outputPdfFilename);
+                Process.Start(outputPdfFilename);
                 return "";
             }
             catch (Exception ex)
             {
+                outputPdfFilename = "";
                 return $"合并失败，原因：{ex.Message}";
             }
         }

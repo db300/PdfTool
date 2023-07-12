@@ -50,7 +50,7 @@ namespace PdfSplitter
         {
             if (_inputPdfFileList.Count == 0)
             {
-                _txtLog.Text = "未添加需要拆分的PDF文件";
+                _txtLog.Text = "未添加需要拆分的PDF文件\r\n";
                 return;
             }
             foreach (var fileName in _inputPdfFileList)
@@ -66,15 +66,16 @@ namespace PdfSplitter
         {
             if (_inputPdfFileList.Count == 0)
             {
-                _txtLog.Text = "未添加需要提取的PDF文件";
+                _txtLog.Text = "未添加需要提取的PDF文件\r\n";
                 return;
             }
             if (_inputPdfFileList.Count != 1)
             {
-                _txtLog.Text = "添加了多个PDF文件，只对第一个文件进行提取";
+                _txtLog.Text = "添加了多个PDF文件，只对第一个文件进行提取\r\n";
             }
-            PdfHelperLibrary.ExtractHelper.ExtractPdf(_inputPdfFileList[0], (int)_numPageFrom.Value, (int)_numPageTo.Value, out var outputPdfFile);
-            _txtLog.AppendText($"{_inputPdfFileList[0]} 提取完成\r\n");
+            var s = PdfHelperLibrary.ExtractHelper.ExtractPdf(_inputPdfFileList[0], (int)_numPageFrom.Value, (int)_numPageTo.Value, out var outputPdfFile);
+            if (string.IsNullOrWhiteSpace(s)) _txtLog.AppendText($"{_inputPdfFileList[0]} 提取完成: {outputPdfFile}\r\n");
+            else _txtLog.AppendText($"{s}\r\n");
         }
 
         private void PicAppreciate_Click(object sender, EventArgs e)

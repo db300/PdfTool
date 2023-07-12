@@ -28,8 +28,8 @@ namespace PdfToolX
                 AllowMultiple = true,
                 Filters =
                 {
-                    new FileDialogFilter { Name = "pdfÎÄ¼ş", Extensions = new List<string> { "pdf" } },
-                    new FileDialogFilter { Name = "ËùÓĞÎÄ¼ş", Extensions = new List<string> { "*" } }
+                    new FileDialogFilter { Name = "pdfæ–‡ä»¶", Extensions = new List<string> { "pdf" } },
+                    new FileDialogFilter { Name = "æ‰€æœ‰æ–‡ä»¶", Extensions = new List<string> { "*" } }
                 }
             };
             if (this.GetVisualRoot() is not Window mainWindow) return;
@@ -40,7 +40,7 @@ namespace PdfToolX
             foreach (var file in _inputPdfFileList)
             {
                 var document = PdfReader.Open(file, PdfDocumentOpenMode.Import);
-                _txtLog.Text += $"¡¾Ò³Êı£º{document.PageCount}¡¿{file}\r\n";
+                _txtLog.Text += $"ã€é¡µæ•°ï¼š{document.PageCount}ã€‘{file}\r\n";
             }
         }
 
@@ -48,27 +48,32 @@ namespace PdfToolX
         {
             if (_inputPdfFileList.Count == 0)
             {
-                _txtLog.Text = "Î´Ìí¼ÓĞèÒª²ğ·ÖµÄPDFÎÄ¼ş";
+                _txtLog.Text = "æœªæ·»åŠ éœ€è¦æ‹†åˆ†çš„PDFæ–‡ä»¶\r\n";
                 return;
             }
             foreach (var fileName in _inputPdfFileList)
             {
-
+                var s = PdfHelperLibraryX.SplitHelper.SplitPdf(fileName, (int)_numPagePerDoc.Value);
+                if (string.IsNullOrWhiteSpace(s)) _txtLog.Text += $"{fileName} æ‹†åˆ†å®Œæˆ\r\n";
+                else _txtLog.Text += $"{fileName} {s}\r\n";
             }
-            _txtLog.Text += "²ğ·ÖÍê³É\r\n";
+            _txtLog.Text += "æ‹†åˆ†å®Œæˆ\r\n";
         }
 
         private void BtnExtract_Click(object sender, RoutedEventArgs e)
         {
             if (_inputPdfFileList.Count == 0)
             {
-                _txtLog.Text = "Î´Ìí¼ÓĞèÒªÌáÈ¡µÄPDFÎÄ¼ş";
+                _txtLog.Text = "æœªæ·»åŠ éœ€è¦æå–çš„PDFæ–‡ä»¶\r\n";
                 return;
             }
             if (_inputPdfFileList.Count != 1)
             {
-                _txtLog.Text = "Ìí¼ÓÁË¶à¸öPDFÎÄ¼ş£¬Ö»¶ÔµÚÒ»¸öÎÄ¼ş½øĞĞÌáÈ¡";
+                _txtLog.Text = "æ·»åŠ äº†å¤šä¸ªPDFæ–‡ä»¶ï¼Œåªå¯¹ç¬¬ä¸€ä¸ªæ–‡ä»¶è¿›è¡Œæå–\r\n";
             }
+            var s = PdfHelperLibraryX.ExtractHelper.ExtractPdf(_inputPdfFileList[0], (int)_numPageFrom.Value, (int)_numPageTo.Value, out var outputPdfFile);
+            if (string.IsNullOrWhiteSpace(s)) _txtLog.Text += $"æå–å®Œæˆ: {outputPdfFile}\r\n";
+            else _txtLog.Text += $"{s}\r\n";
         }
         #endregion
     }

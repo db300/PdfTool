@@ -25,8 +25,8 @@ namespace PdfToolX
                 AllowMultiple = true,
                 Filters =
                 {
-                    new FileDialogFilter { Name = "pdfÎÄ¼ş", Extensions = new List<string> { "pdf" } },
-                    new FileDialogFilter { Name = "ËùÓĞÎÄ¼ş", Extensions = new List<string> { "*" } }
+                    new FileDialogFilter { Name = "pdfæ–‡ä»¶", Extensions = new List<string> { "pdf" } },
+                    new FileDialogFilter { Name = "æ‰€æœ‰æ–‡ä»¶", Extensions = new List<string> { "*" } }
                 }
             };
             if (this.GetVisualRoot() is not Window mainWindow) return;
@@ -36,7 +36,7 @@ namespace PdfToolX
             foreach (var file in inputFileList)
             {
                 var document = PdfReader.Open(file, PdfDocumentOpenMode.Import);
-                _txtLog.Text += $"¡¾Ò³Êı£º{document.PageCount}¡¿{file}\r\n";
+                _txtLog.Text += $"ã€é¡µæ•°ï¼š{document.PageCount}ã€‘{file}\r\n";
                 _txtFileList.Text += $"{file}\r\n";
             }
         }
@@ -46,11 +46,11 @@ namespace PdfToolX
             var inputPdfFilenameList = _txtFileList.Text.Split('\n').Select(a => a.Trim()).Where(a => !string.IsNullOrWhiteSpace(a)).ToList();
             if (inputPdfFilenameList.Count == 0)
             {
-                _txtLog.Text += "Î´Ìí¼ÓĞèÒªºÏ²¢µÄPDFÎÄ¼ş\r\n";
+                _txtLog.Text += "æœªæ·»åŠ éœ€è¦åˆå¹¶çš„PDFæ–‡ä»¶\r\n";
                 return;
             }
             var s = PdfHelperLibraryX.MergeHelper.MergePdf(inputPdfFilenameList, out var outputPdfFilename);
-            if (string.IsNullOrWhiteSpace(s)) _txtLog.Text += $"ºÏ²¢Íê³É: {outputPdfFilename}\r\n";
+            if (string.IsNullOrWhiteSpace(s)) _txtLog.Text += $"åˆå¹¶å®Œæˆ: {outputPdfFilename}\r\n";
             else _txtLog.Text += $"{s}\r\n";
         }
         #endregion

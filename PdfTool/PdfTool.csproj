@@ -79,10 +79,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MaterialSkin\MaterialSkin\MaterialSkin.csproj">
-      <Project>{8eb7611b-68cd-4b8b-987a-11717e2b250c}</Project>
-      <Name>MaterialSkin</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OfficeHelperLibrary\OfficeHelperLibrary.csproj">
       <Project>{5fba6af8-6065-497d-92ce-a11b8ef1c91a}</Project>
       <Name>OfficeHelperLibrary</Name>

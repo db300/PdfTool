@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfTool", "PdfTool\PdfTool.csproj", "{EA59B133-26FE-4514-884B-C44A6D51328F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfHelperLibrary", "PdfHelperLibrary\PdfHelperLibrary.csproj", "{64485278-A143-453E-A1D6-2400D010FF61}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OfficeHelperLibrary", "OfficeHelperLibrary\OfficeHelperLibrary.csproj", "{5FBA6AF8-6065-497D-92CE-A11B8EF1C91A}"
@@ -31,16 +29,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PdfHelperLibraryX", "PdfHel
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfImager", "PdfImager\PdfImager.csproj", "{F9AD25A5-37A7-4E7F-9B93-03D8ED06293B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfTool_Obsolete", "PdfTool_Obsolete\PdfTool_Obsolete.csproj", "{EA59B133-26FE-4514-884B-C44A6D51328F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EA59B133-26FE-4514-884B-C44A6D51328F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA59B133-26FE-4514-884B-C44A6D51328F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EA59B133-26FE-4514-884B-C44A6D51328F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EA59B133-26FE-4514-884B-C44A6D51328F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{64485278-A143-453E-A1D6-2400D010FF61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{64485278-A143-453E-A1D6-2400D010FF61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64485278-A143-453E-A1D6-2400D010FF61}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -93,6 +89,10 @@ Global
 		{F9AD25A5-37A7-4E7F-9B93-03D8ED06293B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9AD25A5-37A7-4E7F-9B93-03D8ED06293B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9AD25A5-37A7-4E7F-9B93-03D8ED06293B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA59B133-26FE-4514-884B-C44A6D51328F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA59B133-26FE-4514-884B-C44A6D51328F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA59B133-26FE-4514-884B-C44A6D51328F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA59B133-26FE-4514-884B-C44A6D51328F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

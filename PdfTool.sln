@@ -31,6 +31,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfImager", "PdfImager\PdfI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfTool_Obsolete", "PdfTool_Obsolete\PdfTool_Obsolete.csproj", "{EA59B133-26FE-4514-884B-C44A6D51328F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfTool", "PdfTool\PdfTool.csproj", "{549BC677-F5D2-47E5-80B7-A5CA8C105163}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -93,6 +95,10 @@ Global
 		{EA59B133-26FE-4514-884B-C44A6D51328F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA59B133-26FE-4514-884B-C44A6D51328F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA59B133-26FE-4514-884B-C44A6D51328F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{549BC677-F5D2-47E5-80B7-A5CA8C105163}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{549BC677-F5D2-47E5-80B7-A5CA8C105163}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{549BC677-F5D2-47E5-80B7-A5CA8C105163}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{549BC677-F5D2-47E5-80B7-A5CA8C105163}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

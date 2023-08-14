@@ -61,6 +61,7 @@
     <Compile Include="Common.cs" />
     <Compile Include="CommonHelper.cs" />
     <Compile Include="ExtractHelper.cs" />
+    <Compile Include="ImageExtractHelper.cs" />
     <Compile Include="ImagerHelper.cs" />
     <Compile Include="MergeHelper.cs" />
     <Compile Include="SplitHelper.cs" />

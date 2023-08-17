@@ -1,5 +1,4 @@
 ﻿using PdfMerger.Properties;
-using PdfSharp.Pdf.IO;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -35,8 +34,7 @@ namespace PdfMerger
             var inputFileList = openDlg.FileNames.ToList();
             foreach (var fileName in inputFileList)
             {
-                var document = PdfReader.Open(fileName, PdfDocumentOpenMode.Import);
-                _txtLog.AppendText($"【页数：{document.PageCount}】{fileName}\r\n");
+                _txtLog.AppendText($"【页数：{PdfHelperLibrary.CommonHelper.GetPageCount(fileName)}】{fileName}\r\n");
                 _txtFileList.AppendText($"{fileName}\r\n");
             }
         }
@@ -89,13 +87,13 @@ namespace PdfMerger
 
             _txtLog = new TextBox
             {
-                Anchor = AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Right,
-                Location = new Point(btnAddFile.Left, ClientSize.Height - ControlMargin - 200),
+                Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom,
+                Location = new Point(ControlMargin, ClientSize.Height - ControlMargin - 200),
                 Multiline = true,
                 Parent = this,
                 ReadOnly = true,
                 ScrollBars = ScrollBars.Both,
-                Size = new Size(ClientSize.Width - 2 * btnAddFile.Left, 200),
+                Size = new Size(ClientSize.Width - ControlMargin * 2, 200),
                 WordWrap = false
             };
 
@@ -106,12 +104,13 @@ namespace PdfMerger
                 Multiline = true,
                 Parent = this,
                 ScrollBars = ScrollBars.Both,
-                Size = new Size(ClientSize.Width - 2 * btnAddFile.Left, _txtLog.Top - btnAddFile.Bottom - 2 * ControlPadding),
+                Size = new Size(ClientSize.Width - ControlMargin * 2, _txtLog.Top - btnAddFile.Bottom - 2 * ControlPadding),
                 WordWrap = false
             };
 
             var picAppreciate = new PictureBox
             {
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
                 Cursor = Cursors.Hand,
                 Image = Resources.appreciatesmall,
                 Location = new Point(ClientSize.Width - 32 - 6, 6),

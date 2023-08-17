@@ -1,5 +1,4 @@
-﻿using PdfSharp.Pdf.IO;
-using PdfSplitter.Properties;
+﻿using PdfSplitter.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -41,8 +40,7 @@ namespace PdfSplitter
             _inputPdfFileList.AddRange(openDlg.FileNames.ToList());
             foreach (var fileName in _inputPdfFileList)
             {
-                var document = PdfReader.Open(fileName, PdfDocumentOpenMode.Import);
-                _txtLog.AppendText($"【页数：{document.PageCount}】{fileName}\r\n");
+                _txtLog.AppendText($"【页数：{PdfHelperLibrary.CommonHelper.GetPageCount(fileName)}】{fileName}\r\n");
             }
         }
 
@@ -105,10 +103,10 @@ namespace PdfSplitter
             var page2 = new TabPage { BorderStyle = BorderStyle.None, Name = "tpSpecialPage", Text = "指定页提取" };
             var tab4SplitMode = new TabControl
             {
-                Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
+                Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right,
                 Location = new Point(btnAddFile.Left, btnAddFile.Bottom + ControlPadding),
                 Parent = this,
-                Size = new Size(ClientSize.Width - 2 * btnAddFile.Left, 150)
+                Size = new Size(ClientSize.Width - ControlMargin * 2, 150)
             };
             tab4SplitMode.TabPages.Add(page1);
             tab4SplitMode.TabPages.Add(page2);
@@ -168,12 +166,13 @@ namespace PdfSplitter
                 Parent = this,
                 ReadOnly = true,
                 ScrollBars = ScrollBars.Both,
+                Size = new Size(ClientSize.Width - ControlMargin * 2, ClientSize.Height - ControlMargin - tab4SplitMode.Bottom - ControlPadding),
                 WordWrap = false
             };
-            _txtLog.Size = new Size(ClientSize.Width - ControlMargin * 2, ClientSize.Height - ControlMargin - _txtLog.Top);
 
             var picAppreciate = new PictureBox
             {
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
                 Cursor = Cursors.Hand,
                 Image = Resources.appreciatesmall,
                 Location = new Point(ClientSize.Width - 32 - 6, 6),

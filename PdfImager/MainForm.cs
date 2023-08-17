@@ -2,14 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
 
 namespace PdfImager
 {
@@ -123,7 +118,7 @@ namespace PdfImager
             _cmbDpi = new ComboBox
             {
                 DropDownStyle = ComboBoxStyle.DropDownList,
-                Location = new Point(lbl.Right , lbl.Top - 3),
+                Location = new Point(lbl.Right, lbl.Top - 3),
                 Parent = this
             };
             _cmbDpi.Items.AddRange(new object[] { 100, 200, 300, 600, 900, 1200 });
@@ -137,9 +132,9 @@ namespace PdfImager
                 Parent = this,
                 ReadOnly = true,
                 ScrollBars = ScrollBars.Both,
+                Size = new Size(ClientSize.Width - ControlMargin * 2, ClientSize.Height - ControlMargin - _cmbDpi.Bottom - ControlPadding),
                 WordWrap = false
             };
-            _txtLog.Size = new Size(ClientSize.Width - ControlMargin * 2, ClientSize.Height - ControlMargin - _txtLog.Top);
 
             var picAppreciate = new PictureBox
             {

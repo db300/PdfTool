@@ -6,18 +6,20 @@
              x:Class="PdfToolX.PdfMerger">
   <DockPanel>
     <StackPanel Orientation="Horizontal" Spacing="12" Margin="10" DockPanel.Dock="Top">
-      <Button Click="BtnAddFile_Click">添加文件</Button>
-      <Button Click="BtnMerge_Click">开始合并</Button>
+      <Button Content="添加文件" Click="BtnAddFile_Click"/>
+      <Button Content="开始合并" Click="BtnMerge_Click"/>
     </StackPanel>
+
     <DockPanel Margin="10 0 10 20" DockPanel.Dock="Bottom" Height="300">
       <Border BorderBrush="Black" BorderThickness="1">
         <ScrollViewer>
-          <TextBlock Name="_txtLog"/>
+          <TextBlock x:Name="_txtLog" TextWrapping="NoWrap"/>
         </ScrollViewer>
       </Border>
     </DockPanel>
+    
     <DockPanel Margin="10 0 10 10">
-      <TextBox Name="_txtFileList" AcceptsReturn="True"/>
+      <TextBox x:Name="_txtFileList" AcceptsReturn="True"/>
     </DockPanel>
   </DockPanel>
 </UserControl>

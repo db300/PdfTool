@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfSplitter", "PdfSplitter\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfMerger", "PdfMerger\PdfMerger.csproj", "{7B14F02C-A40A-46F8-80AC-484E79628F6E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PdfToolX", "PdfToolX\PdfToolX.csproj", "{DBD944F7-1AA1-41EA-944F-58F7A0AFD3EE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfHelperLibrary.DFX45", "PdfHelperLibrary.DFX45\PdfHelperLibrary.DFX45.csproj", "{CB9F3B4F-853C-409A-A984-A15C8E6CADFE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfWatermark", "PdfWatermark\PdfWatermark.csproj", "{135724F2-093D-4BD8-920E-530F8BD67FE5}"
@@ -32,6 +30,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfTool_Obsolete", "PdfTool_Obsolete\PdfTool_Obsolete.csproj", "{EA59B133-26FE-4514-884B-C44A6D51328F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfTool", "PdfTool\PdfTool.csproj", "{549BC677-F5D2-47E5-80B7-A5CA8C105163}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PdfToolX", "PdfToolX\PdfToolX.csproj", "{7F3F3753-9BCE-439A-BF2A-5225BD780C4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,10 +59,6 @@ Global
 		{7B14F02C-A40A-46F8-80AC-484E79628F6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B14F02C-A40A-46F8-80AC-484E79628F6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B14F02C-A40A-46F8-80AC-484E79628F6E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DBD944F7-1AA1-41EA-944F-58F7A0AFD3EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DBD944F7-1AA1-41EA-944F-58F7A0AFD3EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DBD944F7-1AA1-41EA-944F-58F7A0AFD3EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DBD944F7-1AA1-41EA-944F-58F7A0AFD3EE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CB9F3B4F-853C-409A-A984-A15C8E6CADFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CB9F3B4F-853C-409A-A984-A15C8E6CADFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB9F3B4F-853C-409A-A984-A15C8E6CADFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -99,6 +95,10 @@ Global
 		{549BC677-F5D2-47E5-80B7-A5CA8C105163}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{549BC677-F5D2-47E5-80B7-A5CA8C105163}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{549BC677-F5D2-47E5-80B7-A5CA8C105163}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F3F3753-9BCE-439A-BF2A-5225BD780C4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F3F3753-9BCE-439A-BF2A-5225BD780C4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F3F3753-9BCE-439A-BF2A-5225BD780C4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F3F3753-9BCE-439A-BF2A-5225BD780C4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

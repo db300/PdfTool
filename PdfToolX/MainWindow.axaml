@@ -9,10 +9,10 @@
         Title="PDF工具集"
         WindowStartupLocation="CenterScreen">
   <TabControl>
-    <TabItem Header="PDF拆分">
+    <TabItem Header="PDF拆分" FontSize="14">
       <uc:PdfSplitter/>
     </TabItem>
-    <TabItem Header="PDF合并">
+    <TabItem Header="PDF合并" FontSize="14">
       <uc:PdfMerger/>
     </TabItem>
   </TabControl>

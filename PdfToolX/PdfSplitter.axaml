@@ -5,43 +5,47 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="PdfToolX.PdfSplitter">
   <DockPanel>
+    
     <StackPanel Orientation="Horizontal" Spacing="12" Margin="10" DockPanel.Dock="Top">
-      <Button Click="BtnAddFile_Click">添加文件</Button>
+      <Button Content="添加文件" Click="BtnAddFile_Click"/>
     </StackPanel>
+
     <DockPanel Margin="10 0 10 20" DockPanel.Dock="Bottom" Height="300">
       <Border BorderBrush="Black" BorderThickness="1">
         <ScrollViewer>
-          <TextBlock Name="_txtLog"/>
+          <TextBlock x:Name="_txtLog" TextWrapping="NoWrap"/>
         </ScrollViewer>
       </Border>
     </DockPanel>
+
     <DockPanel Margin="10 0 10 10">
       <TabControl>
         <TabItem Header="常规拆分" FontSize="14">
           <StackPanel Orientation="Vertical" Spacing="20" Margin="10">
             <StackPanel Orientation="Horizontal" Height="30">
-              <NumericUpDown Name="_numPagePerDoc" Value="1" Increment="1" Minimum="1" Maximum="100000" Width="150"/>
-              <Label VerticalAlignment="Center">页/文档</Label>
+              <NumericUpDown x:Name="_numPagePerDoc" Value="1" Increment="1" Minimum="1" Maximum="100000" Width="150"/>
+              <Label Content="页/文档" VerticalAlignment="Center"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-              <Button Click="BtnSplit_Click">开始拆分</Button>
+              <Button Content="开始拆分" Click="BtnSplit_Click"/>
             </StackPanel>
           </StackPanel>
         </TabItem>
         <TabItem Header="指定页提取" FontSize="14">
           <StackPanel Orientation="Vertical" Spacing="20" Margin="10">
             <StackPanel Orientation="Horizontal" Height="30">
-              <Label VerticalAlignment="Center">从：</Label>
-              <NumericUpDown Name="_numPageFrom" Value="1" Increment="1" Minimum="1" Maximum="100000" Width="150"/>
-              <Label VerticalAlignment="Center">到：</Label>
-              <NumericUpDown Name="_numPageTo" Value="1" Increment="1" Minimum="1" Maximum="100000" Width="150"/>
+              <Label Content="从：" VerticalAlignment="Center"/>
+              <NumericUpDown x:Name="_numPageFrom" Value="1" Increment="1" Minimum="1" Maximum="100000" Width="150"/>
+              <Label Content="到：" VerticalAlignment="Center"/>
+              <NumericUpDown x:Name="_numPageTo" Value="1" Increment="1" Minimum="1" Maximum="100000" Width="150"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-              <Button Click="BtnExtract_Click">开始提取</Button>
+              <Button Content="开始提取" Click="BtnExtract_Click"/>
             </StackPanel>
           </StackPanel>
         </TabItem>
       </TabControl>
     </DockPanel>
+    
   </DockPanel>
 </UserControl>

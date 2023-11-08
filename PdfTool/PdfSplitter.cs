@@ -26,6 +26,7 @@ namespace PdfTool
         private NumericUpDown _numPagePerDoc;
         private NumericUpDown _numPageFrom;
         private NumericUpDown _numPageTo;
+        private TextBox _txtDeletePageNum;
 
         private const int ControlMargin = 20;
         private const int ControlPadding = 12;
@@ -49,7 +50,7 @@ namespace PdfTool
         {
             if (_inputPdfFileList.Count == 0)
             {
-                _txtLog.Text = "未添加需要拆分的PDF文件\r\n";
+                _txtLog.AppendText("未添加需要拆分的PDF文件\r\n");
                 return;
             }
             foreach (var fileName in _inputPdfFileList)
@@ -65,15 +66,37 @@ namespace PdfTool
         {
             if (_inputPdfFileList.Count == 0)
             {
-                _txtLog.Text = "未添加需要提取的PDF文件\r\n";
+                _txtLog.AppendText("未添加需要提取的PDF文件\r\n");
                 return;
             }
             if (_inputPdfFileList.Count != 1)
             {
-                _txtLog.Text = "添加了多个PDF文件，只对第一个文件进行提取\r\n";
+                _txtLog.AppendText("添加了多个PDF文件，只对第一个文件进行提取\r\n");
             }
             var s = PdfHelperLibrary.ExtractHelper.ExtractPdf(_inputPdfFileList[0], (int)_numPageFrom.Value, (int)_numPageTo.Value, out var outputPdfFile);
             if (string.IsNullOrWhiteSpace(s)) _txtLog.AppendText($"{_inputPdfFileList[0]} 提取完成: {outputPdfFile}\r\n");
+            else _txtLog.AppendText($"{s}\r\n");
+        }
+
+        private void BtnDelete_Click(object sender, EventArgs e)
+        {
+            if (_inputPdfFileList.Count == 0)
+            {
+                _txtLog.AppendText("未添加需要删页的PDF文件\r\n");
+                return;
+            }
+            if (_inputPdfFileList.Count != 1)
+            {
+                _txtLog.AppendText("添加了多个PDF文件，只对第一个文件进行删页\r\n");
+            }
+            var pageNums = _txtDeletePageNum.Text.Split(new[] { ',', ';', '，', '；' }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
+            if (!(pageNums?.Count > 0))
+            {
+                _txtLog.AppendText("未输入要删除的页码\r\n");
+                return;
+            }
+            var s = PdfHelperLibrary.ExtractHelper.DeletePdfPage(_inputPdfFileList.First(), pageNums, out var outputPdfFile);
+            if (string.IsNullOrWhiteSpace(s)) _txtLog.AppendText($"{_inputPdfFileList.First()} 删页完成: {outputPdfFile}\r\n");
             else _txtLog.AppendText($"{s}\r\n");
         }
         #endregion
@@ -91,7 +114,8 @@ namespace PdfTool
             btnAddFile.Click += BtnAddFile_Click;
 
             var page1 = new TabPage { BorderStyle = BorderStyle.None, Name = "tpDefault", Text = "常规拆分" };
-            var page2 = new TabPage { BorderStyle = BorderStyle.None, Name = "tpSpecialPage", Text = "指定页提取" };
+            var page2 = new TabPage { BorderStyle = BorderStyle.None, Name = "tpSpecialPageExtract", Text = "指定页提取" };
+            var page3 = new TabPage { BorderStyle = BorderStyle.None, Name = "tpSpecialPageDelete", Text = "指定页删除" };
             var tab4SplitMode = new TabControl
             {
                 Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right,
@@ -101,53 +125,14 @@ namespace PdfTool
             };
             tab4SplitMode.TabPages.Add(page1);
             tab4SplitMode.TabPages.Add(page2);
+            tab4SplitMode.TabPages.Add(page3);
 
             //常规拆分
-            _numPagePerDoc = new NumericUpDown
-            {
-                AutoSize = true,
-                Location = new Point(ControlMargin, ControlMargin),
-                Maximum = 100000,
-                Minimum = 1,
-                Parent = page1,
-                TextAlign = HorizontalAlignment.Right,
-                Value = 1,
-                Width = 50
-            };
-            var lbl = new Label { AutoSize = true, Parent = page1, Text = "页/文档" };
-            lbl.Location = new Point(_numPagePerDoc.Right + 6, _numPagePerDoc.Top + (_numPagePerDoc.Height - lbl.Height) / 2);
-            var btnSplit = new Button { Anchor = AnchorStyles.Left | AnchorStyles.Bottom, AutoSize = true, Parent = page1, Text = "开始拆分" };
-            btnSplit.Location = new Point(ControlMargin, page1.ClientSize.Height - ControlMargin - btnSplit.Height);
-            btnSplit.Click += BtnSplit_Click;
-
+            InitUi4Common(page1);
             //指定页提取
-            lbl = new Label { AutoSize = true, Location = new Point(ControlMargin, ControlMargin), Parent = page2, Text = "从：" };
-            _numPageFrom = new NumericUpDown
-            {
-                AutoSize = true,
-                Location = new Point(lbl.Right, lbl.Top - 3),
-                Maximum = 100000,
-                Minimum = 1,
-                Parent = page2,
-                TextAlign = HorizontalAlignment.Right,
-                Value = 1,
-                Width = 60
-            };
-            lbl = new Label { AutoSize = true, Location = new Point(_numPageFrom.Right + ControlPadding, lbl.Top), Parent = page2, Text = "到：" };
-            _numPageTo = new NumericUpDown
-            {
-                AutoSize = true,
-                Location = new Point(lbl.Right, lbl.Top - 3),
-                Maximum = 100000,
-                Minimum = 1,
-                Parent = page2,
-                TextAlign = HorizontalAlignment.Right,
-                Value = 1,
-                Width = 60
-            };
-            var btnExtract = new Button { Anchor = AnchorStyles.Left | AnchorStyles.Bottom, AutoSize = true, Parent = page2, Text = "开始提取" };
-            btnExtract.Location = new Point(ControlMargin, page2.ClientSize.Height - ControlMargin - btnExtract.Height);
-            btnExtract.Click += BtnExtract_Click;
+            InitUi4Extract(page2);
+            //指定页删除
+            InitUi4Delete(page3);
 
             _txtLog = new TextBox
             {
@@ -160,6 +145,80 @@ namespace PdfTool
                 Size = new Size(ClientSize.Width - ControlMargin * 2, ClientSize.Height - ControlMargin - tab4SplitMode.Bottom - ControlPadding),
                 WordWrap = false
             };
+        }
+
+        private void InitUi4Common(TabPage tabPage)
+        {
+            _numPagePerDoc = new NumericUpDown
+            {
+                AutoSize = true,
+                Location = new Point(ControlMargin, ControlMargin),
+                Maximum = 100000,
+                Minimum = 1,
+                Parent = tabPage,
+                TextAlign = HorizontalAlignment.Right,
+                Value = 1,
+                Width = 50
+            };
+            var lbl = new Label { AutoSize = true, Parent = tabPage, Text = "页/文档" };
+            lbl.Location = new Point(_numPagePerDoc.Right + 6, _numPagePerDoc.Top + (_numPagePerDoc.Height - lbl.Height) / 2);
+            var btnSplit = new Button { Anchor = AnchorStyles.Left | AnchorStyles.Bottom, AutoSize = true, Parent = tabPage, Text = "开始拆分" };
+            btnSplit.Location = new Point(ControlMargin, tabPage.ClientSize.Height - ControlMargin - btnSplit.Height);
+            btnSplit.Click += BtnSplit_Click;
+        }
+
+        private void InitUi4Extract(TabPage tabPage)
+        {
+            var lbl = new Label { AutoSize = true, Location = new Point(ControlMargin, ControlMargin), Parent = tabPage, Text = "从：" };
+            _numPageFrom = new NumericUpDown
+            {
+                AutoSize = true,
+                Location = new Point(lbl.Right, lbl.Top - 3),
+                Maximum = 100000,
+                Minimum = 1,
+                Parent = tabPage,
+                TextAlign = HorizontalAlignment.Right,
+                Value = 1,
+                Width = 60
+            };
+            lbl = new Label { AutoSize = true, Location = new Point(_numPageFrom.Right + ControlPadding, lbl.Top), Parent = tabPage, Text = "到：" };
+            _numPageTo = new NumericUpDown
+            {
+                AutoSize = true,
+                Location = new Point(lbl.Right, lbl.Top - 3),
+                Maximum = 100000,
+                Minimum = 1,
+                Parent = tabPage,
+                TextAlign = HorizontalAlignment.Right,
+                Value = 1,
+                Width = 60
+            };
+            var btnExtract = new Button { Anchor = AnchorStyles.Left | AnchorStyles.Bottom, AutoSize = true, Parent = tabPage, Text = "开始提取" };
+            btnExtract.Location = new Point(ControlMargin, tabPage.ClientSize.Height - ControlMargin - btnExtract.Height);
+            btnExtract.Click += BtnExtract_Click;
+        }
+
+        private void InitUi4Delete(TabPage tabPage)
+        {
+            var lbl = new Label { AutoSize = true, Location = new Point(ControlMargin, ControlMargin), Parent = tabPage, Text = "删除页码：" };
+            _txtDeletePageNum = new TextBox
+            {
+                Location = new Point(lbl.Right, lbl.Top - 4),
+                Parent = tabPage,
+                Width = 200
+            };
+            lbl = new Label
+            {
+                AutoSize = true,
+                ForeColor = Color.Blue,
+                Location = new Point(_txtDeletePageNum.Right, _txtDeletePageNum.Top + 4),
+                Parent = tabPage,
+                Text = "输入要删除的页码，多个页码可用逗号或分号间隔"
+            };
+
+            var btnDelete = new Button { Anchor = AnchorStyles.Left | AnchorStyles.Bottom, AutoSize = true, Parent = tabPage, Text = "开始删除" };
+            btnDelete.Location = new Point(ControlMargin, tabPage.ClientSize.Height - ControlMargin - btnDelete.Height);
+            btnDelete.Click += BtnDelete_Click;
         }
         #endregion
     }

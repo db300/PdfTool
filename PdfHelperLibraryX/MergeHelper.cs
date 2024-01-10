@@ -1,5 +1,5 @@
-﻿using PdfSharpCore.Pdf.IO;
-using PdfSharpCore.Pdf;
+﻿using PdfSharp.Pdf.IO;
+using PdfSharp.Pdf;
 
 namespace PdfHelperLibraryX
 {

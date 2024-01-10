@@ -1,4 +1,4 @@
-﻿using PdfSharpCore.Pdf.IO;
+﻿using PdfSharp.Pdf.IO;
 
 namespace PdfHelperLibraryX
 {

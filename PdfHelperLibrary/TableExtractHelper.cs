@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Tabula.Extractors;
 using Tabula;
+using Tabula.Extractors;
 using UglyToad.PdfPig;
 
 namespace PdfHelperLibrary

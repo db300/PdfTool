@@ -43,9 +43,6 @@
     <Reference Include="PdfSharp.Charting, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.Charting.dll</HintPath>
     </Reference>
-    <Reference Include="Spire.Pdf, Version=8.7.2.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.PDF.8.7.2\lib\net40\Spire.Pdf.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -93,7 +90,7 @@
     <Compile Include="MergeHelper.cs" />
     <Compile Include="SplitHelper.cs" />
     <Compile Include="TableExtractHelper.cs" />
-    <Compile Include="TextExtractor.cs" />
+    <Compile Include="TextExtractHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WatermarkHelper.cs" />
   </ItemGroup>

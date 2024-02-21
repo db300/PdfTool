@@ -88,6 +88,12 @@
     <Compile Include="PdfTableExtracter.Designer.cs">
       <DependentUpon>PdfTableExtracter.cs</DependentUpon>
     </Compile>
+    <Compile Include="PdfTextExtracter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PdfTextExtracter.Designer.cs">
+      <DependentUpon>PdfTextExtracter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">

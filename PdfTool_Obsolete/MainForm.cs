@@ -5,8 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PdfTool
@@ -54,7 +52,7 @@ namespace PdfTool
             {
                 foreach (var pdfFileItem in _pdfFileList)
                 {
-                    pdfFileItem.TextLines = PdfHelperLibrary.TextExtractor.Pdf2String(pdfFileItem.SrcFileName);
+                    pdfFileItem.TextLines = TextExtractor.Pdf2String(pdfFileItem.SrcFileName);
                     pdfFileItem.Progress = "文本提取完成";
                     ((BackgroundWorker)ww).ReportProgress(_pdfFileList.IndexOf(pdfFileItem), pdfFileItem);
 

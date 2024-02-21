@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfSplitter", "PdfSplitter\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfMerger", "PdfMerger\PdfMerger.csproj", "{7B14F02C-A40A-46F8-80AC-484E79628F6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfHelperLibrary.DFX45", "PdfHelperLibrary.DFX45\PdfHelperLibrary.DFX45.csproj", "{CB9F3B4F-853C-409A-A984-A15C8E6CADFE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfWatermark", "PdfWatermark\PdfWatermark.csproj", "{135724F2-093D-4BD8-920E-530F8BD67FE5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfTableExtractor", "PdfTableExtractor\PdfTableExtractor.csproj", "{5C619CE8-65B8-4E77-8E32-1EBADEB7C07A}"
@@ -61,10 +59,6 @@ Global
 		{7B14F02C-A40A-46F8-80AC-484E79628F6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B14F02C-A40A-46F8-80AC-484E79628F6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B14F02C-A40A-46F8-80AC-484E79628F6E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CB9F3B4F-853C-409A-A984-A15C8E6CADFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CB9F3B4F-853C-409A-A984-A15C8E6CADFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CB9F3B4F-853C-409A-A984-A15C8E6CADFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CB9F3B4F-853C-409A-A984-A15C8E6CADFE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{135724F2-093D-4BD8-920E-530F8BD67FE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{135724F2-093D-4BD8-920E-530F8BD67FE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{135724F2-093D-4BD8-920E-530F8BD67FE5}.Release|Any CPU.ActiveCfg = Release|Any CPU

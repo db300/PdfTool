@@ -1,5 +1,4 @@
-﻿using PdfSharp.Pdf.IO;
-using PdfWatermark.Properties;
+﻿using PdfWatermark.Properties;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -36,8 +35,7 @@ namespace PdfWatermark
             var inputFileList = openDlg.FileNames.ToList();
             foreach (var fileName in inputFileList)
             {
-                var document = PdfReader.Open(fileName, PdfDocumentOpenMode.Import);
-                _txtLog.AppendText($"【页数：{document.PageCount}】{fileName}\r\n");
+                _txtLog.AppendText($"【页数：{PdfHelperLibrary.CommonHelper.GetPageCount(fileName)}】{fileName}\r\n");
                 _txtFileList.AppendText($"{fileName}\r\n");
             }
         }

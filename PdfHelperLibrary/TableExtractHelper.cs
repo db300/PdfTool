@@ -65,9 +65,6 @@ namespace PdfHelperLibrary
                         Cells = r.Select(c => c.GetText()).ToList()
                     }).ToList()
                 }).ToList();
-#if DEBUG
-                System.Diagnostics.Debug.WriteLine(pdfExtractTables);
-#endif
                 extractTables.AddRange(pdfExtractTables);
             }
             return extractTables;

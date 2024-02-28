@@ -2,13 +2,16 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Platform.Storage;
 using Avalonia.VisualTree;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata;
 
 namespace PdfToolX;
 
+/// <summary>
+/// PDF合并器
+/// </summary>
 public partial class PdfMerger : UserControl
 {
     #region constructor
@@ -21,19 +24,19 @@ public partial class PdfMerger : UserControl
     #region event handler
     private async void BtnAddFile_Click(object sender, RoutedEventArgs e)
     {
-        var openDlg = new OpenFileDialog
+        var topLevel = TopLevel.GetTopLevel(this);
+        if (topLevel is null) return;
+        var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
             AllowMultiple = true,
-            Filters =
+            FileTypeFilter = new List<FilePickerFileType>
             {
-                new FileDialogFilter { Name = "pdf文件", Extensions = new List<string> { "pdf" } },
-                new FileDialogFilter { Name = "所有文件", Extensions = new List<string> { "*" } }
+                new("pdf文件") { Patterns = new List<string> { "*.pdf" } },
+                new("所有文件") { Patterns = new List<string> { "*.*" } }
             }
-        };
-        if (this.GetVisualRoot() is not Window mainWindow) return;
-        var result = await openDlg.ShowAsync(mainWindow);
-        if (!(result?.ToList().Count > 0)) return;
-        var inputFileList = result.ToList();
+        });
+        if (!(files?.Count > 0)) return;
+        var inputFileList = files.Select(a => a.Path.LocalPath).ToList();
         foreach (var file in inputFileList)
         {
             _txtLog.Text += $"【页数：{PdfHelperLibraryX.CommonHelper.GetPageCount(file)}】{file}\r\n";

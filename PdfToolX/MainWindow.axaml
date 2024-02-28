@@ -15,5 +15,14 @@
     <TabItem Header="PDF合并" FontSize="14">
       <uc:PdfMerger/>
     </TabItem>
+    <TabItem Header="PDF图片提取" FontSize="14">
+      <uc:PdfImageExtracter/>
+    </TabItem>
+    <TabItem Header="PDF表格提取" FontSize="14">
+      <uc:PdfTableExtracter/>
+    </TabItem>
+    <TabItem Header="PDF文本提取" FontSize="14">
+      <uc:PdfTextExtracter/>
+    </TabItem>
   </TabControl>
 </Window>

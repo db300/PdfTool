@@ -1,0 +1,20 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PdfToolX.PdfImageExtracter">
+  <DockPanel>
+    <StackPanel Orientation="Horizontal" Spacing="12" Margin="10" DockPanel.Dock="Top">
+      <Button Content="添加文件" Click="BtnAddFile_Click"/>
+      <Button Content="开始提取" Click="BtnExtract_Click"/>
+    </StackPanel>
+    <DockPanel Margin="10 0 10 20">
+      <Border BorderBrush="Black" BorderThickness="1">
+        <ScrollViewer>
+          <TextBlock x:Name="_txtLog" TextWrapping="NoWrap"/>
+        </ScrollViewer>
+      </Border>
+    </DockPanel>
+  </DockPanel>
+</UserControl>

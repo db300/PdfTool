@@ -40,5 +40,34 @@ namespace PdfHelperLibraryX
                 return ex.Message;
             }
         }
+
+        public static string DeletePdfPage(string inputPdfFileName, List<int> pageNums, out string outputPdfFileName)
+        {
+            try
+            {
+                var inputDocument = PdfReader.Open(inputPdfFileName, PdfDocumentOpenMode.Import);
+                var pageCount = inputDocument.PageCount;
+                // Create new document
+                var outputDocument = new PdfDocument { Version = inputDocument.Version };
+                outputDocument.Info.Title = inputDocument.Info.Title;
+                outputDocument.Info.Creator = inputDocument.Info.Creator;
+                // Add the page and save it
+                for (var i = 0; i < pageCount; i++)
+                {
+                    if (pageNums.Contains(i + 1)) continue;
+                    outputDocument.AddPage(inputDocument.Pages[i]);
+                }
+                var path = Path.GetDirectoryName(inputPdfFileName);
+                var fileName = Path.GetFileNameWithoutExtension(inputPdfFileName);
+                outputPdfFileName = Path.Combine(path, $"{fileName} - DeletePageFile - {DateTime.Now:yyyyMMddHHmmssfff}.pdf");
+                outputDocument.Save(outputPdfFileName);
+                return "";
+            }
+            catch (Exception ex)
+            {
+                outputPdfFileName = "";
+                return ex.Message;
+            }
+        }
     }
 }

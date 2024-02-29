@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotNetZip, Version=1.16.0.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetZip.1.16.0\lib\net40\DotNetZip.dll</HintPath>
+    </Reference>
     <Reference Include="O2S.Components.PDFRender4NET, Version=4.7.3.0, Culture=neutral, PublicKeyToken=6753860be21d84fb, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\_extLibrary\O2S.Components.PDFRender4NET.dll</HintPath>

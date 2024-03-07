@@ -2,13 +2,16 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
+using Avalonia.Platform.Storage;
 using Avalonia.VisualTree;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata;
 
 namespace PdfToolX;
 
+/// <summary>
+/// PDF拆分器
+/// </summary>
 public partial class PdfSplitter : UserControl
 {
     #region constructor
@@ -19,30 +22,27 @@ public partial class PdfSplitter : UserControl
     #endregion
 
     #region property
-    private readonly List<string> _inputPdfFileList = new List<string>();
+    private readonly List<string> _inputPdfFileList = new();
     #endregion
 
     #region event handler
     private async void BtnAddFile_Click(object sender, RoutedEventArgs e)
     {
-        var openDlg = new OpenFileDialog
+        var topLevel = TopLevel.GetTopLevel(this);
+        if (topLevel is null) return;
+        var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
         {
             AllowMultiple = true,
-            Filters =
+            FileTypeFilter = new List<FilePickerFileType>
             {
-                new FileDialogFilter { Name = "pdf文件", Extensions = new List<string> { "pdf" } },
-                new FileDialogFilter { Name = "所有文件", Extensions = new List<string> { "*" } }
+                new("pdf文件") { Patterns = new List<string> { "*.pdf" } },
+                new("所有文件") { Patterns = new List<string> { "*.*" } }
             }
-        };
-        if (this.GetVisualRoot() is not Window mainWindow) return;
-        var result = await openDlg.ShowAsync(mainWindow);
-        if (!(result?.ToList().Count > 0)) return;
+        });
+        if (!(files?.Count > 0)) return;
         _inputPdfFileList.Clear();
-        _inputPdfFileList.AddRange(result.ToList());
-        foreach (var file in _inputPdfFileList)
-        {
-            _txtLog.Text += $"【页数：{PdfHelperLibraryX.CommonHelper.GetPageCount(file)}】{file}\r\n";
-        }
+        _inputPdfFileList.AddRange(files.Select(a => a.Path.LocalPath));
+        _inputPdfFileList.Select(a => $"【页数：{PdfHelperLibraryX.CommonHelper.GetPageCount(a)}】{a}").ToList().ForEach(a => _txtLog.Text += $"{a}\r\n");
     }
 
     private void BtnSplit_Click(object sender, RoutedEventArgs e)

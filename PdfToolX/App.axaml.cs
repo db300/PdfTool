@@ -20,4 +20,8 @@ public partial class App : Application
 
         base.OnFrameworkInitializationCompleted();
     }
+
+    private void NativeMenuAbout_Click(object? sender, System.EventArgs e)
+    {
+    }
 }

@@ -7,6 +7,7 @@
     <Application.Styles>
         <FluentTheme />
     </Application.Styles>
+  <Application.Name>PdfToolX</Application.Name>
   <NativeMenu.Menu>
     <NativeMenu>
       <NativeMenuItem Header="About PdfToolX" Click="NativeMenuAbout_Click"/>

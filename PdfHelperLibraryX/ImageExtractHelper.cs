@@ -91,6 +91,8 @@ namespace PdfHelperLibraryX
                 case "/FlateDecode":
                     ExportAsPngImage(image, ref count);
                     break;
+                case "/FlateDecode /DCTDecode":
+                    return ExportCompressedJpegImage(image, fileNameWithoutExt, ref count);
             }
             return "";
         }
@@ -120,6 +122,29 @@ namespace PdfHelperLibraryX
             // We don't need that feature at the moment and therefore will not implement it.
             // If you write the code for exporting images I would be pleased to publish it in a future release
             // of PDFsharp.
+        }
+
+        private static string ExportCompressedJpegImage(PdfDictionary image, string fileNameWithoutExt, ref int count)
+        {
+            var stream = image.Stream.Value;
+            var cutinput = new byte[stream.Length - 2];
+            Array.Copy(stream, 2, cutinput, 0, cutinput.Length);
+
+            // FlateDecode
+            var flateDecodedData = new MemoryStream();
+            using (var compressedStream = new MemoryStream(/*stream*/cutinput))
+            using (var deflateStream = new Ionic.Zlib.DeflateStream(compressedStream, Ionic.Zlib.CompressionMode.Decompress))
+            {
+                deflateStream.CopyTo(flateDecodedData);
+            }
+
+            var outFileName = $"{fileNameWithoutExt}_{count++}.jpeg";
+            var fs = new FileStream(outFileName, FileMode.Create, FileAccess.Write);
+            var bw = new BinaryWriter(fs);
+            bw.Write(flateDecodedData.ToArray());
+            bw.Close();
+
+            return outFileName;
         }
     }
 }

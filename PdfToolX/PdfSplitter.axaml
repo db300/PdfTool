@@ -10,15 +10,7 @@
       <Button Content="添加文件" Click="BtnAddFile_Click"/>
     </StackPanel>
 
-    <DockPanel Margin="10 0 10 20" DockPanel.Dock="Bottom" Height="300">
-      <Border BorderBrush="Black" BorderThickness="1">
-        <ScrollViewer>
-          <TextBlock x:Name="_txtLog" TextWrapping="NoWrap"/>
-        </ScrollViewer>
-      </Border>
-    </DockPanel>
-
-    <DockPanel Margin="10 0 10 10">
+    <DockPanel Margin="10 0 10 10" DockPanel.Dock="Top" Height="180">
       <TabControl>
         <TabItem Header="常规拆分" FontSize="14">
           <StackPanel Orientation="Vertical" Spacing="20" Margin="10">
@@ -44,8 +36,28 @@
             </StackPanel>
           </StackPanel>
         </TabItem>
+        <TabItem Header="指定页删除" FontSize="14">
+          <StackPanel Orientation="Vertical" Spacing="20" Margin="10">
+            <StackPanel Orientation="Horizontal" Height="30">
+              <Label Content="删除页码：" VerticalAlignment="Center"/>
+              <TextBox x:Name="_txtDeletePageNum" Width="200"/>
+              <Label Content="输入要删除的页码，多个页码可用逗号或分号间隔" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+              <Button Content="开始删除" Click="BtnDelete_Click"/>
+            </StackPanel>
+          </StackPanel>
+        </TabItem>
       </TabControl>
     </DockPanel>
-    
+
+    <DockPanel Margin="10 0 10 20">
+      <Border BorderBrush="Black" BorderThickness="1">
+        <ScrollViewer>
+          <TextBlock x:Name="_txtLog" TextWrapping="NoWrap"/>
+        </ScrollViewer>
+      </Border>
+    </DockPanel>
+
   </DockPanel>
 </UserControl>

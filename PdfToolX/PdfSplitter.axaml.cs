@@ -4,6 +4,7 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Platform.Storage;
 using Avalonia.VisualTree;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -68,13 +69,35 @@ public partial class PdfSplitter : UserControl
             _txtLog.Text = "未添加需要提取的PDF文件\r\n";
             return;
         }
-        if (_inputPdfFileList.Count != 1)
+        foreach (var fileName in _inputPdfFileList)
         {
-            _txtLog.Text = "添加了多个PDF文件，只对第一个文件进行提取\r\n";
+            var s = PdfHelperLibraryX.ExtractHelper.ExtractPdf(fileName, (int)_numPageFrom.Value, (int)_numPageTo.Value, out var outputPdfFile);
+            if (string.IsNullOrWhiteSpace(s)) _txtLog.Text += $"{fileName} 提取完成: {outputPdfFile}\r\n";
+            else _txtLog.Text += $"{s}\r\n";
         }
-        var s = PdfHelperLibraryX.ExtractHelper.ExtractPdf(_inputPdfFileList[0], (int)_numPageFrom.Value, (int)_numPageTo.Value, out var outputPdfFile);
-        if (string.IsNullOrWhiteSpace(s)) _txtLog.Text += $"提取完成: {outputPdfFile}\r\n";
-        else _txtLog.Text += $"{s}\r\n";
+        _txtLog.Text += "提取完成\r\n";
+    }
+
+    private void BtnDelete_Click(object sender, RoutedEventArgs e)
+    {
+        if (_inputPdfFileList.Count == 0)
+        {
+            _txtLog.Text = "未添加需要删除页的PDF文件\r\n";
+            return;
+        }
+        var pageNums = _txtDeletePageNum?.Text?.Split(new[] { ',', ';', '，', '；' }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
+        if (!(pageNums?.Count > 0))
+        {
+            _txtLog.Text = "未输入要删除的页码\r\n";
+            return;
+        }
+        foreach (var fileName in _inputPdfFileList)
+        {
+            var s = PdfHelperLibraryX.ExtractHelper.DeletePdfPage(fileName, pageNums, out var outputPdfFile);
+            if (string.IsNullOrWhiteSpace(s)) _txtLog.Text += $"{fileName} 删页完成: {outputPdfFile}\r\n";
+            else _txtLog.Text += $"{s}\r\n";
+        }
+        _txtLog.Text += "删页完成\r\n";
     }
     #endregion
 }

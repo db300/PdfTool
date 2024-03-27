@@ -5,24 +5,28 @@
         xmlns:uc="clr-namespace:PdfToolX;assembly=PdfToolX"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="PdfToolX.MainWindow"
-        FontFamily="Microsoft YaHei,Simsun,苹方-简,宋体-简"
         Title="PDF工具集"
         WindowStartupLocation="CenterScreen">
-  <TabControl>
-    <TabItem Header="PDF拆分" FontSize="14">
-      <uc:PdfSplitter/>
-    </TabItem>
-    <TabItem Header="PDF合并" FontSize="14">
-      <uc:PdfMerger/>
-    </TabItem>
-    <TabItem Header="PDF图片提取" FontSize="14">
-      <uc:PdfImageExtracter/>
-    </TabItem>
-    <TabItem Header="PDF表格提取" FontSize="14">
-      <uc:PdfTableExtracter/>
-    </TabItem>
-    <TabItem Header="PDF文本提取" FontSize="14">
-      <uc:PdfTextExtracter/>
-    </TabItem>
-  </TabControl>
+  <DockPanel>
+    <StackPanel DockPanel.Dock="Top" Height="30">
+      <TextBlock Text="如果觉得好用，来打赏一下啊 O(∩_∩)O 哈哈~" Foreground="Blue" Cursor="Hand" Background="Transparent" Margin="10"/>
+    </StackPanel>
+    <TabControl>
+      <TabItem Header="PDF拆分" FontSize="14">
+        <uc:PdfSplitter/>
+      </TabItem>
+      <TabItem Header="PDF合并" FontSize="14">
+        <uc:PdfMerger/>
+      </TabItem>
+      <TabItem Header="PDF图片提取" FontSize="14">
+        <uc:PdfImageExtracter/>
+      </TabItem>
+      <TabItem Header="PDF表格提取" FontSize="14">
+        <uc:PdfTableExtracter/>
+      </TabItem>
+      <TabItem Header="PDF文本提取" FontSize="14">
+        <uc:PdfTextExtracter/>
+      </TabItem>
+    </TabControl>
+  </DockPanel>
 </Window>

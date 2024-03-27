@@ -69,13 +69,13 @@ namespace PdfTool
                 _txtLog.AppendText("未添加需要提取的PDF文件\r\n");
                 return;
             }
-            if (_inputPdfFileList.Count != 1)
+            foreach (var fileName in _inputPdfFileList)
             {
-                _txtLog.AppendText("添加了多个PDF文件，只对第一个文件进行提取\r\n");
+                var s = PdfHelperLibrary.ExtractHelper.ExtractPdf(fileName, (int)_numPageFrom.Value, (int)_numPageTo.Value, out var outputPdfFile);
+                if (string.IsNullOrWhiteSpace(s)) _txtLog.AppendText($"{fileName} 提取完成: {outputPdfFile}\r\n");
+                else _txtLog.AppendText($"{s}\r\n");
             }
-            var s = PdfHelperLibrary.ExtractHelper.ExtractPdf(_inputPdfFileList[0], (int)_numPageFrom.Value, (int)_numPageTo.Value, out var outputPdfFile);
-            if (string.IsNullOrWhiteSpace(s)) _txtLog.AppendText($"{_inputPdfFileList[0]} 提取完成: {outputPdfFile}\r\n");
-            else _txtLog.AppendText($"{s}\r\n");
+            _txtLog.AppendText("提取完成\r\n");
         }
 
         private void BtnDelete_Click(object sender, EventArgs e)
@@ -85,19 +85,19 @@ namespace PdfTool
                 _txtLog.AppendText("未添加需要删页的PDF文件\r\n");
                 return;
             }
-            if (_inputPdfFileList.Count != 1)
-            {
-                _txtLog.AppendText("添加了多个PDF文件，只对第一个文件进行删页\r\n");
-            }
             var pageNums = _txtDeletePageNum.Text.Split(new[] { ',', ';', '，', '；' }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
             if (!(pageNums?.Count > 0))
             {
                 _txtLog.AppendText("未输入要删除的页码\r\n");
                 return;
             }
-            var s = PdfHelperLibrary.ExtractHelper.DeletePdfPage(_inputPdfFileList.First(), pageNums, out var outputPdfFile);
-            if (string.IsNullOrWhiteSpace(s)) _txtLog.AppendText($"{_inputPdfFileList.First()} 删页完成: {outputPdfFile}\r\n");
-            else _txtLog.AppendText($"{s}\r\n");
+            foreach (var fileName in _inputPdfFileList)
+            {
+                var s = PdfHelperLibrary.ExtractHelper.DeletePdfPage(fileName, pageNums, out var outputPdfFile);
+                if (string.IsNullOrWhiteSpace(s)) _txtLog.AppendText($"{fileName} 删页完成: {outputPdfFile}\r\n");
+                else _txtLog.AppendText($"{s}\r\n");
+            }
+            _txtLog.AppendText("删页完成\r\n");
         }
         #endregion
 

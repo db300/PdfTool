@@ -7,10 +7,21 @@
         x:Class="PdfToolX.MainWindow"
         Title="PDF工具集"
         WindowStartupLocation="CenterScreen">
+  <Window.Styles>
+    <Style Selector="TextBlock.Hotlink">
+      <Setter Property="Foreground" Value="Blue"/>
+      <Setter Property="TextDecorations" Value="Underline"/>
+      <Setter Property="Cursor" Value="Hand"/>
+    </Style>
+    <Style Selector="TextBlock.Hotlink:pointerover">
+      <Setter Property="Foreground" Value="Red"/>
+    </Style>
+  </Window.Styles>
   <DockPanel>
-    <StackPanel DockPanel.Dock="Top" Height="30">
-      <TextBlock Text="如果觉得好用，来打赏一下啊 O(∩_∩)O 哈哈~" Foreground="Blue" Cursor="Hand" Background="Transparent" Margin="10"/>
-    </StackPanel>
+    <Grid DockPanel.Dock="Top" Height="30" ColumnDefinitions="*,*">
+      <TextBlock Classes="Hotlink" Text="如果觉得好用，来打赏一下啊~" Grid.Row="0" Grid.Column="0" Margin="10" PointerPressed="TxtLink1_PointerPressed"/>
+      <TextBlock Classes="Hotlink" Text="如果有问题和需求，欢迎来反馈哦~" Grid.Row="0" Grid.Column="1" Margin="10" TextAlignment="Right" PointerPressed="TxtLink2_PointerPressed"/>
+    </Grid>
     <TabControl>
       <TabItem Header="PDF拆分" FontSize="14">
         <uc:PdfSplitter/>

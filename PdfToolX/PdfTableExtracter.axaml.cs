@@ -28,17 +28,7 @@ public partial class PdfTableExtracter : UserControl
     #region event handler
     private async void BtnAddFile_Click(object sender, RoutedEventArgs e)
     {
-        var topLevel = TopLevel.GetTopLevel(this);
-        if (topLevel is null) return;
-        var files = await topLevel.StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
-        {
-            AllowMultiple = true,
-            FileTypeFilter = new List<FilePickerFileType>
-            {
-                new("pdf文件") { Patterns = new List<string> { "*.pdf" } },
-                new("所有文件") { Patterns = new List<string> { "*.*" } }
-            }
-        });
+        var files = await CommonHelper.OpenPdfFileAsync(this);
         if (!(files?.Count > 0)) return;
         _inputPdfFileList.Clear();
         _inputPdfFileList.AddRange(files.Select(a => a.Path.LocalPath));

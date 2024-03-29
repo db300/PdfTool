@@ -6,7 +6,7 @@
              x:Class="PdfToolX.PdfSplitter">
   <DockPanel>
     
-    <StackPanel Orientation="Horizontal" Spacing="12" Margin="10" DockPanel.Dock="Top">
+    <StackPanel Classes="ButtonBar">
       <Button Content="添加文件" Click="BtnAddFile_Click"/>
     </StackPanel>
 

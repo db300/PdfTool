@@ -4,5 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="PdfToolX.PdfTextExtracter">
-  PDF文本提取模块研发中……
+  <DockPanel>
+    <StackPanel Classes="ButtonBar">
+      <Button Content="添加文件" Click="BtnAddFile_Click"/>
+      <Button Content="开始提取" Click="BtnExtract_Click"/>
+    </StackPanel>
+    <DockPanel Margin="10 0 10 20">
+      <Border BorderBrush="Black" BorderThickness="1">
+        <ScrollViewer HorizontalScrollBarVisibility="Auto">
+          <TextBlock x:Name="_txtLog" TextWrapping="NoWrap"/>
+        </ScrollViewer>
+      </Border>
+    </DockPanel>
+  </DockPanel>
 </UserControl>

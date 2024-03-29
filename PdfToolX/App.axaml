@@ -9,6 +9,12 @@
       <Style Selector="Window">
         <Setter Property="FontFamily" Value="Microsoft YaHei UI,Simsun,苹方-简,宋体-简"/>
       </Style>
+      <Style Selector="StackPanel.ButtonBar">
+        <Setter Property="Orientation" Value="Horizontal"/>
+        <Setter Property="Spacing" Value="12"/>
+        <Setter Property="Margin" Value="10"/>
+        <Setter Property="DockPanel.Dock" Value="Top"/>
+      </Style>
     </Application.Styles>
   <Application.Name>PdfToolX</Application.Name>
   <NativeMenu.Menu>

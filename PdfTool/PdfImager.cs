@@ -25,9 +25,6 @@ namespace PdfTool
         private readonly List<string> _inputPdfFileList = new List<string>();
         private TextBox _txtLog;
         private ComboBox _cmbDpi;
-
-        private const int ControlMargin = 20;
-        private const int ControlPadding = 12;
         #endregion
 
         #region event handler
@@ -84,7 +81,7 @@ namespace PdfTool
             var btnAddFile = new Button
             {
                 AutoSize = true,
-                Location = new Point(ControlMargin, ControlMargin),
+                Location = new Point(Config.ControlMargin, Config.ControlMargin),
                 Parent = this,
                 Text = "添加文件"
             };
@@ -93,7 +90,7 @@ namespace PdfTool
             var btnConvert = new Button
             {
                 AutoSize = true,
-                Location = new Point(btnAddFile.Right + ControlPadding, btnAddFile.Top),
+                Location = new Point(btnAddFile.Right + Config.ControlPadding, btnAddFile.Top),
                 Parent = this,
                 Text = "开始转换"
             };
@@ -102,7 +99,7 @@ namespace PdfTool
             var lbl = new Label
             {
                 AutoSize = true,
-                Location = new Point(ControlMargin, btnAddFile.Bottom + ControlPadding),
+                Location = new Point(Config.ControlMargin, btnAddFile.Bottom + Config.ControlPadding),
                 Parent = this,
                 Text = "生成图片DPI："
             };
@@ -118,12 +115,12 @@ namespace PdfTool
             _txtLog = new TextBox
             {
                 Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
-                Location = new Point(ControlMargin, _cmbDpi.Bottom + ControlPadding),
+                Location = new Point(Config.ControlMargin, _cmbDpi.Bottom + Config.ControlPadding),
                 Multiline = true,
                 Parent = this,
                 ReadOnly = true,
                 ScrollBars = ScrollBars.Both,
-                Size = new Size(ClientSize.Width - ControlMargin * 2, ClientSize.Height - ControlMargin - _cmbDpi.Bottom - ControlPadding),
+                Size = new Size(ClientSize.Width - Config.ControlMargin * 2, ClientSize.Height - Config.ControlMargin - _cmbDpi.Bottom - Config.ControlPadding),
                 WordWrap = false
             };
         }

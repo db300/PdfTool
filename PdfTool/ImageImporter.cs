@@ -22,9 +22,6 @@ namespace PdfTool
         #region property
         private TextBox _txtFileList;
         private TextBox _txtLog;
-
-        private const int ControlMargin = 20;
-        private const int ControlPadding = 12;
         #endregion
 
         #region event handler
@@ -60,7 +57,7 @@ namespace PdfTool
             var btnAddFile = new Button
             {
                 AutoSize = true,
-                Location = new Point(ControlMargin, ControlMargin),
+                Location = new Point(Config.ControlMargin, Config.ControlMargin),
                 Parent = this,
                 Text = "添加文件"
             };
@@ -69,7 +66,7 @@ namespace PdfTool
             var btnImport = new Button
             {
                 AutoSize = true,
-                Location = new Point(btnAddFile.Right + ControlPadding, btnAddFile.Top),
+                Location = new Point(btnAddFile.Right + Config.ControlPadding, btnAddFile.Top),
                 Parent = this,
                 Text = "开始导入"
             };
@@ -80,7 +77,7 @@ namespace PdfTool
                 AutoSize = true,
                 Checked = true,
                 Enabled = false,
-                Location = new Point(btnImport.Right + ControlPadding, btnAddFile.Top),
+                Location = new Point(btnImport.Right + Config.ControlPadding, btnAddFile.Top),
                 Parent = this,
                 Text = "每张图片占一页"
             }; 
@@ -91,7 +88,7 @@ namespace PdfTool
                 AutoSize = true,
                 Checked = true,
                 Enabled = false,
-                Location = new Point(ckbOneImgOnePage.Right + ControlPadding, ckbOneImgOnePage.Top),
+                Location = new Point(ckbOneImgOnePage.Right + Config.ControlPadding, ckbOneImgOnePage.Top),
                 Parent = this,
                 Text = "保持原始图片大小"
             };
@@ -99,23 +96,23 @@ namespace PdfTool
             _txtLog = new TextBox
             {
                 Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom,
-                Location = new Point(ControlMargin, ClientSize.Height - ControlMargin - 200),
+                Location = new Point(Config.ControlMargin, ClientSize.Height - Config.ControlMargin - 200),
                 Multiline = true,
                 Parent = this,
                 ReadOnly = true,
                 ScrollBars = ScrollBars.Both,
-                Size = new Size(ClientSize.Width - ControlMargin * 2, 200),
+                Size = new Size(ClientSize.Width - Config.ControlMargin * 2, 200),
                 WordWrap = false
             };
 
             _txtFileList = new TextBox
             {
                 Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
-                Location = new Point(btnAddFile.Left, btnAddFile.Bottom + ControlPadding),
+                Location = new Point(btnAddFile.Left, btnAddFile.Bottom + Config.ControlPadding),
                 Multiline = true,
                 Parent = this,
                 ScrollBars = ScrollBars.Both,
-                Size = new Size(ClientSize.Width - ControlMargin * 2, _txtLog.Top - btnAddFile.Bottom - 2 * ControlPadding),
+                Size = new Size(ClientSize.Width - Config.ControlMargin * 2, _txtLog.Top - btnAddFile.Bottom - 2 * Config.ControlPadding),
                 WordWrap = false
             };
         }

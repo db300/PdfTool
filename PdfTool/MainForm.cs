@@ -80,7 +80,8 @@ namespace PdfTool
                 new TabPage("PDF图片提取") { BorderStyle = BorderStyle.None, Name = "tpPdfImageExtracter" },
                 new TabPage("PDF表格提取") { BorderStyle = BorderStyle.None, Name = "tpPdfTableExtracter" },
                 new TabPage("PDF文本提取") { BorderStyle = BorderStyle.None, Name = "tpPdfTextExtracter" },
-                new TabPage("图片导入PDF") { BorderStyle = BorderStyle.None, Name = "tpImageImporter" }
+                new TabPage("图片导入PDF") { BorderStyle = BorderStyle.None, Name = "tpImageImporter" },
+                new TabPage("批量打印") { BorderStyle = BorderStyle.None, Name = "tpPdfPrinter" }
             });
 
             tabControl.TabPages["tpPdfSplitter"].Controls.Add(new PdfSplitter { Dock = DockStyle.Fill });
@@ -90,6 +91,7 @@ namespace PdfTool
             tabControl.TabPages["tpPdfTableExtracter"].Controls.Add(new PdfTableExtracter { Dock = DockStyle.Fill });
             tabControl.TabPages["tpPdfTextExtracter"].Controls.Add(new PdfTextExtracter { Dock = DockStyle.Fill });
             tabControl.TabPages["tpImageImporter"].Controls.Add(new ImageImporter { Dock = DockStyle.Fill });
+            tabControl.TabPages["tpPdfPrinter"].Controls.Add(new PdfPrinter { Dock = DockStyle.Fill });
         }
         #endregion
     }

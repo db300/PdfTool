@@ -27,9 +27,6 @@ namespace PdfTool
         private NumericUpDown _numPageFrom;
         private NumericUpDown _numPageTo;
         private TextBox _txtDeletePageNum;
-
-        private const int ControlMargin = 20;
-        private const int ControlPadding = 12;
         #endregion
 
         #region event handler
@@ -107,7 +104,7 @@ namespace PdfTool
             var btnAddFile = new Button
             {
                 AutoSize = true,
-                Location = new Point(ControlMargin, ControlMargin),
+                Location = new Point(Config.ControlMargin, Config.ControlMargin),
                 Parent = this,
                 Text = "添加文件"
             };
@@ -119,9 +116,9 @@ namespace PdfTool
             var tab4SplitMode = new TabControl
             {
                 Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right,
-                Location = new Point(btnAddFile.Left, btnAddFile.Bottom + ControlPadding),
+                Location = new Point(btnAddFile.Left, btnAddFile.Bottom + Config.ControlPadding),
                 Parent = this,
-                Size = new Size(ClientSize.Width - ControlMargin * 2, 150)
+                Size = new Size(ClientSize.Width - Config.ControlMargin * 2, 150)
             };
             tab4SplitMode.TabPages.Add(page1);
             tab4SplitMode.TabPages.Add(page2);
@@ -137,12 +134,12 @@ namespace PdfTool
             _txtLog = new TextBox
             {
                 Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
-                Location = new Point(ControlMargin, tab4SplitMode.Bottom + ControlPadding),
+                Location = new Point(Config.ControlMargin, tab4SplitMode.Bottom + Config.ControlPadding),
                 Multiline = true,
                 Parent = this,
                 ReadOnly = true,
                 ScrollBars = ScrollBars.Both,
-                Size = new Size(ClientSize.Width - ControlMargin * 2, ClientSize.Height - ControlMargin - tab4SplitMode.Bottom - ControlPadding),
+                Size = new Size(ClientSize.Width - Config.ControlMargin * 2, ClientSize.Height - Config.ControlMargin - tab4SplitMode.Bottom - Config.ControlPadding),
                 WordWrap = false
             };
         }
@@ -152,7 +149,7 @@ namespace PdfTool
             _numPagePerDoc = new NumericUpDown
             {
                 AutoSize = true,
-                Location = new Point(ControlMargin, ControlMargin),
+                Location = new Point(Config.ControlMargin, Config.ControlMargin),
                 Maximum = 100000,
                 Minimum = 1,
                 Parent = tabPage,
@@ -163,13 +160,13 @@ namespace PdfTool
             var lbl = new Label { AutoSize = true, Parent = tabPage, Text = "页/文档" };
             lbl.Location = new Point(_numPagePerDoc.Right + 6, _numPagePerDoc.Top + (_numPagePerDoc.Height - lbl.Height) / 2);
             var btnSplit = new Button { Anchor = AnchorStyles.Left | AnchorStyles.Bottom, AutoSize = true, Parent = tabPage, Text = "开始拆分" };
-            btnSplit.Location = new Point(ControlMargin, tabPage.ClientSize.Height - ControlMargin - btnSplit.Height);
+            btnSplit.Location = new Point(Config.ControlMargin, tabPage.ClientSize.Height - Config.ControlMargin - btnSplit.Height);
             btnSplit.Click += BtnSplit_Click;
         }
 
         private void InitUi4Extract(TabPage tabPage)
         {
-            var lbl = new Label { AutoSize = true, Location = new Point(ControlMargin, ControlMargin), Parent = tabPage, Text = "从：" };
+            var lbl = new Label { AutoSize = true, Location = new Point(Config.ControlMargin, Config.ControlMargin), Parent = tabPage, Text = "从：" };
             _numPageFrom = new NumericUpDown
             {
                 AutoSize = true,
@@ -181,7 +178,7 @@ namespace PdfTool
                 Value = 1,
                 Width = 60
             };
-            lbl = new Label { AutoSize = true, Location = new Point(_numPageFrom.Right + ControlPadding, lbl.Top), Parent = tabPage, Text = "到：" };
+            lbl = new Label { AutoSize = true, Location = new Point(_numPageFrom.Right + Config.ControlPadding, lbl.Top), Parent = tabPage, Text = "到：" };
             _numPageTo = new NumericUpDown
             {
                 AutoSize = true,
@@ -194,13 +191,13 @@ namespace PdfTool
                 Width = 60
             };
             var btnExtract = new Button { Anchor = AnchorStyles.Left | AnchorStyles.Bottom, AutoSize = true, Parent = tabPage, Text = "开始提取" };
-            btnExtract.Location = new Point(ControlMargin, tabPage.ClientSize.Height - ControlMargin - btnExtract.Height);
+            btnExtract.Location = new Point(Config.ControlMargin, tabPage.ClientSize.Height - Config.ControlMargin - btnExtract.Height);
             btnExtract.Click += BtnExtract_Click;
         }
 
         private void InitUi4Delete(TabPage tabPage)
         {
-            var lbl = new Label { AutoSize = true, Location = new Point(ControlMargin, ControlMargin), Parent = tabPage, Text = "删除页码：" };
+            var lbl = new Label { AutoSize = true, Location = new Point(Config.ControlMargin, Config.ControlMargin), Parent = tabPage, Text = "删除页码：" };
             _txtDeletePageNum = new TextBox
             {
                 Location = new Point(lbl.Right, lbl.Top - 4),
@@ -217,7 +214,7 @@ namespace PdfTool
             };
 
             var btnDelete = new Button { Anchor = AnchorStyles.Left | AnchorStyles.Bottom, AutoSize = true, Parent = tabPage, Text = "开始删除" };
-            btnDelete.Location = new Point(ControlMargin, tabPage.ClientSize.Height - ControlMargin - btnDelete.Height);
+            btnDelete.Location = new Point(Config.ControlMargin, tabPage.ClientSize.Height - Config.ControlMargin - btnDelete.Height);
             btnDelete.Click += BtnDelete_Click;
         }
         #endregion

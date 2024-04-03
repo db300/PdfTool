@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config.cs" />
     <Compile Include="ImageImporter.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -75,6 +76,12 @@
     </Compile>
     <Compile Include="PdfMerger.Designer.cs">
       <DependentUpon>PdfMerger.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PdfPrinter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PdfPrinter.Designer.cs">
+      <DependentUpon>PdfPrinter.cs</DependentUpon>
     </Compile>
     <Compile Include="PdfSplitter.cs">
       <SubType>UserControl</SubType>

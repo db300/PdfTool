@@ -69,17 +69,8 @@ namespace PdfTool
 #endif
                 }
             };
-            background.ProgressChanged += (ww, ee) =>
-            {
-                if (ee.UserState is string msg)
-                {
-                    _txtLog.AppendText($"{msg}\r\n");
-                }
-            };
-            background.RunWorkerCompleted += (ww, ee) =>
-            {
-                _txtLog.AppendText($"提取完成\r\n");
-            };
+            background.ProgressChanged += (ww, ee) => { if (ee.UserState is string msg) { _txtLog.AppendText($"{msg}\r\n"); } };
+            background.RunWorkerCompleted += (ww, ee) => { _txtLog.AppendText($"提取完成\r\n"); };
             background.RunWorkerAsync();
             _txtLog.AppendText($"正在提取，请稍候...\r\n");
         }

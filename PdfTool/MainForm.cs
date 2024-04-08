@@ -51,7 +51,7 @@ namespace PdfTool
                 AutoSize = true,
                 Location = new Point(10, 10),
                 Parent = this,
-                Text = "如果觉得好用，来打赏一下啊 O(∩_∩)O 哈哈~"
+                Text = "如果觉得好用，来打赏一下啊~"
             };
             lbl.LinkClicked += Lbl_LinkClicked;
 
@@ -60,7 +60,7 @@ namespace PdfTool
                 Anchor = AnchorStyles.Top | AnchorStyles.Right,
                 AutoSize = true,
                 Parent = this,
-                Text = "如果有问题和需求，欢迎来反馈哦~",
+                Text = "如果有问题和需求，欢迎来反馈~",
             };
             lbl.LinkClicked += Lbl_LinkClicked1;
             lbl.Location = new Point(ClientSize.Width - 10 - lbl.Width, 10);

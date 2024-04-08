@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PdfTool
@@ -56,7 +53,7 @@ namespace PdfTool
                 foreach (var fileName in _inputPdfFileList)
                 {
                     var s = PdfHelperLibrary.PrintHelper.Print(fileName);
-                    var msg = string.IsNullOrWhiteSpace(s) ? $"{fileName} 打印完成" : $"{fileName} {s}";
+                    var msg = string.IsNullOrWhiteSpace(s) ? $"{fileName} 已推送至默认打印机" : $"{fileName} {s}";
                     background.ReportProgress(0, msg);
                 }
             };

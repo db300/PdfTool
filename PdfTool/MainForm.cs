@@ -18,6 +18,36 @@ namespace PdfTool
             InitializeComponent();
 
             InitUi();
+
+            AllowDrop = true;
+            DragEnter += (sender, e) =>
+            {
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                {
+                    e.Effect = DragDropEffects.Copy;
+                }
+            };
+            DragDrop += (sender, e) =>
+            {
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                {
+                    var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                    if (files.Length == 1)
+                    {
+                        var file = files[0];
+                        if (file.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
+                        {
+                            var pdfSplitter = Controls.Find("tpPdfSplitter", true).FirstOrDefault()?.Controls.OfType<PdfSplitter>().FirstOrDefault();
+                            //pdfSplitter?.OpenPdf(file);
+                        }
+                        else if (file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) || file.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
+                        {
+                            var imageImporter = Controls.Find("tpImageImporter", true).FirstOrDefault()?.Controls.OfType<ImageImporter>().FirstOrDefault();
+                            //imageImporter?.OpenImage(file);
+                        }
+                    }
+                }
+            };
         }
         #endregion
 

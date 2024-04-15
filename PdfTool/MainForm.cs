@@ -19,35 +19,8 @@ namespace PdfTool
 
             InitUi();
 
-            AllowDrop = true;
-            DragEnter += (sender, e) =>
-            {
-                if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                {
-                    e.Effect = DragDropEffects.Copy;
-                }
-            };
-            DragDrop += (sender, e) =>
-            {
-                if (e.Data.GetDataPresent(DataFormats.FileDrop))
-                {
-                    var files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                    if (files.Length == 1)
-                    {
-                        var file = files[0];
-                        if (file.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
-                        {
-                            var pdfSplitter = Controls.Find("tpPdfSplitter", true).FirstOrDefault()?.Controls.OfType<PdfSplitter>().FirstOrDefault();
-                            //pdfSplitter?.OpenPdf(file);
-                        }
-                        else if (file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) || file.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
-                        {
-                            var imageImporter = Controls.Find("tpImageImporter", true).FirstOrDefault()?.Controls.OfType<ImageImporter>().FirstOrDefault();
-                            //imageImporter?.OpenImage(file);
-                        }
-                    }
-                }
-            };
+            DragEnter += MainForm_DragEnter;
+            DragDrop += MainForm_DragDrop;
         }
         #endregion
 
@@ -57,6 +30,69 @@ namespace PdfTool
         #endregion
 
         #region event handler
+        private void MainForm_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+        }
+
+        private void MainForm_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                var files = ((string[])e.Data.GetData(DataFormats.FileDrop)).ToList();
+                files.RemoveAll(a => !a.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase));
+                if (files.Count == 0) return;
+                var tabPage = Controls.OfType<TabControl>().FirstOrDefault().SelectedTab;
+                if (tabPage.Controls[0] is PdfSplitter pdfSplitter)
+                {
+                    pdfSplitter.OpenPdfs(files);
+                }
+                else if (tabPage.Controls.OfType<PdfMerger>().Any())
+                {
+                    tabPage.Controls.OfType<PdfMerger>().FirstOrDefault().OpenPdf(files[0]);
+                }
+                else if (tabPage.Controls.OfType<PdfImager>().Any())
+                {
+                    tabPage.Controls.OfType<PdfImager>().FirstOrDefault().OpenPdf(files[0]);
+                }
+                else if (tabPage.Controls.OfType<PdfImageExtracter>().Any())
+                {
+                    tabPage.Controls.OfType<PdfImageExtracter>().FirstOrDefault().OpenPdf(files[0]);
+                }
+                else if (tabPage.Controls.OfType<PdfTableExtracter>().Any())
+                {
+                    tabPage.Controls.OfType<PdfTableExtracter>().FirstOrDefault().OpenPdf(files[0]);
+                }
+                else if (tabPage.Controls.OfType<PdfTextExtracter>().Any())
+                {
+                    tabPage.Controls.OfType<PdfTextExtracter>().FirstOrDefault().OpenPdf(files[0]);
+                }
+                else if (tabPage.Controls.OfType<ImageImporter>().Any())
+                {
+                    tabPage.Controls.OfType<ImageImporter>().FirstOrDefault().OpenImage(files[0]);
+                }
+                else if (tabPage.Controls.OfType<PdfPrinter>().Any())
+                {
+                    tabPage.Controls.OfType<PdfPrinter>().FirstOrDefault().OpenPdf(files[0]);
+                }   
+                /*
+                if (file.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
+                {
+                    var pdfSplitter = Controls.Find("tpPdfSplitter", true).FirstOrDefault()?.Controls.OfType<PdfSplitter>().FirstOrDefault();
+                    //pdfSplitter?.OpenPdf(file);
+                }
+                else if (file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) || file.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
+                {
+                    var imageImporter = Controls.Find("tpImageImporter", true).FirstOrDefault()?.Controls.OfType<ImageImporter>().FirstOrDefault();
+                    //imageImporter?.OpenImage(file);
+                }
+                */
+            }
+        }
+
         private void Lbl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(Url4Appreciate);
@@ -71,6 +107,7 @@ namespace PdfTool
         #region ui
         private void InitUi()
         {
+            AllowDrop = true;
             MaximizeBox = false;
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;

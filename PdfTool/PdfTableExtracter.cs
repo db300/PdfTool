@@ -27,18 +27,25 @@ namespace PdfTool
         private TextBox _txtLog;
         #endregion
 
+        #region method
+        public void OpenPdfs(List<string> files)
+        {
+            _txtLog.Clear();
+            _inputPdfFileList.Clear();
+            _inputPdfFileList.AddRange(files);
+            foreach (var fileName in _inputPdfFileList)
+            {
+                _txtLog.AppendText($"【页数：{PdfHelperLibrary.CommonHelper.GetPageCount(fileName)}】{fileName}\r\n");
+            }
+        }
+        #endregion
+
         #region event handler
         private void BtnAddFile_Click(object sender, EventArgs e)
         {
             var openDlg = new OpenFileDialog { Filter = "PDF文件(*.pdf)|*.pdf|所有文件(*.*)|*.*", Multiselect = true };
             if (openDlg.ShowDialog() != DialogResult.OK) return;
-            _txtLog.Clear();
-            _inputPdfFileList.Clear();
-            _inputPdfFileList.AddRange(openDlg.FileNames.ToList());
-            foreach (var fileName in _inputPdfFileList)
-            {
-                _txtLog.AppendText($"【页数：{PdfHelperLibrary.CommonHelper.GetPageCount(fileName)}】{fileName}\r\n");
-            }
+            OpenPdfs(openDlg.FileNames.ToList());
         }
 
         private void BtnExtract_Click(object sender, EventArgs e)

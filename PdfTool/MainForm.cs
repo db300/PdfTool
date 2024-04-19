@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PdfTool
@@ -43,53 +41,42 @@ namespace PdfTool
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 var files = ((string[])e.Data.GetData(DataFormats.FileDrop)).ToList();
-                files.RemoveAll(a => !a.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase));
-                if (files.Count == 0) return;
+                var pdfFiles = files.Where(a => a.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase)).ToList();
                 var tabPage = Controls.OfType<TabControl>().FirstOrDefault().SelectedTab;
                 if (tabPage.Controls[0] is PdfSplitter pdfSplitter)
                 {
-                    pdfSplitter.OpenPdfs(files);
+                    pdfSplitter.OpenPdfs(pdfFiles);
                 }
-                else if (tabPage.Controls.OfType<PdfMerger>().Any())
+                else if (tabPage.Controls[0] is PdfMerger pdfMerger)
                 {
-                    tabPage.Controls.OfType<PdfMerger>().FirstOrDefault().OpenPdf(files[0]);
+                    pdfMerger.OpenPdfs(pdfFiles);
                 }
-                else if (tabPage.Controls.OfType<PdfImager>().Any())
+                else if (tabPage.Controls[0] is PdfImager pdfImager)
                 {
-                    tabPage.Controls.OfType<PdfImager>().FirstOrDefault().OpenPdf(files[0]);
+                    pdfImager.OpenPdfs(pdfFiles);
                 }
-                else if (tabPage.Controls.OfType<PdfImageExtracter>().Any())
+                else if (tabPage.Controls[0] is PdfImageExtracter pdfImageExtracter)
                 {
-                    tabPage.Controls.OfType<PdfImageExtracter>().FirstOrDefault().OpenPdf(files[0]);
+                    pdfImageExtracter.OpenPdfs(pdfFiles);
                 }
-                else if (tabPage.Controls.OfType<PdfTableExtracter>().Any())
+                else if (tabPage.Controls[0] is PdfTableExtracter pdfTableExtracter)
                 {
-                    tabPage.Controls.OfType<PdfTableExtracter>().FirstOrDefault().OpenPdf(files[0]);
+                    pdfTableExtracter.OpenPdfs(pdfFiles);
                 }
-                else if (tabPage.Controls.OfType<PdfTextExtracter>().Any())
+                else if (tabPage.Controls[0] is PdfTextExtracter pdfTextExtracter)
                 {
-                    tabPage.Controls.OfType<PdfTextExtracter>().FirstOrDefault().OpenPdf(files[0]);
+                    pdfTextExtracter.OpenPdfs(pdfFiles);
                 }
-                else if (tabPage.Controls.OfType<ImageImporter>().Any())
+                else if (tabPage.Controls[0] is ImageImporter imageImporter)
                 {
-                    tabPage.Controls.OfType<ImageImporter>().FirstOrDefault().OpenImage(files[0]);
+                    var extList = new List<string> { ".bmp", ".jpg", ".tif", ".png" };
+                    var imgFiles = files.Where(a => extList.Contains(Path.GetExtension(a).ToLower())).ToList();
+                    imageImporter.OpenImages(imgFiles);
                 }
-                else if (tabPage.Controls.OfType<PdfPrinter>().Any())
+                else if (tabPage.Controls[0] is PdfPrinter pdfPrinter)
                 {
-                    tabPage.Controls.OfType<PdfPrinter>().FirstOrDefault().OpenPdf(files[0]);
-                }   
-                /*
-                if (file.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
-                {
-                    var pdfSplitter = Controls.Find("tpPdfSplitter", true).FirstOrDefault()?.Controls.OfType<PdfSplitter>().FirstOrDefault();
-                    //pdfSplitter?.OpenPdf(file);
+                    pdfPrinter.OpenPdfs(pdfFiles);
                 }
-                else if (file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) || file.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
-                {
-                    var imageImporter = Controls.Find("tpImageImporter", true).FirstOrDefault()?.Controls.OfType<ImageImporter>().FirstOrDefault();
-                    //imageImporter?.OpenImage(file);
-                }
-                */
             }
         }
 

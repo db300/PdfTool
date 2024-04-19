@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -24,16 +25,22 @@ namespace PdfTool
         private TextBox _txtLog;
         #endregion
 
-        #region event handler
-        private void BtnAddFile_Click(object sender, EventArgs e)
+        #region method
+        public void OpenImages(List<string> files)
         {
-            var openDlg = new OpenFileDialog { Filter = "图片文件(*.bmp;*jpg;*tif;*png)|*.bmp;*jpg;*tif;*png|所有文件(*.*)|*.*", Multiselect = true };
-            if (openDlg.ShowDialog() != DialogResult.OK) return;
-            var inputFileList = openDlg.FileNames.ToList();
-            foreach (var fileName in inputFileList)
+            foreach (var fileName in files)
             {
                 _txtFileList.AppendText($"{fileName}\r\n");
             }
+        }
+        #endregion
+
+        #region event handler
+        private void BtnAddFile_Click(object sender, EventArgs e)
+        {
+            var openDlg = new OpenFileDialog { Filter = "图片文件(*.bmp;*.jpg;*.tif;*.png)|*.bmp;*.jpg;*.tif;*.png|所有文件(*.*)|*.*", Multiselect = true };
+            if (openDlg.ShowDialog() != DialogResult.OK) return;
+            OpenImages(openDlg.FileNames.ToList());
         }
 
         private void BtnImport_Click(object sender, EventArgs e)

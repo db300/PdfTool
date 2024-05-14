@@ -61,7 +61,7 @@ namespace PdfTool
             {
                 foreach (var fileName in _inputPdfFileList)
                 {
-                    var s = PdfHelperLibrary.ImagerHelper.ConvertPdfToImage(fileName, dpi);
+                    var s = PdfHelperLibrary.ImagerHelper.ConvertPdfToImage(fileName, dpi, info => background.ReportProgress(0, info));
                     var msg = string.IsNullOrWhiteSpace(s) ? $"{fileName} 转换完成" : $"{fileName} {s}";
                     background.ReportProgress(0, msg);
                 }

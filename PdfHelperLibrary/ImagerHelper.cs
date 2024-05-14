@@ -15,7 +15,7 @@ namespace PdfHelperLibrary
         /// </summary>
         /// <param name="inputPdfFileName"></param>
         /// <param name="dpi">转换图片dpi</param>
-        public static string ConvertPdfToImage(string inputPdfFileName, int dpi)
+        public static string ConvertPdfToImage(string inputPdfFileName, int dpi, InfoHandler handler)
         {
             try
             {
@@ -31,6 +31,7 @@ namespace PdfHelperLibrary
                     var image = file.GetPageImage(i, dpi);//get pdf image
                     var outputFileName = $"{outputFileNamePrefix}-page{(i + 1).ToString().PadLeft(pageNumLength, '0')}.png";
                     image.Save(outputFileName, ImageFormat.Png);
+                    handler?.Invoke($"已转换第{i + 1}页");
                 }
                 return "";
             }
@@ -66,5 +67,7 @@ namespace PdfHelperLibrary
                 return $"转换失败，原因：{ex.Message}";
             }
         }
+
+        public delegate void InfoHandler(string info);
     }
 }

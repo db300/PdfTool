@@ -33,6 +33,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PdfToolX", "PdfToolX\PdfToo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordToPdf", "WordToPdf\WordToPdf.csproj", "{C7B2F798-17C0-459C-B1C2-B4A8EDEC0B25}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageTool", "ImageTool\ImageTool.csproj", "{E21936E5-3A2E-43CC-A69D-88C56C4309B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfDesignHelper", "PdfDesignHelper\PdfDesignHelper.csproj", "{E00599FE-087C-4470-A2E3-4873CDBB0621}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +103,14 @@ Global
 		{C7B2F798-17C0-459C-B1C2-B4A8EDEC0B25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7B2F798-17C0-459C-B1C2-B4A8EDEC0B25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7B2F798-17C0-459C-B1C2-B4A8EDEC0B25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E21936E5-3A2E-43CC-A69D-88C56C4309B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E21936E5-3A2E-43CC-A69D-88C56C4309B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E21936E5-3A2E-43CC-A69D-88C56C4309B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E21936E5-3A2E-43CC-A69D-88C56C4309B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E00599FE-087C-4470-A2E3-4873CDBB0621}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E00599FE-087C-4470-A2E3-4873CDBB0621}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E00599FE-087C-4470-A2E3-4873CDBB0621}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E00599FE-087C-4470-A2E3-4873CDBB0621}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

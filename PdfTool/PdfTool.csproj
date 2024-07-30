@@ -79,6 +79,18 @@
     <Compile Include="PdfMerger.Designer.cs">
       <DependentUpon>PdfMerger.cs</DependentUpon>
     </Compile>
+    <Compile Include="PdfPreviewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PdfPreviewer.Designer.cs">
+      <DependentUpon>PdfPreviewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PdfPreviewPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PdfPreviewPanel.Designer.cs">
+      <DependentUpon>PdfPreviewPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="PdfPrinter.cs">
       <SubType>UserControl</SubType>
     </Compile>

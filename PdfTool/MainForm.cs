@@ -77,6 +77,10 @@ namespace PdfTool
                 {
                     pdfPrinter.OpenPdfs(pdfFiles);
                 }
+                else if (tabPage.Controls[0] is PdfPreviewer pdfPreviewer)
+                {
+                    pdfPreviewer.OpenPdfs(pdfFiles);
+                }
             }
         }
 
@@ -95,7 +99,6 @@ namespace PdfTool
         private void InitUi()
         {
             AllowDrop = true;
-            MaximizeBox = false;
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = $"PDF工具 {System.Reflection.Assembly.GetExecutingAssembly().GetName().Version}";
@@ -135,7 +138,8 @@ namespace PdfTool
                 new TabPage("PDF表格提取") { BorderStyle = BorderStyle.None, Name = "tpPdfTableExtracter" },
                 new TabPage("PDF文本提取") { BorderStyle = BorderStyle.None, Name = "tpPdfTextExtracter" },
                 new TabPage("图片导入PDF") { BorderStyle = BorderStyle.None, Name = "tpImageImporter" },
-                new TabPage("批量打印") { BorderStyle = BorderStyle.None, Name = "tpPdfPrinter" }
+                new TabPage("批量打印") { BorderStyle = BorderStyle.None, Name = "tpPdfPrinter" },
+                new TabPage("PDF预览") { BorderStyle = BorderStyle.None, Name = "tpPdfPreviewer" }
             });
 
             tabControl.TabPages["tpPdfSplitter"].Controls.Add(new PdfSplitter { Dock = DockStyle.Fill });
@@ -146,6 +150,7 @@ namespace PdfTool
             tabControl.TabPages["tpPdfTextExtracter"].Controls.Add(new PdfTextExtracter { Dock = DockStyle.Fill });
             tabControl.TabPages["tpImageImporter"].Controls.Add(new ImageImporter { Dock = DockStyle.Fill });
             tabControl.TabPages["tpPdfPrinter"].Controls.Add(new PdfPrinter { Dock = DockStyle.Fill });
+            tabControl.TabPages["tpPdfPreviewer"].Controls.Add(new PdfPreviewer { Dock = DockStyle.Fill });
         }
         #endregion
     }

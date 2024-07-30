@@ -1,5 +1,7 @@
 ﻿using O2S.Components.PDFRender4NET;
 using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 
@@ -69,5 +71,25 @@ namespace PdfHelperLibrary
         }
 
         public delegate void InfoHandler(string info);
+    }
+
+    public class ImagerHelper2
+    {
+        public ImagerHelper2(string inputPdfFileName)
+        {
+            _file = PDFFile.Open(inputPdfFileName);
+            _dict = new Dictionary<int, Bitmap>();
+        }
+
+        private readonly PDFFile _file;
+        private readonly Dictionary<int, Bitmap> _dict;
+
+        public Bitmap GetPageImage(int pageNum, int dpi)
+        {
+            if (_dict.ContainsKey(pageNum)) return _dict[pageNum];
+            var img = _file.GetPageImage(pageNum, dpi);
+            _dict.Add(pageNum, img);
+            return img;
+        }
     }
 }

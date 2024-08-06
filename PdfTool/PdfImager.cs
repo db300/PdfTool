@@ -25,6 +25,7 @@ namespace PdfTool
         private readonly List<string> _inputPdfFileList = new List<string>();
         private TextBox _txtLog;
         private ComboBox _cmbDpi;
+        private ComboBox _cmbFormat;
         #endregion
 
         #region method
@@ -56,12 +57,13 @@ namespace PdfTool
                 return;
             }
             var dpi = int.Parse(_cmbDpi.Text);
+            var format = _cmbFormat.Text;
             var background = new BackgroundWorker { WorkerReportsProgress = true };
             background.DoWork += (ww, ee) =>
             {
                 foreach (var fileName in _inputPdfFileList)
                 {
-                    var s = PdfHelperLibrary.ImagerHelper.ConvertPdfToImage(fileName, dpi, info => background.ReportProgress(0, info));
+                    var s = PdfHelperLibrary.ImagerHelper.ConvertPdfToImage(fileName, dpi, format, info => background.ReportProgress(0, info));
                     var msg = string.IsNullOrWhiteSpace(s) ? $"{fileName} 转换完成" : $"{fileName} {s}";
                     background.ReportProgress(0, msg);
                 }
@@ -118,6 +120,21 @@ namespace PdfTool
             };
             _cmbDpi.Items.AddRange(new object[] { 100, 200, 300, 600, 900, 1200 });
             _cmbDpi.SelectedIndex = 2;
+            lbl = new Label
+            {
+                AutoSize = true,
+                Location = new Point(_cmbDpi.Right + Config.ControlPadding, lbl.Top),
+                Parent = this,
+                Text = "生成图片格式："
+            };
+            _cmbFormat = new ComboBox
+            {
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Location = new Point(lbl.Right, lbl.Top - 3),
+                Parent = this
+            };
+            _cmbFormat.Items.AddRange(new object[] { "png", "jpg", "bmp" });
+            _cmbFormat.SelectedIndex = 0;
 
             _txtLog = new TextBox
             {

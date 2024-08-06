@@ -12,12 +12,25 @@ namespace PdfHelperLibrary
     /// </summary>
     public static class ImagerHelper
     {
+        private static readonly Dictionary<string, ImageFormat> ImgFormatDict = new Dictionary<string, ImageFormat>
+        {
+            {"png", ImageFormat.Png},
+            {"jpg", ImageFormat.Jpeg},
+            {"jpeg", ImageFormat.Jpeg},
+            {"bmp", ImageFormat.Bmp},
+            {"gif", ImageFormat.Gif},
+            {"tiff", ImageFormat.Tiff},
+            {"tif", ImageFormat.Tiff},
+            {"emf", ImageFormat.Emf},
+            {"wmf", ImageFormat.Wmf}
+        };
+
         /// <summary>
         /// PDF转图片(全页)
         /// </summary>
         /// <param name="inputPdfFileName"></param>
         /// <param name="dpi">转换图片dpi</param>
-        public static string ConvertPdfToImage(string inputPdfFileName, int dpi, InfoHandler handler)
+        public static string ConvertPdfToImage(string inputPdfFileName, int dpi, string ext, InfoHandler handler)
         {
             try
             {
@@ -31,8 +44,8 @@ namespace PdfHelperLibrary
                 for (var i = 0; i < pageCount; i++)
                 {
                     var image = file.GetPageImage(i, dpi);//get pdf image
-                    var outputFileName = $"{outputFileNamePrefix}-page{(i + 1).ToString().PadLeft(pageNumLength, '0')}.png";
-                    image.Save(outputFileName, ImageFormat.Png);
+                    var outputFileName = $"{outputFileNamePrefix}-page{(i + 1).ToString().PadLeft(pageNumLength, '0')}.{ext}";
+                    image.Save(outputFileName, ImgFormatDict[ext]);
                     handler?.Invoke($"已转换第{i + 1}页");
                 }
                 return "";

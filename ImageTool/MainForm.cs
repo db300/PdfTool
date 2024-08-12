@@ -1,14 +1,9 @@
 ﻿using ImageProcessor;
 using ImageProcessor.Imaging.Filters.Photo;
+using OpenCvSharp;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ImageTool
@@ -27,6 +22,31 @@ namespace ImageTool
         #region property
         private readonly List<string> _inputImgFileList = new List<string>();
         private TextBox _txtLog;
+        #endregion
+
+        #region method
+        private void ConvertToSketch(string inputImagePath, string outputImagePath)
+        {
+            // 读取图像
+            var src = Cv2.ImRead(inputImagePath, ImreadModes.Color);
+            // 转换为灰度图像
+            var gray = new Mat();
+            Cv2.CvtColor(src, gray, ColorConversionCodes.BGR2GRAY);
+            // 反转颜色
+            var invertedGray = new Mat();
+            Cv2.BitwiseNot(gray, invertedGray);
+            // 高斯模糊
+            var blurred = new Mat();
+            Cv2.GaussianBlur(invertedGray, blurred, new OpenCvSharp.Size(21, 21), 0);
+            // 反转模糊图像
+            var invertedBlurred = new Mat();
+            Cv2.BitwiseNot(blurred, invertedBlurred);
+            // 创建素描图像
+            var sketch = new Mat();
+            Cv2.Divide(gray, invertedBlurred, sketch, scale: 256.0);
+            // 保存素描图像
+            Cv2.ImWrite(outputImagePath, sketch);
+        }
         #endregion
 
         #region event handler
@@ -58,15 +78,26 @@ namespace ImageTool
                 }
             }
         }
+
+        private void BtnConvert2Sketch_Click(object sender, EventArgs e)
+        {
+            foreach(var file in _inputImgFileList)
+            {
+                ConvertToSketch(file, file + "2.png");
+            }
+        }
         #endregion
 
         #region ui
         private void InitUi()
         {
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = $"图片处理工具 v{Application.ProductVersion}";
+
             var btnOpen = new Button
             {
                 AutoSize = true,
-                Location = new Point(20, 20),
+                Location = new System.Drawing.Point(20, 20),
                 Parent = this,
                 Text = "打开"
             };
@@ -75,21 +106,30 @@ namespace ImageTool
             var btnConvert = new Button
             {
                 AutoSize = true,
-                Location = new Point(btnOpen.Right + 12, btnOpen.Top),
+                Location = new System.Drawing.Point(btnOpen.Right + 12, btnOpen.Top),
                 Parent = this,
                 Text = "转换"
             };
             btnConvert.Click += BtnConvert_Click;
 
+            var btnConvert2Sketch = new Button
+            {
+                AutoSize = true,
+                Location = new System.Drawing.Point(btnConvert.Right + 12, btnOpen.Top),
+                Parent = this,
+                Text = "转换为素描风格"
+            };
+            btnConvert2Sketch.Click += BtnConvert2Sketch_Click;
+
             _txtLog = new TextBox
             {
                 Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
-                Location = new Point(20, 50),
+                Location = new System.Drawing.Point(20, 50),
                 Multiline = true,
                 Parent = this,
                 ReadOnly = true,
                 ScrollBars = ScrollBars.Both,
-                Size = new Size(ClientSize.Width - 20 * 2, ClientSize.Height - 20 - 50),
+                Size = new System.Drawing.Size(ClientSize.Width - 20 * 2, ClientSize.Height - 20 - 50),
             };
         }
         #endregion

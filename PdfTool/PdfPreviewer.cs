@@ -35,7 +35,7 @@ namespace PdfTool
             {
                 var viewPanel = new PdfPreviewPanel { Dock = DockStyle.Fill };
                 viewPanel.OpenPdf(fileName);
-                var tabPage = new TabPage { BorderStyle = BorderStyle.None, Tag = fileName, Text = Path.GetFileName(fileName) };
+                var tabPage = new TabPage { BorderStyle = BorderStyle.None, Tag = fileName, Text = Path.GetFileName(fileName), ToolTipText = fileName };
                 tabPage.Controls.Add(viewPanel);
                 _tabControl.TabPages.Add(tabPage);
             }

@@ -97,6 +97,12 @@
     <Compile Include="PdfPrinter.Designer.cs">
       <DependentUpon>PdfPrinter.cs</DependentUpon>
     </Compile>
+    <Compile Include="PdfProtector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PdfProtector.Designer.cs">
+      <DependentUpon>PdfProtector.cs</DependentUpon>
+    </Compile>
     <Compile Include="PdfSplitter.cs">
       <SubType>UserControl</SubType>
     </Compile>

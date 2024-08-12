@@ -92,6 +92,7 @@
     <Compile Include="ImagerHelper.cs" />
     <Compile Include="MergeHelper.cs" />
     <Compile Include="PrintHelper.cs" />
+    <Compile Include="ProtectHelper.cs" />
     <Compile Include="SplitHelper.cs" />
     <Compile Include="TableExtractHelper.cs" />
     <Compile Include="TextExtractHelper.cs" />

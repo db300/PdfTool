@@ -22,6 +22,10 @@ namespace ImageTool
         #region property
         private readonly List<string> _inputImgFileList = new List<string>();
         private TextBox _txtLog;
+
+        private const string Url4Appreciate = "https://www.yuque.com/docs/share/4d2ad434-a4fe-40a1-b530-c61811d5226e?# 《打赏说明》";
+        private const string Url4Feedback = "https://www.yuque.com/lengda/eq8cm6/ezwik4?singleDoc# 《需求记录》";
+        private const string Url4Readme = "https://www.yuque.com/lengda/eq8cm6/dw961sdll0h3zkz0?singleDoc# 《图片处理工具》";
         #endregion
 
         #region method
@@ -50,6 +54,21 @@ namespace ImageTool
         #endregion
 
         #region event handler
+        private void Lbl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(Url4Appreciate);
+        }
+
+        private void Lbl_LinkClicked1(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(Url4Feedback);
+        }
+
+        private void Lbl_LinkClicked2(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(Url4Readme);
+        }
+
         private void BtnOpen_Click(object sender, EventArgs e)
         {
             var openDlg = new OpenFileDialog { Filter = "图片文件(*.bmp;*.jpg;*.tif;*.png)|*.bmp;*.jpg;*.tif;*.png|所有文件(*.*)|*.*", Multiselect = true };
@@ -78,28 +97,64 @@ namespace ImageTool
                 }
             }
         }
-
-        private void BtnConvert2Sketch_Click(object sender, EventArgs e)
-        {
-            foreach(var file in _inputImgFileList)
-            {
-                ConvertToSketch(file, file + "2.png");
-            }
-        }
         #endregion
 
         #region ui
         private void InitUi()
         {
+            ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = $"图片处理工具 v{Application.ProductVersion}";
+
+            var lbl = new LinkLabel
+            {
+                AutoSize = true,
+                Location = new System.Drawing.Point(10, 10),
+                Parent = this,
+                Text = "如果觉得好用，来打赏一下啊~"
+            };
+            lbl.LinkClicked += Lbl_LinkClicked;
+
+            lbl = new LinkLabel
+            {
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                AutoSize = true,
+                Parent = this,
+                Text = "如果有问题和需求，欢迎来反馈~",
+            };
+            lbl.LinkClicked += Lbl_LinkClicked1;
+            lbl.Location = new System.Drawing.Point(ClientSize.Width - 10 - lbl.Width, 10);
+
+            var lbl2 = new LinkLabel
+            {
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                AutoSize = true,
+                Parent = this,
+                Text = "点击查看使用说明",
+            };
+            lbl2.LinkClicked += Lbl_LinkClicked2;
+            lbl2.Location = new System.Drawing.Point(lbl.Left - 10 - lbl2.Width, 10);
+
+            var tabControl = new TabControl
+            {
+                Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
+                Location = new System.Drawing.Point(10, lbl.Bottom + 10),
+                Parent = this,
+                Size = new System.Drawing.Size(ClientSize.Width - 10 * 2, ClientSize.Height - 10 * 2 - lbl.Bottom)
+            };
+            tabControl.TabPages.AddRange(new TabPage[]
+            {
+                new TabPage("素描化") { BorderStyle = BorderStyle.None, Name = "tpSketchConverter" }
+            });
+            tabControl.TabPages["tpSketchConverter"].Controls.Add(new SketchConverter { Dock = DockStyle.Fill });
 
             var btnOpen = new Button
             {
                 AutoSize = true,
                 Location = new System.Drawing.Point(20, 20),
                 Parent = this,
-                Text = "打开"
+                Text = "打开",
+                Visible = false
             };
             btnOpen.Click += BtnOpen_Click;
 
@@ -108,18 +163,10 @@ namespace ImageTool
                 AutoSize = true,
                 Location = new System.Drawing.Point(btnOpen.Right + 12, btnOpen.Top),
                 Parent = this,
-                Text = "转换"
+                Text = "转换",
+                Visible = false
             };
             btnConvert.Click += BtnConvert_Click;
-
-            var btnConvert2Sketch = new Button
-            {
-                AutoSize = true,
-                Location = new System.Drawing.Point(btnConvert.Right + 12, btnOpen.Top),
-                Parent = this,
-                Text = "转换为素描风格"
-            };
-            btnConvert2Sketch.Click += BtnConvert2Sketch_Click;
 
             _txtLog = new TextBox
             {
@@ -130,6 +177,7 @@ namespace ImageTool
                 ReadOnly = true,
                 ScrollBars = ScrollBars.Both,
                 Size = new System.Drawing.Size(ClientSize.Width - 20 * 2, ClientSize.Height - 20 - 50),
+                Visible = false
             };
         }
         #endregion

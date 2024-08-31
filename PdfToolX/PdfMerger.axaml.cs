@@ -29,7 +29,7 @@ public partial class PdfMerger : UserControl
         var inputFileList = files.Select(a => a.Path.LocalPath).ToList();
         foreach (var file in inputFileList)
         {
-            _txtLog.Text += $"【页数：{PdfHelperLibraryX.CommonHelper.GetPageCount(file)}】{file}\r\n";
+            _txtLog.Text += $"【页数：{PdfHelperLibrary.CommonHelper.GetPageCount(file)}】{file}\r\n";
             _txtFileList.Text += $"{file}\r\n";
         }
     }
@@ -42,7 +42,7 @@ public partial class PdfMerger : UserControl
             _txtLog.Text += "未添加需要合并的PDF文件\r\n";
             return;
         }
-        var s = PdfHelperLibraryX.MergeHelper.MergePdf(inputPdfFilenameList, out var outputPdfFilename);
+        var s = PdfHelperLibrary.MergeHelper.MergePdf(inputPdfFilenameList, out var outputPdfFilename);
         if (string.IsNullOrWhiteSpace(s)) _txtLog.Text += $"合并完成: {outputPdfFilename}\r\n";
         else _txtLog.Text += $"{s}\r\n";
     }

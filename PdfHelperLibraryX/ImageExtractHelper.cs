@@ -1,8 +1,12 @@
-﻿using PdfSharp.Pdf.Advanced;
+﻿using PdfSharp.Pdf;
+using PdfSharp.Pdf.Advanced;
 using PdfSharp.Pdf.IO;
-using PdfSharp.Pdf;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
-namespace PdfHelperLibraryX
+namespace PdfHelperLibrary
 {
     /// <summary>
     /// 图片提取帮助类

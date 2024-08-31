@@ -33,7 +33,7 @@ public partial class PdfSplitter : UserControl
         if (!(files?.Count > 0)) return;
         _inputPdfFileList.Clear();
         _inputPdfFileList.AddRange(files.Select(a => a.Path.LocalPath));
-        _inputPdfFileList.Select(a => $"【页数：{PdfHelperLibraryX.CommonHelper.GetPageCount(a)}】{a}").ToList().ForEach(a => _txtLog.Text += $"{a}\r\n");
+        _inputPdfFileList.Select(a => $"【页数：{PdfHelperLibrary.CommonHelper.GetPageCount(a)}】{a}").ToList().ForEach(a => _txtLog.Text += $"{a}\r\n");
     }
 
     private void BtnSplit_Click(object sender, RoutedEventArgs e)
@@ -45,7 +45,7 @@ public partial class PdfSplitter : UserControl
         }
         foreach (var fileName in _inputPdfFileList)
         {
-            var s = PdfHelperLibraryX.SplitHelper.SplitPdf(fileName, (int)_numPagePerDoc.Value);
+            var s = PdfHelperLibrary.SplitHelper.SplitPdf(fileName, (int)_numPagePerDoc.Value);
             if (string.IsNullOrWhiteSpace(s)) _txtLog.Text += $"{fileName} 拆分完成\r\n";
             else _txtLog.Text += $"{fileName} {s}\r\n";
         }
@@ -61,7 +61,7 @@ public partial class PdfSplitter : UserControl
         }
         foreach (var fileName in _inputPdfFileList)
         {
-            var s = PdfHelperLibraryX.ExtractHelper.ExtractPdf(fileName, (int)_numPageFrom.Value, (int)_numPageTo.Value, out var outputPdfFile);
+            var s = PdfHelperLibrary.ExtractHelper.ExtractPdf(fileName, (int)_numPageFrom.Value, (int)_numPageTo.Value, out var outputPdfFile);
             if (string.IsNullOrWhiteSpace(s)) _txtLog.Text += $"{fileName} 提取完成: {outputPdfFile}\r\n";
             else _txtLog.Text += $"{s}\r\n";
         }
@@ -83,7 +83,7 @@ public partial class PdfSplitter : UserControl
         }
         foreach (var fileName in _inputPdfFileList)
         {
-            var s = PdfHelperLibraryX.ExtractHelper.DeletePdfPage(fileName, pageNums, out var outputPdfFile);
+            var s = PdfHelperLibrary.ExtractHelper.DeletePdfPage(fileName, pageNums, out var outputPdfFile);
             if (string.IsNullOrWhiteSpace(s)) _txtLog.Text += $"{fileName} 删页完成: {outputPdfFile}\r\n";
             else _txtLog.Text += $"{s}\r\n";
         }

@@ -1,7 +1,11 @@
 ﻿using PdfSharp.Drawing;
 using PdfSharp.Pdf;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
-namespace PdfHelperLibraryX
+namespace PdfHelperLibrary
 {
     /// <summary>
     /// 图片帮助类

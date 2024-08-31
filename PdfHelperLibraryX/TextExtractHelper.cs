@@ -1,6 +1,7 @@
-﻿using UglyToad.PdfPig;
+﻿using System.Collections.Generic;
+using UglyToad.PdfPig;
 
-namespace PdfHelperLibraryX
+namespace PdfHelperLibrary
 {
     /// <summary>
     /// 文本提取帮助类

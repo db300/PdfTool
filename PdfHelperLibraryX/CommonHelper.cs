@@ -1,6 +1,6 @@
 ﻿using PdfSharp.Pdf.IO;
 
-namespace PdfHelperLibraryX
+namespace PdfHelperLibrary
 {
     /// <summary>
     /// 通用帮助类
@@ -9,7 +9,7 @@ namespace PdfHelperLibraryX
     {
         public static int GetPageCount(string inputPdfFileName)
         {
-            var document = PdfReader.Open(inputPdfFileName, PdfDocumentOpenMode.ReadOnly);
+            var document = PdfReader.Open(inputPdfFileName, PdfDocumentOpenMode.Import);
             return document.PageCount;
         }
     }

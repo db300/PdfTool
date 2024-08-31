@@ -1,7 +1,9 @@
-﻿using PdfSharp.Pdf.IO;
-using PdfSharp.Pdf;
+﻿using PdfSharp.Pdf;
+using PdfSharp.Pdf.IO;
+using System;
+using System.IO;
 
-namespace PdfHelperLibraryX
+namespace PdfHelperLibrary
 {
     /// <summary>
     /// 拆分帮助类

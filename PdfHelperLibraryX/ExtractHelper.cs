@@ -1,7 +1,10 @@
 ﻿using PdfSharp.Pdf;
 using PdfSharp.Pdf.IO;
+using System;
+using System.Collections.Generic;
+using System.IO;
 
-namespace PdfHelperLibraryX
+namespace PdfHelperLibrary
 {
     /// <summary>
     /// 提取帮助类

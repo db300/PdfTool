@@ -32,7 +32,7 @@ public partial class PdfTextExtracter : UserControl
         if (!(files?.Count > 0)) return;
         _inputPdfFileList.Clear();
         _inputPdfFileList.AddRange(files.Select(a => a.Path.LocalPath));
-        _inputPdfFileList.Select(a => $"【页数：{PdfHelperLibraryX.CommonHelper.GetPageCount(a)}】{a}").ToList().ForEach(a => _txtLog.Text += $"{a}\r\n");
+        _inputPdfFileList.Select(a => $"【页数：{PdfHelperLibrary.CommonHelper.GetPageCount(a)}】{a}").ToList().ForEach(a => _txtLog.Text += $"{a}\r\n");
     }
 
     private void BtnExtract_Click(object sender, RoutedEventArgs e)
@@ -47,7 +47,7 @@ public partial class PdfTextExtracter : UserControl
         {
             foreach (var fileName in _inputPdfFileList)
             {
-                var list = PdfHelperLibraryX.TextExtractHelper.ExtractText(fileName);
+                var list = PdfHelperLibrary.TextExtractHelper.ExtractText(fileName);
                 var msg = $"{fileName} 提取完成\r\n{string.Join("\r\n", list)}";
                 background.ReportProgress(0, msg);
             }

@@ -2,7 +2,7 @@
 using Tabula;
 using UglyToad.PdfPig;
 
-namespace PdfHelperLibraryX
+namespace PdfHelperLibrary
 {
     /// <summary>
     /// 表格提取帮助类

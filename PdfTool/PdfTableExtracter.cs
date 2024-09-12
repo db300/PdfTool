@@ -71,9 +71,17 @@ namespace PdfTool
                             sb.AppendLine(string.Join("\t", row.Cells.Select(a => a.Replace("\r", ""))));
                         }
                     }
-#if DEBUG
-                    System.Diagnostics.Debug.WriteLine(sb.ToString());
-#endif
+                    background.ReportProgress(0, sb.ToString());
+
+                    var outputFileName = fileName.Replace(".pdf", ".xlsx");
+                    var commonTable = new ExcelHelperLibrary.CommonTable
+                    {
+                        Rows = pdfExtractTables.SelectMany(table => table.Rows)
+                           .Select(row => new ExcelHelperLibrary.CommonRow { Cells = row.Cells })
+                           .ToList()
+                    };
+                    ExcelHelperLibrary.GenerateHelper.GenerateExcel(outputFileName, new List<ExcelHelperLibrary.CommonTable> { commonTable });
+                    background.ReportProgress(0, $"{outputFileName} 生成完成");
                 }
             };
             background.ProgressChanged += (ww, ee) => { if (ee.UserState is string msg) { _txtLog.AppendText($"{msg}\r\n"); } };

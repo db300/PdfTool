@@ -146,6 +146,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ExcelHelperLibrary\ExcelHelperLibrary.csproj">
+      <Project>{6ca1aadf-0aee-40fe-9cae-416891bca27d}</Project>
+      <Name>ExcelHelperLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PdfHelperLibrary\PdfHelperLibrary.csproj">
       <Project>{64485278-a143-453e-a1d6-2400d010ff61}</Project>
       <Name>PdfHelperLibrary</Name>

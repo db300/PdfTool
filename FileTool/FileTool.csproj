@@ -52,6 +52,12 @@
     <Compile Include="BatchMover.Designer.cs">
       <DependentUpon>BatchMover.cs</DependentUpon>
     </Compile>
+    <Compile Include="BatchRenamer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BatchRenamer.Designer.cs">
+      <DependentUpon>BatchRenamer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Config.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

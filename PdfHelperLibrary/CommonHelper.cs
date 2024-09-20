@@ -9,7 +9,7 @@ namespace PdfHelperLibrary
     {
         public static int GetPageCount(string inputPdfFileName)
         {
-            var document = PdfReader.Open(inputPdfFileName, PdfDocumentOpenMode.ReadOnly);
+            var document = PdfReader.Open(inputPdfFileName, PdfDocumentOpenMode.Import);
             return document.PageCount;
         }
     }

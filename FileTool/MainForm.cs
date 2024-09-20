@@ -22,8 +22,8 @@ namespace FileTool
         #endregion
 
         #region property
-        private const string Url4Appreciate = "https://www.yuque.com/docs/share/4d2ad434-a4fe-40a1-b530-c61811d5226e?# 《打赏说明》";
-        private const string Url4Feedback = "https://www.yuque.com/lengda/eq8cm6/ezwik4?singleDoc# 《需求记录》";
+        private const string Url4Appreciate = "https://www.yuque.com/lengda/eq8cm6/rylia4";
+        private const string Url4Feedback = "https://www.yuque.com/lengda/eq8cm6/ezwik4";
         private const string Url4Readme = "https://www.yuque.com/lengda/eq8cm6/dlhpml59eyue8qls";
         #endregion
 

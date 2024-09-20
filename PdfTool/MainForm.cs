@@ -23,8 +23,9 @@ namespace PdfTool
         #endregion
 
         #region property
-        private const string Url4Appreciate = "https://www.yuque.com/docs/share/4d2ad434-a4fe-40a1-b530-c61811d5226e?# 《打赏说明》";
-        private const string Url4Feedback = "https://www.yuque.com/lengda/eq8cm6/ezwik4?singleDoc# 《需求记录》";
+        private const string Url4Appreciate = "https://www.yuque.com/lengda/eq8cm6/rylia4";
+        private const string Url4Feedback = "https://www.yuque.com/lengda/eq8cm6/ezwik4";
+        private const string Url4Readme = "https://www.yuque.com/lengda/eq8cm6/fgfthhr3e53qkszl";
         #endregion
 
         #region event handler
@@ -97,6 +98,11 @@ namespace PdfTool
         {
             System.Diagnostics.Process.Start(Url4Feedback);
         }
+
+        private void Lbl_LinkClicked2(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start(Url4Readme);
+        }
         #endregion
 
         #region ui
@@ -125,6 +131,16 @@ namespace PdfTool
             };
             lbl.LinkClicked += Lbl_LinkClicked1;
             lbl.Location = new Point(ClientSize.Width - 10 - lbl.Width, 10);
+
+            var lbl2 = new LinkLabel
+            {
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                AutoSize = true,
+                Parent = this,
+                Text = "点击查看使用说明",
+            };
+            lbl2.LinkClicked += Lbl_LinkClicked2;
+            lbl2.Location = new Point(lbl.Left - 10 - lbl2.Width, 10);
 
             var tabControl = new TabControl
             {

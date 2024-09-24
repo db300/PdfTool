@@ -22,6 +22,8 @@ namespace PdfTool
 
         #region property
         private TextBox _txtFileList;
+        private CheckBox _ckbAutoOpen;
+        private CheckBox _ckbAddBookmarks;
         private TextBox _txtLog;
         #endregion
 
@@ -53,7 +55,7 @@ namespace PdfTool
                 _txtLog.AppendText("未添加需要合并的PDF文件\r\n");
                 return;
             }
-            var s = PdfHelperLibrary.MergeHelper.MergePdf(inputPdfFilenameList, out var outputPdfFilename);
+            var s = PdfHelperLibrary.MergeHelper.MergePdf(inputPdfFilenameList, _ckbAutoOpen.Checked, _ckbAddBookmarks.Checked, out var outputPdfFilename);
             if (string.IsNullOrWhiteSpace(s)) _txtLog.AppendText($"合并完成: {outputPdfFilename}\r\n");
             else _txtLog.AppendText($"{s}\r\n");
         }
@@ -79,6 +81,22 @@ namespace PdfTool
                 Text = "开始合并"
             };
             btnMerge.Click += BtnMerge_Click;
+
+            _ckbAutoOpen = new CheckBox
+            {
+                AutoSize = true,
+                Parent = this,
+                Text = "合并后自动打开"
+            };
+            _ckbAutoOpen.Location = new Point(btnMerge.Right + Config.ControlPadding, btnMerge.Top + (btnMerge.Height - _ckbAutoOpen.Height) / 2);
+
+            _ckbAddBookmarks = new CheckBox
+            {
+                AutoSize = true,
+                Location = new Point(_ckbAutoOpen.Right + Config.ControlPadding, _ckbAutoOpen.Top),
+                Parent = this,
+                Text = "将每个文件名添加至书签"
+            };
 
             _txtLog = new TextBox
             {

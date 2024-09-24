@@ -48,7 +48,7 @@ namespace PdfMerger
                 _txtLog.AppendText("未添加需要合并的PDF文件\r\n");
                 return;
             }
-            var s = PdfHelperLibrary.MergeHelper.MergePdf(inputPdfFilenameList, out var outputPdfFilename);
+            var s = PdfHelperLibrary.MergeHelper.MergePdf(inputPdfFilenameList, false, false, out var outputPdfFilename);
             if (string.IsNullOrWhiteSpace(s)) _txtLog.AppendText($"合并完成: {outputPdfFilename}\r\n");
             else _txtLog.AppendText($"{s}\r\n");
         }

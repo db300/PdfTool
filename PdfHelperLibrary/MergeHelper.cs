@@ -13,7 +13,7 @@ namespace PdfHelperLibrary
     /// </summary>
     public static class MergeHelper
     {
-        public static string MergePdf(List<string> inputPdfFilenameList, out string outputPdfFilename)
+        public static string MergePdf(List<string> inputPdfFilenameList, bool autoOpen, bool addBookmarks, out string outputPdfFilename)
         {
             try
             {
@@ -24,13 +24,14 @@ namespace PdfHelperLibrary
                     var pageCount = inputDocument.PageCount;
                     for (var i = 0; i < pageCount; i++)
                     {
-                        outputDocument.AddPage(inputDocument.Pages[i]);
+                        var page = outputDocument.AddPage(inputDocument.Pages[i]);
+                        if (i == 0 && addBookmarks) outputDocument.Outlines.Add(Path.GetFileNameWithoutExtension(file), page);
                     }
                 }
                 var path = Path.GetDirectoryName(inputPdfFilenameList.First());
                 outputPdfFilename = Path.Combine(path, $"MergedFile - {DateTime.Now:yyyyMMddHHmmssfff}.pdf");
                 outputDocument.Save(outputPdfFilename);
-                Process.Start(outputPdfFilename);
+                if (autoOpen) Process.Start(outputPdfFilename);
                 return "";
             }
             catch (Exception ex)

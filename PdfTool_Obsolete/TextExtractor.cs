@@ -1,4 +1,5 @@
 ﻿using Spire.Pdf;
+using Spire.Pdf.Texts;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,7 +21,13 @@ namespace PdfTool
             {
                 var document = new PdfDocument(fileName);
                 var sb = new StringBuilder();
-                foreach (PdfPageBase page in document.Pages) sb.Append(page.ExtractText());
+                foreach (PdfPageBase page in document.Pages)
+                {
+                    var textExtractor = new PdfTextExtractor(page);
+                    var extractOptions = new PdfTextExtractOptions { IsExtractAllText = true };
+                    var text = textExtractor.ExtractText(extractOptions);
+                    sb.Append(text);
+                }
                 document.Close();
 
                 var ss = sb.ToString().Replace(EvaluationWarning, "").Trim().Split('\n').Select(a => a.Trim()).ToList();
@@ -43,7 +50,13 @@ namespace PdfTool
             {
                 var document = new PdfDocument(stream);
                 var sb = new StringBuilder();
-                foreach (PdfPageBase page in document.Pages) sb.Append(page.ExtractText());
+                foreach (PdfPageBase page in document.Pages)
+                {
+                    var textExtractor = new PdfTextExtractor(page);
+                    var extractOptions = new PdfTextExtractOptions { IsExtractAllText = true };
+                    var text = textExtractor.ExtractText(extractOptions);
+                    sb.Append(text);
+                }
                 document.Close();
 
                 var ss = sb.ToString().Replace(EvaluationWarning, "").Trim().Split('\n').Select(a => a.Trim()).ToList();
@@ -66,7 +79,13 @@ namespace PdfTool
             {
                 var document = new PdfDocument(bytes);
                 var sb = new StringBuilder();
-                foreach (PdfPageBase page in document.Pages) sb.Append(page.ExtractText());
+                foreach (PdfPageBase page in document.Pages)
+                {
+                    var textExtractor = new PdfTextExtractor(page);
+                    var extractOptions = new PdfTextExtractOptions { IsExtractAllText = true };
+                    var text = textExtractor.ExtractText(extractOptions);
+                    sb.Append(text);
+                }
                 document.Close();
 
                 var ss = sb.ToString().Replace(EvaluationWarning, "").Trim().Split('\n').Select(a => a.Trim()).ToList();

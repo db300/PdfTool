@@ -3,9 +3,6 @@ using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExcelTool.Helpers
 {
@@ -42,7 +39,7 @@ namespace ExcelTool.Helpers
 
                     if (images.Count <= 0) continue;
 
-                    var outputPath = Path.Combine(Path.GetDirectoryName(excelFilePath), Path.GetFileNameWithoutExtension(excelFilePath));
+                    var outputPath = Path.Combine(Path.GetDirectoryName(excelFilePath), Path.GetFileNameWithoutExtension(excelFilePath).Trim());
                     if (!Directory.Exists(outputPath)) Directory.CreateDirectory(outputPath);
 
                     infoHandler($"正在保存至 {outputPath}");

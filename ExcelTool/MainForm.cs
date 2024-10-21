@@ -51,42 +51,39 @@ namespace ExcelTool
             StartPosition = FormStartPosition.CenterScreen;
             Text = $"Excel工具 {System.Reflection.Assembly.GetExecutingAssembly().GetName().Version}";
 
-            var lbl = new LinkLabel
+            var panelFoot = new Panel
             {
-                AutoSize = true,
-                Location = new Point(10, 10),
-                Parent = this,
-                Text = "如果觉得好用，来打赏一下啊~"
+                Dock = DockStyle.Bottom,
+                Height = 25,
+                Parent = this
             };
-            lbl.LinkClicked += Lbl_LinkClicked;
 
-            lbl = new LinkLabel
+            var lbl1 = new LinkLabel
             {
                 Anchor = AnchorStyles.Top | AnchorStyles.Right,
                 AutoSize = true,
-                Parent = this,
-                Text = "如果有问题和需求，欢迎来反馈~",
+                Parent = panelFoot,
+                Text = "问题反馈",
             };
-            lbl.LinkClicked += Lbl_LinkClicked1;
-            lbl.Location = new Point(ClientSize.Width - 10 - lbl.Width, 10);
+            lbl1.LinkClicked += Lbl_LinkClicked1;
+            lbl1.Location = new Point(panelFoot.ClientSize.Width - 10 - lbl1.Width, (panelFoot.ClientSize.Height - lbl1.Height) / 2);
 
             var lbl2 = new LinkLabel
             {
                 Anchor = AnchorStyles.Top | AnchorStyles.Right,
                 AutoSize = true,
-                Parent = this,
-                Text = "点击查看使用说明",
+                Parent = panelFoot,
+                Text = "使用说明",
             };
             lbl2.LinkClicked += Lbl_LinkClicked2;
-            lbl2.Location = new Point(lbl.Left - 10 - lbl2.Width, 10);
+            lbl2.Location = new Point(lbl1.Left - 10 - lbl2.Width, (panelFoot.ClientSize.Height - lbl2.Height) / 2);
 
             var tabControl = new TabControl
             {
-                Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
-                Location = new Point(10, lbl.Bottom + 10),
-                Parent = this,
-                Size = new Size(ClientSize.Width - 10 * 2, ClientSize.Height - 10 * 2 - lbl.Bottom)
+                Dock = DockStyle.Fill,
+                Parent = this
             };
+            tabControl.BringToFront();
             tabControl.TabPages.AddRange(new TabPage[]
             {
                 new TabPage("图片提取") { BorderStyle = BorderStyle.None, Name = "tpImageExtracter" }

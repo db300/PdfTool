@@ -86,9 +86,13 @@ namespace ExcelTool
             tabControl.BringToFront();
             tabControl.TabPages.AddRange(new TabPage[]
             {
-                new TabPage("图片提取") { BorderStyle = BorderStyle.None, Name = "tpImageExtracter" }
+                new TabPage("图片提取") { BorderStyle = BorderStyle.None, Name = "tpImageExtracter" },
+                new TabPage("数据提取") { BorderStyle = BorderStyle.None, Name = "tpDataExtracter" },
+                new TabPage("数据预览") { BorderStyle = BorderStyle.None, Name = "tpDataViewer" }
             });
             tabControl.TabPages["tpImageExtracter"].Controls.Add(new ImageExtracter { Dock = DockStyle.Fill });
+            tabControl.TabPages["tpDataExtracter"].Controls.Add(new DataExtracter { Dock = DockStyle.Fill });
+            tabControl.TabPages["tpDataViewer"].Controls.Add(new DataViewer { Dock = DockStyle.Fill });
         }
         #endregion
     }

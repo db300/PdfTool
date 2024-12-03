@@ -61,6 +61,12 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PdfCompressor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PdfCompressor.Designer.cs">
+      <DependentUpon>PdfCompressor.cs</DependentUpon>
+    </Compile>
     <Compile Include="PdfImageExtracter.cs">
       <SubType>UserControl</SubType>
     </Compile>

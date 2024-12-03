@@ -151,6 +151,9 @@ namespace PdfTool
                 Width = 25
             };
             pic.Click += Pic_Click;
+            // 创建并设置ToolTip
+            var toolTip = new ToolTip();
+            toolTip.SetToolTip(pic, "点击进行赞赏");
 
             var tabControl = new TabControl
             {
@@ -169,6 +172,7 @@ namespace PdfTool
                 new TabPage("图片导入PDF") { BorderStyle = BorderStyle.None, Name = "tpImageImporter" },
                 new TabPage("批量打印") { BorderStyle = BorderStyle.None, Name = "tpPdfPrinter" },
                 new TabPage("PDF保护") { BorderStyle = BorderStyle.None, Name = "tpPdfProtector" },
+                //new TabPage("PDF压缩") { BorderStyle = BorderStyle.None, Name = "tpPdfCompressor" },
                 new TabPage("PDF预览") { BorderStyle = BorderStyle.None, Name = "tpPdfPreviewer" }
             });
 
@@ -181,6 +185,7 @@ namespace PdfTool
             tabControl.TabPages["tpImageImporter"].Controls.Add(new ImageImporter { Dock = DockStyle.Fill });
             tabControl.TabPages["tpPdfPrinter"].Controls.Add(new PdfPrinter { Dock = DockStyle.Fill });
             tabControl.TabPages["tpPdfProtector"].Controls.Add(new PdfProtector { Dock = DockStyle.Fill });
+            //tabControl.TabPages["tpPdfCompressor"].Controls.Add(new PdfCompressor { Dock = DockStyle.Fill });
             tabControl.TabPages["tpPdfPreviewer"].Controls.Add(new PdfPreviewer { Dock = DockStyle.Fill });
         }
         #endregion

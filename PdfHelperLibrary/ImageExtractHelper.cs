@@ -97,6 +97,8 @@ namespace PdfHelperLibrary
                     break;
                 case "/FlateDecode /DCTDecode":
                     return ExportCompressedJpegImage(image, fileNameWithoutExt, ref count);
+                case "/CCITTFaxDecode":
+                    return ExportCcittFaxImage(image, fileNameWithoutExt, ref count);
             }
             return "";
         }
@@ -150,5 +152,29 @@ namespace PdfHelperLibrary
 
             return outFileName;
         }
+
+        private static string ExportCcittFaxImage(PdfDictionary image, string fileNameWithoutExt, ref int count)
+        {
+            var width = image.Elements.GetInteger(PdfImage.Keys.Width);
+            var height = image.Elements.GetInteger(PdfImage.Keys.Height);
+            var stream = image.Stream.Value;
+
+            // 使用 System.Drawing.Bitmap 处理 CCITT Fax 解码
+            using (var ms = new MemoryStream(stream))
+            {
+                var outFileName = $"{fileNameWithoutExt}_{count++}.tiff";
+                using (var bitmap = new System.Drawing.Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format1bppIndexed))
+                {
+                    var bitmapData = bitmap.LockBits(new System.Drawing.Rectangle(0, 0, width, height), System.Drawing.Imaging.ImageLockMode.WriteOnly, bitmap.PixelFormat);
+                    var buffer = new byte[stream.Length];
+                    ms.Read(buffer, 0, buffer.Length);
+                    System.Runtime.InteropServices.Marshal.Copy(buffer, 0, bitmapData.Scan0, buffer.Length);
+                    bitmap.UnlockBits(bitmapData);
+                    bitmap.Save(outFileName, System.Drawing.Imaging.ImageFormat.Tiff);
+                }
+                return outFileName;
+            }
+        }
+
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 
 namespace PdfHelperLibrary
 {
@@ -30,6 +31,8 @@ namespace PdfHelperLibrary
         /// </summary>
         /// <param name="inputPdfFileName"></param>
         /// <param name="dpi">转换图片dpi</param>
+        /// <param name="ext">生成图片扩展名</param>
+        /// <param name="handler">消息事件句柄</param>
         public static string ConvertPdfToImage(string inputPdfFileName, int dpi, string ext, InfoHandler handler)
         {
             try
@@ -47,6 +50,43 @@ namespace PdfHelperLibrary
                     var outputFileName = $"{outputFileNamePrefix}-page{(i + 1).ToString().PadLeft(pageNumLength, '0')}.{ext}";
                     image.Save(outputFileName, ImgFormatDict[ext]);
                     handler?.Invoke($"已转换第{i + 1}页");
+                }
+                return "";
+            }
+            catch (Exception ex)
+            {
+                return $"转换失败，原因：{ex.Message}";
+            }
+        }
+
+        /// <summary>
+        /// PDF转图片(指定页)
+        /// </summary>
+        /// <param name="inputPdfFileName"></param>
+        /// <param name="dpi">转换图片dpi</param>
+        /// <param name="ext">生成图片扩展名</param>
+        /// <param name="pageNums">页码列表，从1开始</param>
+        /// <param name="handler">消息事件句柄</param>
+        public static string ConvertPdfToImage(string inputPdfFileName, int dpi, string ext, List<int> pageNums, InfoHandler handler)
+        {
+            try
+            {
+                //const int dpi = 600;//set image dpi
+                var file = PDFFile.Open(inputPdfFileName);//open pdf file
+
+                var pageCount = file.PageCount;
+                var pageNumLength = pageCount.ToString().Length;
+                var outputFileNamePrefix = Path.Combine(Path.GetDirectoryName(inputPdfFileName), Path.GetFileNameWithoutExtension(inputPdfFileName));
+
+                var validPageNums = pageNums.Where(a => a > 0 && a <= pageCount).ToList();
+                validPageNums.Sort();
+
+                foreach (var pageNum in validPageNums)
+                {
+                    var image = file.GetPageImage(pageNum - 1, dpi);//get pdf image
+                    var outputFileName = $"{outputFileNamePrefix}-page{pageNum.ToString().PadLeft(pageNumLength, '0')}.{ext}";
+                    image.Save(outputFileName, ImgFormatDict[ext]);
+                    handler?.Invoke($"已转换第{pageNum}页");
                 }
                 return "";
             }

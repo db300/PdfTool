@@ -26,6 +26,10 @@ namespace PdfTool
         private TextBox _txtLog;
         private ComboBox _cmbDpi;
         private ComboBox _cmbFormat;
+        private RadioButton _rbAllPage;
+        private RadioButton _rbPartPage;
+        private NumericUpDown _numPageFrom;
+        private NumericUpDown _numPageTo;
         #endregion
 
         #region method
@@ -58,14 +62,28 @@ namespace PdfTool
             }
             var dpi = int.Parse(_cmbDpi.Text);
             var format = _cmbFormat.Text;
+            var allPage = _rbAllPage.Checked;
+            var pageNums = allPage ? null : Enumerable.Range((int)_numPageFrom.Value, (int)_numPageTo.Value - (int)_numPageFrom.Value + 1).ToList();
             var background = new BackgroundWorker { WorkerReportsProgress = true };
             background.DoWork += (ww, ee) =>
             {
-                foreach (var fileName in _inputPdfFileList)
+                if (allPage)
                 {
-                    var s = PdfHelperLibrary.ImagerHelper.ConvertPdfToImage(fileName, dpi, format, info => background.ReportProgress(0, info));
-                    var msg = string.IsNullOrWhiteSpace(s) ? $"{fileName} 转换完成" : $"{fileName} {s}";
-                    background.ReportProgress(0, msg);
+                    foreach (var fileName in _inputPdfFileList)
+                    {
+                        var s = PdfHelperLibrary.ImagerHelper.ConvertPdfToImage(fileName, dpi, format, info => background.ReportProgress(0, info));
+                        var msg = string.IsNullOrWhiteSpace(s) ? $"{fileName} 转换完成" : $"{fileName} {s}";
+                        background.ReportProgress(0, msg);
+                    }
+                }
+                else
+                {
+                    foreach (var fileName in _inputPdfFileList)
+                    {
+                        var s = PdfHelperLibrary.ImagerHelper.ConvertPdfToImage(fileName, dpi, format, pageNums, info => background.ReportProgress(0, info));
+                        var msg = string.IsNullOrWhiteSpace(s) ? $"{fileName} 转换完成" : $"{fileName} {s}";
+                        background.ReportProgress(0, msg);
+                    }
                 }
             };
             background.ProgressChanged += (ww, ee) =>
@@ -136,15 +154,61 @@ namespace PdfTool
             _cmbFormat.Items.AddRange(new object[] { "png", "jpg", "bmp" });
             _cmbFormat.SelectedIndex = 0;
 
+            _rbAllPage = new RadioButton
+            {
+                AutoSize = true,
+                Checked = true,
+                Location = new Point(Config.ControlMargin, _cmbDpi.Bottom + Config.ControlPadding),
+                Parent = this,
+                Text = "全部页面"
+            };
+            _rbPartPage = new RadioButton
+            {
+                AutoSize = true,
+                Location = new Point(_rbAllPage.Right + Config.ControlPadding, _rbAllPage.Top),
+                Parent = this,
+                Text = "仅部分页面从："
+            };
+            _numPageFrom = new NumericUpDown
+            {
+                AutoSize = true,
+                Maximum = 100000,
+                Minimum = 1,
+                Parent = this,
+                TextAlign = HorizontalAlignment.Right,
+                Value = 1,
+                Width = 60
+            };
+            _numPageFrom.Location = new Point(_rbPartPage.Right, _rbAllPage.Top + (_rbAllPage.Height - _numPageFrom.Height) / 2);
+            lbl = new Label
+            {
+                AutoSize = true,
+                Parent = this,
+                Text = "到："
+            };
+            lbl.Location = new Point(_numPageFrom.Right + Config.ControlPadding, _rbAllPage.Top + (_rbAllPage.Height - lbl.Height) / 2);
+            _numPageTo = new NumericUpDown
+            {
+                AutoSize = true,
+                Location = new Point(lbl.Right, _numPageFrom.Top),
+                Maximum = 100000,
+                Minimum = 1,
+                Parent = this,
+                TextAlign = HorizontalAlignment.Right,
+                Value = 1,
+                Width = 60
+            };
+
+            var top = _numPageFrom.Bottom + Config.ControlPadding;
             _txtLog = new TextBox
             {
                 Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
-                Location = new Point(Config.ControlMargin, _cmbDpi.Bottom + Config.ControlPadding),
+                Location = new Point(Config.ControlMargin, top),
                 Multiline = true,
                 Parent = this,
                 ReadOnly = true,
                 ScrollBars = ScrollBars.Both,
-                Size = new Size(ClientSize.Width - Config.ControlMargin * 2, ClientSize.Height - Config.ControlMargin - _cmbDpi.Bottom - Config.ControlPadding),
+                Size = new Size(ClientSize.Width - Config.ControlMargin * 2, ClientSize.Height - Config.ControlMargin - top),
                 WordWrap = false
             };
         }

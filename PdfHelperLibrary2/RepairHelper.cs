@@ -23,6 +23,7 @@ namespace PdfHelperLibrary2
                 // 打开现有的 PDF 文档
                 using (var reader = new PdfReader(inputFilename))
                 {
+                    // 创建一个新的 PDF 文档
                     using (var fs = new FileStream(outputFilename, FileMode.Create, FileAccess.Write, FileShare.None))
                     {
                         using (var stamper = new PdfStamper(reader, fs))

@@ -74,8 +74,8 @@
     <Reference Include="PdfSharp.WPFonts, Version=6.1.1.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\packages\PDFsharp.6.1.1\lib\netstandard2.0\PdfSharp.WPFonts.dll</HintPath>
     </Reference>
-    <Reference Include="Spire.Pdf, Version=10.11.1.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spire.PDF.10.11.1\lib\net40\Spire.Pdf.dll</HintPath>
+    <Reference Include="Spire.Pdf, Version=10.12.4.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Spire.PDF.10.12.4\lib\net40\Spire.Pdf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">

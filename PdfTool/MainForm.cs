@@ -173,6 +173,7 @@ namespace PdfTool
                 new TabPage("批量打印") { BorderStyle = BorderStyle.None, Name = "tpPdfPrinter" },
                 new TabPage("PDF保护") { BorderStyle = BorderStyle.None, Name = "tpPdfProtector" },
                 //new TabPage("PDF压缩") { BorderStyle = BorderStyle.None, Name = "tpPdfCompressor" },
+                new TabPage("PDF修复") { BorderStyle = BorderStyle.None, Name = "tpPdfRepairer" },
                 new TabPage("PDF预览") { BorderStyle = BorderStyle.None, Name = "tpPdfPreviewer" }
             });
 
@@ -186,6 +187,7 @@ namespace PdfTool
             tabControl.TabPages["tpPdfPrinter"].Controls.Add(new PdfPrinter { Dock = DockStyle.Fill });
             tabControl.TabPages["tpPdfProtector"].Controls.Add(new PdfProtector { Dock = DockStyle.Fill });
             //tabControl.TabPages["tpPdfCompressor"].Controls.Add(new PdfCompressor { Dock = DockStyle.Fill });
+            tabControl.TabPages["tpPdfRepairer"].Controls.Add(new PdfRepairer { Dock = DockStyle.Fill });
             tabControl.TabPages["tpPdfPreviewer"].Controls.Add(new PdfPreviewer { Dock = DockStyle.Fill });
         }
         #endregion

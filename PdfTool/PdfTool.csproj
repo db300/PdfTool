@@ -109,6 +109,12 @@
     <Compile Include="PdfProtector.Designer.cs">
       <DependentUpon>PdfProtector.cs</DependentUpon>
     </Compile>
+    <Compile Include="PdfRepairer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PdfRepairer.Designer.cs">
+      <DependentUpon>PdfRepairer.cs</DependentUpon>
+    </Compile>
     <Compile Include="PdfSplitter.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -156,6 +162,10 @@
     <ProjectReference Include="..\ExcelHelperLibrary\ExcelHelperLibrary.csproj">
       <Project>{6ca1aadf-0aee-40fe-9cae-416891bca27d}</Project>
       <Name>ExcelHelperLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PdfHelperLibrary2\PdfHelperLibrary2.csproj">
+      <Project>{80f2df32-698b-4924-8e99-9594f4cb11fb}</Project>
+      <Name>PdfHelperLibrary2</Name>
     </ProjectReference>
     <ProjectReference Include="..\PdfHelperLibrary\PdfHelperLibrary.csproj">
       <Project>{64485278-a143-453e-a1d6-2400d010ff61}</Project>

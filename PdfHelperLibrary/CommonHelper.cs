@@ -1,4 +1,5 @@
 ﻿using PdfSharp.Pdf.IO;
+using System;
 
 namespace PdfHelperLibrary
 {
@@ -9,8 +10,19 @@ namespace PdfHelperLibrary
     {
         public static int GetPageCount(string inputPdfFileName)
         {
-            var document = PdfReader.Open(inputPdfFileName, PdfDocumentOpenMode.Import);
-            return document.PageCount;
+            try
+            {
+                var document = PdfReader.Open(inputPdfFileName, PdfDocumentOpenMode.Import);
+                return document.PageCount;
+            }
+            catch (PdfReaderException ex)
+            {
+                throw ex;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

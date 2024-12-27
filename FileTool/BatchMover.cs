@@ -28,8 +28,10 @@ namespace FileTool
         #region property
         private TextBox _txtSourceFolder;
         private TextBox _txtTargetFolder;
+        private TextBox _txtSearchPattern;
         private CheckBox _ckbIgnoreExistsFiles;
         private CheckBox _ckbKeepSourceFiles;
+        private CheckBox _ckbCheckRootOnly;
         private Button _btnMove;
         private TextBox _txtLog;
         #endregion
@@ -65,7 +67,7 @@ namespace FileTool
             var keepSrcFiles = _ckbKeepSourceFiles.Checked;
             var sourceFolder = _txtSourceFolder.Text;
             var targetFolder = _txtTargetFolder.Text;
-            var files = Directory.GetFiles(sourceFolder, "*.*", SearchOption.AllDirectories);
+            var files = Directory.GetFiles(sourceFolder, _txtSearchPattern.Text.Trim(), _ckbCheckRootOnly.Checked ? SearchOption.TopDirectoryOnly : SearchOption.AllDirectories);
             var total = files.Length;
             _txtLog.Text = keepSrcFiles ? "开始复制文件...\r\n" : "开始移动文件...\r\n";
             var background = new BackgroundWorker { WorkerReportsProgress = true };
@@ -120,10 +122,10 @@ namespace FileTool
         {
             var btnAddSourceFolder = new Button
             {
-                AutoSize = true,
                 Location = new Point(Config.ControlMargin, Config.ControlMargin),
                 Parent = this,
-                Text = "选择源文件夹"
+                Text = "选择源文件夹",
+                Width = 100
             };
             btnAddSourceFolder.Click += BtnAddSourceFolder_Click;
             _txtSourceFolder = new TextBox
@@ -136,10 +138,10 @@ namespace FileTool
             };
             var btnAddTargetFolder = new Button
             {
-                AutoSize = true,
                 Location = new Point(Config.ControlMargin, btnAddSourceFolder.Bottom + Config.ControlPadding),
                 Parent = this,
-                Text = "选择目标文件夹"
+                Text = "选择目标文件夹",
+                Width = 100
             };
             btnAddTargetFolder.Click += BtnAddTargetFolder_Click;
             _txtTargetFolder = new TextBox
@@ -150,10 +152,25 @@ namespace FileTool
                 ReadOnly = true,
                 Width = ClientSize.Width - Config.ControlMargin - btnAddTargetFolder.Right - Config.ControlPadding
             };
+            _txtSearchPattern = new TextBox
+            {
+                Anchor = AnchorStyles.Left | AnchorStyles.Top,
+                Location = new Point(_txtTargetFolder.Left, _txtTargetFolder.Bottom + Config.ControlPadding),
+                Parent = this,
+                Text = "*.*",
+                Width = 200
+            };
+            var lbl = new Label
+            {
+                AutoSize = true,
+                Parent = this,
+                Text = "文件名匹配："
+            };
+            lbl.Location = new Point(_txtSearchPattern.Left - lbl.Width, _txtSearchPattern.Top + 3);
             _ckbIgnoreExistsFiles = new CheckBox
             {
                 AutoSize = true,
-                Location = new Point(Config.ControlMargin, btnAddTargetFolder.Bottom + Config.ControlPadding),
+                Location = new Point(_txtSearchPattern.Right + Config.ControlPadding, _txtSearchPattern.Top + 2),
                 Parent = this,
                 Text = "忽略已存在文件"
             };
@@ -165,23 +182,32 @@ namespace FileTool
                 Text = "保留源文件"
             };
             _ckbKeepSourceFiles.CheckedChanged += CkbKeepSourceFiles_CheckedChanged;
-            _btnMove = new Button
+            _ckbCheckRootOnly = new CheckBox
             {
                 AutoSize = true,
+                Location = new Point(_ckbKeepSourceFiles.Right + Config.ControlPadding, _ckbIgnoreExistsFiles.Top),
+                Parent = this,
+                Text = "只检索源文件夹根目录"
+            };
+            _btnMove = new Button
+            {
                 Location = new Point(Config.ControlMargin, _ckbKeepSourceFiles.Bottom + Config.ControlPadding),
                 Parent = this,
-                Text = "开始移动"
+                Text = "开始移动",
+                Width = 100
             };
             _btnMove.Click += BtnMove_Click;
             _txtLog = new TextBox
             {
                 Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
+                Font = new Font(Font.FontFamily, 11F, GraphicsUnit.Point),
                 Location = new Point(Config.ControlMargin, _btnMove.Bottom + Config.ControlPadding),
                 Multiline = true,
                 Parent = this,
                 ReadOnly = true,
                 ScrollBars = ScrollBars.Both,
-                Size = new Size(ClientSize.Width - Config.ControlMargin * 2, ClientSize.Height - Config.ControlMargin - _btnMove.Bottom - Config.ControlPadding)
+                Size = new Size(ClientSize.Width - Config.ControlMargin * 2, ClientSize.Height - Config.ControlMargin - _btnMove.Bottom - Config.ControlPadding),
+                WordWrap = false
             };
         }
         #endregion

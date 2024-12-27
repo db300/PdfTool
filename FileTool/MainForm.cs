@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using FileTool.Properties;
+using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 
 namespace FileTool
@@ -28,11 +24,6 @@ namespace FileTool
         #endregion
 
         #region event handler
-        private void Lbl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start(Url4Appreciate);
-        }
-
         private void Lbl_LinkClicked1(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(Url4Feedback);
@@ -42,52 +33,69 @@ namespace FileTool
         {
             System.Diagnostics.Process.Start(Url4Readme);
         }
+
+        private void Pic_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(Url4Appreciate);
+        }
         #endregion
 
         #region ui
         private void InitUi()
         {
+            ClientSize = new Size(1000, 800);
             MaximizeBox = false;
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = $"文件工具 {System.Reflection.Assembly.GetExecutingAssembly().GetName().Version}";
 
-            var lbl = new LinkLabel
+            var panelFoot = new Panel
             {
-                AutoSize = true,
-                Location = new Point(10, 10),
-                Parent = this,
-                Text = "如果觉得好用，来打赏一下啊~"
+                Dock = DockStyle.Bottom,
+                Height = 25,
+                Parent = this
             };
-            lbl.LinkClicked += Lbl_LinkClicked;
 
-            lbl = new LinkLabel
+            var lbl1 = new LinkLabel
             {
                 Anchor = AnchorStyles.Top | AnchorStyles.Right,
                 AutoSize = true,
-                Parent = this,
-                Text = "如果有问题和需求，欢迎来反馈~",
+                Parent = panelFoot,
+                Text = "问题和需求反馈",
             };
-            lbl.LinkClicked += Lbl_LinkClicked1;
-            lbl.Location = new Point(ClientSize.Width - 10 - lbl.Width, 10);
+            lbl1.LinkClicked += Lbl_LinkClicked1;
+            lbl1.Location = new Point(panelFoot.ClientSize.Width - 10 - lbl1.Width, (panelFoot.ClientSize.Height - lbl1.Height) / 2);
 
             var lbl2 = new LinkLabel
             {
                 Anchor = AnchorStyles.Top | AnchorStyles.Right,
                 AutoSize = true,
-                Parent = this,
-                Text = "点击查看使用说明",
+                Parent = panelFoot,
+                Text = "使用说明",
             };
             lbl2.LinkClicked += Lbl_LinkClicked2;
-            lbl2.Location = new Point(lbl.Left - 10 - lbl2.Width, 10);
+            lbl2.Location = new Point(lbl1.Left - 10 - lbl2.Width, (panelFoot.ClientSize.Height - lbl2.Height) / 2);
+
+            var pic = new PictureBox
+            {
+                Cursor = Cursors.Hand,
+                Dock = DockStyle.Left,
+                Image = Image.FromStream(new MemoryStream(Resources.redheart)),
+                Parent = panelFoot,
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Width = 25
+            };
+            pic.Click += Pic_Click;
+            // 创建并设置ToolTip
+            var toolTip = new ToolTip();
+            toolTip.SetToolTip(pic, "点击进行赞赏");
 
             var tabControl = new TabControl
             {
-                Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
-                Location = new Point(10, lbl.Bottom + 10),
-                Parent = this,
-                Size = new Size(ClientSize.Width - 10 * 2, ClientSize.Height - 10 * 2 - lbl.Bottom)
+                Dock = DockStyle.Fill,
+                Parent = this
             };
+            tabControl.BringToFront();
             tabControl.TabPages.AddRange(new TabPage[]
             {
                 new TabPage("批量移动") { BorderStyle = BorderStyle.None, Name = "tpBatchMover" },

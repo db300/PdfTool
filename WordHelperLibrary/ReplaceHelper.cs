@@ -32,6 +32,28 @@ namespace WordHelperLibrary
         }
 
         /// <summary>
+        /// 替换页眉的文本
+        /// </summary>
+        /// <param name="headerPart"></param>
+        /// <param name="replacements">{oldText, newText}</param>
+        public static void ReplaceTextInHeader(HeaderPart headerPart, Dictionary<string, string> replacements)
+        {
+            string content;
+            using (var sr = new StreamReader(headerPart.GetStream()))
+            {
+                content = sr.ReadToEnd();
+            }
+            foreach (var item in replacements)
+            {
+                content = content.Replace(item.Key, item.Value);
+            }
+            using (var sw = new StreamWriter(headerPart.GetStream(FileMode.Create)))
+            {
+                sw.Write(content);
+            }
+        }
+
+        /// <summary>
         /// 替换正文的文本
         /// </summary>
         /// <param name="wordDoc"></param>

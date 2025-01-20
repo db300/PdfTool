@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -8,12 +9,12 @@ using System.Windows.Forms;
 namespace PdfTool
 {
     /// <summary>
-    /// PDF转图器
+    /// 页面旋转器
     /// </summary>
-    public partial class PdfImager : UserControl, IPdfHandler
+    public partial class PageRotator : UserControl, IPdfHandler
     {
         #region constructor
-        public PdfImager()
+        public PageRotator()
         {
             InitializeComponent();
 
@@ -24,12 +25,10 @@ namespace PdfTool
         #region property
         private readonly List<string> _inputPdfFileList = new List<string>();
         private TextBox _txtLog;
-        private ComboBox _cmbDpi;
-        private ComboBox _cmbFormat;
+        private ComboBox _cmbRotationAngle;
         private RadioButton _rbAllPage;
         private RadioButton _rbPartPage;
-        private NumericUpDown _numPageFrom;
-        private NumericUpDown _numPageTo;
+        private TextBox _txtPageNums;
         #endregion
 
         #region method
@@ -43,6 +42,33 @@ namespace PdfTool
                 _txtLog.AppendText($"【页数：{PdfHelperLibrary.CommonHelper.GetPageCount(fileName)}】{fileName}\r\n");
             }
         }
+
+        private List<int> ParsePageNumbers(string pageNumbersText)
+        {
+            var pageNums = new List<int>();
+            var parts = pageNumbersText.Split(new[] { ',', '，', ';', '；' }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var part in parts)
+            {
+                if (part.Contains('-'))
+                {
+                    var rangeParts = part.Split('-');
+                    if (rangeParts.Length == 2 && int.TryParse(rangeParts[0], out var start) && int.TryParse(rangeParts[1], out var end))
+                    {
+                        for (var i = start; i <= end; i++)
+                        {
+                            pageNums.Add(i);
+                        }
+                    }
+                }
+                else if (int.TryParse(part, out var pageNum))
+                {
+                    pageNums.Add(pageNum);
+                }
+            }
+
+            return pageNums;
+        }
         #endregion
 
         #region event handler
@@ -53,17 +79,16 @@ namespace PdfTool
             OpenPdfs(openDlg.FileNames.ToList());
         }
 
-        private void BtnConvert_Click(object sender, EventArgs e)
+        private void BtnRotate_Click(object sender, EventArgs e)
         {
             if (_inputPdfFileList.Count == 0)
             {
-                _txtLog.Text = "未添加需要转换的PDF文件\r\n";
+                _txtLog.AppendText("未添加需要旋转的PDF文件\r\n");
                 return;
             }
-            var dpi = int.Parse(_cmbDpi.Text);
-            var format = _cmbFormat.Text;
             var allPage = _rbAllPage.Checked;
-            var pageNums = allPage ? null : Enumerable.Range((int)_numPageFrom.Value, (int)_numPageTo.Value - (int)_numPageFrom.Value + 1).ToList();
+            var rotateAngle = int.Parse(_cmbRotationAngle.Text);
+            var pageNums = allPage ? null : ParsePageNumbers(_txtPageNums.Text);
             var background = new BackgroundWorker { WorkerReportsProgress = true };
             background.DoWork += (ww, ee) =>
             {
@@ -71,8 +96,8 @@ namespace PdfTool
                 {
                     foreach (var fileName in _inputPdfFileList)
                     {
-                        var s = PdfHelperLibrary.ImagerHelper.ConvertPdfToImage(fileName, dpi, format, info => background.ReportProgress(0, info));
-                        var msg = string.IsNullOrWhiteSpace(s) ? $"{fileName} 转换完成" : $"{fileName} {s}";
+                        var s = PdfHelperLibrary.PageRotateHelper.RotatePdf(fileName, out var outputFileName, rotateAngle);
+                        var msg = string.IsNullOrWhiteSpace(s) ? $"{fileName} 旋转完成: {outputFileName}" : $"{fileName} 旋转失败: {s}";
                         background.ReportProgress(0, msg);
                     }
                 }
@@ -80,8 +105,8 @@ namespace PdfTool
                 {
                     foreach (var fileName in _inputPdfFileList)
                     {
-                        var s = PdfHelperLibrary.ImagerHelper.ConvertPdfToImage(fileName, dpi, format, pageNums, info => background.ReportProgress(0, info));
-                        var msg = string.IsNullOrWhiteSpace(s) ? $"{fileName} 转换完成" : $"{fileName} {s}";
+                        var s = PdfHelperLibrary.PageRotateHelper.RotatePdf(fileName, out var outputFileName, rotateAngle, pageNums);
+                        var msg = string.IsNullOrWhiteSpace(s) ? $"{fileName} 旋转完成: {outputFileName}" : $"{fileName} 旋转失败: {s}";
                         background.ReportProgress(0, msg);
                     }
                 }
@@ -95,10 +120,10 @@ namespace PdfTool
             };
             background.RunWorkerCompleted += (ww, ee) =>
             {
-                _txtLog.AppendText($"转换完成\r\n");
+                _txtLog.AppendText($"旋转完成\r\n");
             };
             background.RunWorkerAsync();
-            _txtLog.AppendText($"正在转换，请稍候...\r\n");
+            _txtLog.AppendText($"正在旋转，请稍候...\r\n");
         }
         #endregion
 
@@ -113,52 +138,36 @@ namespace PdfTool
                 Text = "添加文件"
             };
             btnAddFile.Click += BtnAddFile_Click;
-
-            var btnConvert = new Button
+            var btnRotate = new Button
             {
                 AutoSize = true,
                 Location = new Point(btnAddFile.Right + Config.ControlPadding, btnAddFile.Top),
                 Parent = this,
-                Text = "开始转换"
+                Text = "开始旋转"
             };
-            btnConvert.Click += BtnConvert_Click;
+            btnRotate.Click += BtnRotate_Click;
 
             var lbl = new Label
             {
                 AutoSize = true,
                 Location = new Point(Config.ControlMargin, btnAddFile.Bottom + Config.ControlPadding),
                 Parent = this,
-                Text = "生成图片DPI："
+                Text = "旋转角度："
             };
-            _cmbDpi = new ComboBox
+            _cmbRotationAngle = new ComboBox
             {
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 Location = new Point(lbl.Right, lbl.Top - 3),
                 Parent = this
             };
-            _cmbDpi.Items.AddRange(new object[] { 100, 200, 300, 600, 900, 1200 });
-            _cmbDpi.SelectedIndex = 2;
-            lbl = new Label
-            {
-                AutoSize = true,
-                Location = new Point(_cmbDpi.Right + Config.ControlPadding, lbl.Top),
-                Parent = this,
-                Text = "生成图片格式："
-            };
-            _cmbFormat = new ComboBox
-            {
-                DropDownStyle = ComboBoxStyle.DropDownList,
-                Location = new Point(lbl.Right, lbl.Top - 3),
-                Parent = this
-            };
-            _cmbFormat.Items.AddRange(new object[] { "png", "jpg", "bmp" });
-            _cmbFormat.SelectedIndex = 0;
+            _cmbRotationAngle.Items.AddRange(new object[] { 90, 180, 270 });
+            _cmbRotationAngle.SelectedIndex = 0;
 
             _rbAllPage = new RadioButton
             {
                 AutoSize = true,
                 Checked = true,
-                Location = new Point(Config.ControlMargin, _cmbDpi.Bottom + Config.ControlPadding),
+                Location = new Point(Config.ControlMargin, _cmbRotationAngle.Bottom + Config.ControlPadding),
                 Parent = this,
                 Text = "全部页面"
             };
@@ -167,39 +176,25 @@ namespace PdfTool
                 AutoSize = true,
                 Location = new Point(_rbAllPage.Right + Config.ControlPadding, _rbAllPage.Top),
                 Parent = this,
-                Text = "仅部分页面从："
+                Text = "仅部分页面："
             };
-            _numPageFrom = new NumericUpDown
+            _txtPageNums = new TextBox
             {
-                AutoSize = true,
-                Maximum = 100000,
-                Minimum = 1,
+
                 Parent = this,
-                TextAlign = HorizontalAlignment.Right,
-                Value = 1,
-                Width = 60
+                Width = 200
             };
-            _numPageFrom.Location = new Point(_rbPartPage.Right, _rbAllPage.Top + (_rbAllPage.Height - _numPageFrom.Height) / 2);
+            _txtPageNums.Location = new Point(_rbPartPage.Right, _rbAllPage.Top + (_rbAllPage.Height - _txtPageNums.Height) / 2);
             lbl = new Label
             {
                 AutoSize = true,
+                ForeColor = Color.Blue,
                 Parent = this,
-                Text = "到："
+                Text = "（例如：1,3,5-9）"
             };
-            lbl.Location = new Point(_numPageFrom.Right + Config.ControlPadding, _rbAllPage.Top + (_rbAllPage.Height - lbl.Height) / 2);
-            _numPageTo = new NumericUpDown
-            {
-                AutoSize = true,
-                Location = new Point(lbl.Right, _numPageFrom.Top),
-                Maximum = 100000,
-                Minimum = 1,
-                Parent = this,
-                TextAlign = HorizontalAlignment.Right,
-                Value = 1,
-                Width = 60
-            };
+            lbl.Location = new Point(_txtPageNums.Right, _rbAllPage.Top + (_rbAllPage.Height - lbl.Height) / 2);
 
-            var top = _numPageFrom.Bottom + Config.ControlPadding;
+            var top = _txtPageNums.Bottom + Config.ControlPadding;
             _txtLog = new TextBox
             {
                 Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,

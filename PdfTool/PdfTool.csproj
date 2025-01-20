@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="ImageImporter.cs">
       <SubType>UserControl</SubType>
@@ -60,6 +61,12 @@
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PageRotator.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PageRotator.Designer.cs">
+      <DependentUpon>PageRotator.cs</DependentUpon>
     </Compile>
     <Compile Include="PdfCompressor.cs">
       <SubType>UserControl</SubType>

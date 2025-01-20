@@ -9,7 +9,7 @@ namespace PdfTool
     /// <summary>
     /// PDF拆分器
     /// </summary>
-    public partial class PdfSplitter : UserControl
+    public partial class PdfSplitter : UserControl, IPdfHandler
     {
         #region constructor
         public PdfSplitter()

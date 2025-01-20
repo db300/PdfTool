@@ -9,7 +9,7 @@ namespace PdfTool
     /// <summary>
     /// PDF合并器
     /// </summary>
-    public partial class PdfMerger : UserControl
+    public partial class PdfMerger : UserControl, IPdfHandler
     {
         #region constructor
         public PdfMerger()

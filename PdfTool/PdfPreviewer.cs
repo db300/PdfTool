@@ -10,7 +10,7 @@ namespace PdfTool
     /// <summary>
     /// PDF预览器
     /// </summary>
-    public partial class PdfPreviewer : UserControl
+    public partial class PdfPreviewer : UserControl, IPdfHandler
     {
         #region constructor
         public PdfPreviewer()

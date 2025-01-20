@@ -45,47 +45,16 @@ namespace PdfTool
                 var files = ((string[])e.Data.GetData(DataFormats.FileDrop)).ToList();
                 var pdfFiles = files.Where(a => a.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase)).ToList();
                 var tabPage = Controls.OfType<TabControl>().FirstOrDefault().SelectedTab;
-                if (tabPage.Controls[0] is PdfSplitter pdfSplitter)
+                var control = tabPage.Controls[0];
+                if (control is IPdfHandler pdfHandler)
                 {
-                    pdfSplitter.OpenPdfs(pdfFiles);
+                    pdfHandler.OpenPdfs(pdfFiles);
                 }
-                else if (tabPage.Controls[0] is PdfMerger pdfMerger)
-                {
-                    pdfMerger.OpenPdfs(pdfFiles);
-                }
-                else if (tabPage.Controls[0] is PdfImager pdfImager)
-                {
-                    pdfImager.OpenPdfs(pdfFiles);
-                }
-                else if (tabPage.Controls[0] is PdfImageExtracter pdfImageExtracter)
-                {
-                    pdfImageExtracter.OpenPdfs(pdfFiles);
-                }
-                else if (tabPage.Controls[0] is PdfTableExtracter pdfTableExtracter)
-                {
-                    pdfTableExtracter.OpenPdfs(pdfFiles);
-                }
-                else if (tabPage.Controls[0] is PdfTextExtracter pdfTextExtracter)
-                {
-                    pdfTextExtracter.OpenPdfs(pdfFiles);
-                }
-                else if (tabPage.Controls[0] is ImageImporter imageImporter)
+                else if (control is ImageImporter imageImporter)
                 {
                     var extList = new List<string> { ".bmp", ".jpg", ".tif", ".png" };
                     var imgFiles = files.Where(a => extList.Contains(Path.GetExtension(a).ToLower())).ToList();
                     imageImporter.OpenImages(imgFiles);
-                }
-                else if (tabPage.Controls[0] is PdfPrinter pdfPrinter)
-                {
-                    pdfPrinter.OpenPdfs(pdfFiles);
-                }
-                else if (tabPage.Controls[0] is PdfProtector pdfProtector)
-                {
-                    pdfProtector.OpenPdfs(pdfFiles);
-                }
-                else if (tabPage.Controls[0] is PdfPreviewer pdfPreviewer)
-                {
-                    pdfPreviewer.OpenPdfs(pdfFiles);
                 }
             }
         }
@@ -110,6 +79,7 @@ namespace PdfTool
         private void InitUi()
         {
             AllowDrop = true;
+            ClientSize = new Size(1000, 800);
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = $"PDF工具 {System.Reflection.Assembly.GetExecutingAssembly().GetName().Version}";
@@ -169,6 +139,7 @@ namespace PdfTool
                 new TabPage("PDF图片提取") { BorderStyle = BorderStyle.None, Name = "tpPdfImageExtracter" },
                 new TabPage("PDF表格提取") { BorderStyle = BorderStyle.None, Name = "tpPdfTableExtracter" },
                 new TabPage("PDF文本提取") { BorderStyle = BorderStyle.None, Name = "tpPdfTextExtracter" },
+                new TabPage("PDF页面旋转") { BorderStyle = BorderStyle.None, Name = "tpPdfPageRotator" },
                 new TabPage("图片导入PDF") { BorderStyle = BorderStyle.None, Name = "tpImageImporter" },
                 new TabPage("批量打印") { BorderStyle = BorderStyle.None, Name = "tpPdfPrinter" },
                 new TabPage("PDF保护") { BorderStyle = BorderStyle.None, Name = "tpPdfProtector" },
@@ -183,6 +154,7 @@ namespace PdfTool
             tabControl.TabPages["tpPdfImageExtracter"].Controls.Add(new PdfImageExtracter { Dock = DockStyle.Fill });
             tabControl.TabPages["tpPdfTableExtracter"].Controls.Add(new PdfTableExtracter { Dock = DockStyle.Fill });
             tabControl.TabPages["tpPdfTextExtracter"].Controls.Add(new PdfTextExtracter { Dock = DockStyle.Fill });
+            tabControl.TabPages["tpPdfPageRotator"].Controls.Add(new PageRotator { Dock = DockStyle.Fill });
             tabControl.TabPages["tpImageImporter"].Controls.Add(new ImageImporter { Dock = DockStyle.Fill });
             tabControl.TabPages["tpPdfPrinter"].Controls.Add(new PdfPrinter { Dock = DockStyle.Fill });
             tabControl.TabPages["tpPdfProtector"].Controls.Add(new PdfProtector { Dock = DockStyle.Fill });

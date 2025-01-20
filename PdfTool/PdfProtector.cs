@@ -11,7 +11,7 @@ namespace PdfTool
     /// <summary>
     /// PDF保护器
     /// </summary>
-    public partial class PdfProtector : UserControl
+    public partial class PdfProtector : UserControl, IPdfHandler
     {
         #region constructor
         public PdfProtector()

@@ -10,7 +10,7 @@ namespace PdfTool
     /// <summary>
     /// PDF图片提取器
     /// </summary>
-    public partial class PdfImageExtracter : UserControl
+    public partial class PdfImageExtracter : UserControl, IPdfHandler
     {
         #region constructor
         public PdfImageExtracter()

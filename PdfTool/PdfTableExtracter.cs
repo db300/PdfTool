@@ -11,7 +11,7 @@ namespace PdfTool
     /// <summary>
     /// PDF表格提取器
     /// </summary>
-    public partial class PdfTableExtracter : UserControl
+    public partial class PdfTableExtracter : UserControl, IPdfHandler
     {
         #region constructor
         public PdfTableExtracter()

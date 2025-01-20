@@ -13,7 +13,7 @@ namespace PdfTool
     /// <summary>
     /// PDF修复器
     /// </summary>
-    public partial class PdfRepairer : UserControl
+    public partial class PdfRepairer : UserControl, IPdfHandler
     {
         #region constructor
         public PdfRepairer()
@@ -29,6 +29,31 @@ namespace PdfTool
         #endregion
 
         #region method
+        public void OpenPdfs(List<string> files)
+        {
+            foreach (var inputFilename in files)
+            {
+                _txtLog.AppendText("---------------------------------------------\r\n");
+                if (TryOpenPdf(inputFilename) >= 0) continue;
+
+                var repairMsg = PdfHelperLibrary2.RepairHelper.SaveAs(inputFilename, out var outputFilename);
+                if (!string.IsNullOrWhiteSpace(repairMsg))
+                {
+                    _txtLog.AppendText($"{inputFilename} 修复失败: {repairMsg}\r\n");
+                    continue;
+                }
+
+                if (TryOpenPdf(outputFilename) >= 0)
+                {
+                    _txtLog.AppendText($"{inputFilename} 修复完成: {outputFilename}\r\n");
+                }
+                else
+                {
+                    _txtLog.AppendText($"{inputFilename} 修复失败: 修复后仍无法顺利加载\r\n");
+                }
+            }
+        }
+
         private int TryOpenPdf(string fileName)
         {
             try
@@ -50,28 +75,7 @@ namespace PdfTool
         {
             var openDlg = new OpenFileDialog { Filter = "PDF文件(*.pdf)|*.pdf|所有文件(*.*)|*.*", Multiselect = true };
             if (openDlg.ShowDialog() != DialogResult.OK) return;
-            var inputFilenames = openDlg.FileNames;
-            foreach (var inputFilename in inputFilenames)
-            {
-                _txtLog.AppendText("---------------------------------------------\r\n");
-                if (TryOpenPdf(inputFilename) >= 0) continue;
-
-                var repairMsg = PdfHelperLibrary2.RepairHelper.SaveAs(inputFilename, out var outputFilename);
-                if (!string.IsNullOrWhiteSpace(repairMsg))
-                {
-                    _txtLog.AppendText($"{inputFilename} 修复失败: {repairMsg}\r\n");
-                    continue;
-                }
-
-                if (TryOpenPdf(outputFilename) >= 0)
-                {
-                    _txtLog.AppendText($"{inputFilename} 修复完成: {outputFilename}\r\n");
-                }
-                else
-                {
-                    _txtLog.AppendText($"{inputFilename} 修复失败: 修复后仍无法顺利加载\r\n");
-                }
-            }
+            OpenPdfs(openDlg.FileNames.ToList());
         }
         #endregion
 

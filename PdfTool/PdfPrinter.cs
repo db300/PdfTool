@@ -10,7 +10,7 @@ namespace PdfTool
     /// <summary>
     /// PDF打印器
     /// </summary>
-    public partial class PdfPrinter : UserControl
+    public partial class PdfPrinter : UserControl, IPdfHandler
     {
         #region constructor
         public PdfPrinter()

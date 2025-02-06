@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UglyToad.PdfPig;
+﻿using UglyToad.PdfPig;
 
 namespace PdfHelperLibrary
 {

@@ -1,10 +1,5 @@
 ﻿using PdfSharp.Pdf;
 using PdfSharp.Pdf.IO;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
 
 namespace PdfHelperLibrary
 {

@@ -108,6 +108,7 @@
     <Compile Include="ImageHelper.cs" />
     <Compile Include="ImagerHelper.cs" />
     <Compile Include="MergeHelper.cs" />
+    <Compile Include="PageRotateHelper.cs" />
     <Compile Include="PrintHelper.cs" />
     <Compile Include="ProtectHelper.cs" />
     <Compile Include="SplitHelper.cs" />

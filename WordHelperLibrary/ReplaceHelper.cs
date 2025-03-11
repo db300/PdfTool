@@ -101,5 +101,37 @@ namespace WordHelperLibrary
                 }
             }
         }
+
+        /// <summary>
+        /// 替换正文中的图片
+        /// </summary>
+        /// <param name="wordDoc"></param>
+        /// <param name="embedId">图片的 embed 属性，用于指定要替换的图片，如果不指定则为全部图片</param>
+        /// <param name="newImagePath"></param>
+        public static void ReplaceImageInBody(WordprocessingDocument wordDoc, string embedId, string newImagePath)
+        {
+            if (string.IsNullOrWhiteSpace(embedId)) return;
+
+            var mainPart = wordDoc.MainDocumentPart;
+            var blipElements = mainPart.Document.Descendants<DocumentFormat.OpenXml.Drawing.Blip>().Where(b => b.Embed.Value == embedId);
+            if (!blipElements.Any()) return;
+
+            var oldImagePart = mainPart.GetPartById(embedId) as ImagePart;
+            if (oldImagePart == null) return;
+
+            var contentType = oldImagePart.ContentType;
+            mainPart.DeletePart(oldImagePart);
+
+            var newImagePart = mainPart.AddImagePart(contentType);
+            using (var stream = new FileStream(newImagePath, FileMode.Open, FileAccess.Read))
+            {
+                newImagePart.FeedData(stream);
+            }
+
+            foreach (var blip in blipElements)
+            {
+                blip.Embed.Value = mainPart.GetIdOfPart(newImagePart);
+            }
+        }
     }
 }

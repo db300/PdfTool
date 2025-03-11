@@ -8,7 +8,11 @@ namespace WordHelperLibrary
     /// </summary>
     public static class CustomHelper
     {
-        public static void Build1(string inputFileName, Dictionary<string, string> bodyReplaceDict, Dictionary<string, string> headerReplaceDict, string qrCodeFileName)
+        public static void Build1(string inputFileName,
+            Dictionary<string, string> bodyReplaceDict,
+            Dictionary<string, string> headerReplaceDict,
+            string qrCodeImgEmbedId, string qrCodeFileName,
+            string fontUseImgEmbedId, string fontUseQRCodeFileName)
         {
             using (var tempDoc = WordprocessingDocument.Open(inputFileName, true))
             {
@@ -19,9 +23,14 @@ namespace WordHelperLibrary
                 {
                     ReplaceHelper.ReplaceTextInHeader(headerPart, headerReplaceDict);
                 }
-                if (!string.IsNullOrWhiteSpace(qrCodeFileName))
+                //替换图片
+                if (!string.IsNullOrWhiteSpace(qrCodeFileName) && !string.IsNullOrWhiteSpace(qrCodeImgEmbedId))
                 {
-                    ReplaceHelper.ReplaceImageInBody(tempDoc, qrCodeFileName);
+                    ReplaceHelper.ReplaceImageInBody(tempDoc, qrCodeImgEmbedId, qrCodeFileName);
+                }
+                if (!string.IsNullOrWhiteSpace(fontUseQRCodeFileName) && !string.IsNullOrWhiteSpace(fontUseImgEmbedId))
+                {
+                    ReplaceHelper.ReplaceImageInBody(tempDoc, fontUseImgEmbedId, fontUseQRCodeFileName);
                 }
             }
         }

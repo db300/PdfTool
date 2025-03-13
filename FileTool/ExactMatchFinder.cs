@@ -211,6 +211,22 @@ namespace FileTool
         {
             MoveOrCopy(false);
         }
+
+        private void BtnExportLog_Click(object sender, EventArgs e)
+        {
+            if (!(_fileMoveInfos?.Count > 0)) return;
+            var saveDlg = new SaveFileDialog { DefaultExt = ".xlsx", Filter = "Excel文件(*.xlsx)|*.xlsx|所有文件(*.*)|*.*", Title = "导出检索结果" };
+            if (saveDlg.ShowDialog() != DialogResult.OK) return;
+            var logTable = new ExcelHelperLibrary.CommonTable
+            {
+                Rows = _fileMoveInfos.Select(a => new ExcelHelperLibrary.CommonRow
+                {
+                    Cells = new List<string> { a.FileName, a.FileInfo?.FullName ?? "未找到" }
+                }).ToList()
+            };
+            ExcelHelperLibrary.GenerateHelper.GenerateExcel(saveDlg.FileName, new List<ExcelHelperLibrary.CommonTable> { logTable });
+            _txtLog.AppendText("日志导出完成\r\n");
+        }
         #endregion
 
         #region ui
@@ -305,6 +321,15 @@ namespace FileTool
                 Text = "复制"
             };
             btnCopy.Click += BtnCopy_Click;
+            var btnExportLog = new Button
+            {
+                Anchor = AnchorStyles.Top | AnchorStyles.Right,
+                AutoSize = true,
+                Parent = this,
+                Text = "导出检索结果"
+            };
+            btnExportLog.Location = new Point(ClientSize.Width - Config.ControlMargin - btnExportLog.Width, _btnSearch.Top);
+            btnExportLog.Click += BtnExportLog_Click;
             var top = _btnSearch.Bottom + Config.ControlPadding;
             _txtLog = new TextBox
             {

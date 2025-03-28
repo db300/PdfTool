@@ -132,10 +132,12 @@ namespace PdfHelperLibrary
         {
             _file = PDFFile.Open(inputPdfFileName);
             _dict = new Dictionary<int, Bitmap>();
+            PageCount = _file.PageCount;
         }
 
         private readonly PDFFile _file;
         private readonly Dictionary<int, Bitmap> _dict;
+        public readonly int PageCount;
 
         public Bitmap GetPageImage(int pageNum, int dpi)
         {

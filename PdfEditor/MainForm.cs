@@ -33,6 +33,7 @@ namespace PdfEditor
             if (openDlg.ShowDialog() != DialogResult.OK) return;
             var tabPage = new TabPage($"旋转页面 - {Path.GetFileName(openDlg.FileName)}");
             var pageRotator = new Modules.PageRotator { Dock = DockStyle.Fill };
+            pageRotator.OpenPdf(openDlg.FileName);
             tabPage.Controls.Add(pageRotator);
             _tabControl.TabPages.Add(tabPage);
             _tabControl.SelectedTab = tabPage;

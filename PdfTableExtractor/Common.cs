@@ -96,7 +96,7 @@ namespace PdfTableExtractor
             {
                 var document = new PdfDocument(fileName);
                 var sb = new StringBuilder();
-                foreach (PdfPageBase page in document.Pages) sb.Append(page.ExtractText());
+                //foreach (PdfPageBase page in document.Pages) sb.Append(page.ExtractText());
                 document.Close();
 
                 var ss = sb.ToString().Replace(EvaluationWarning, "").Trim().Split('\n').Select(a => a.Trim()).ToList();
@@ -119,7 +119,7 @@ namespace PdfTableExtractor
             {
                 var document = new PdfDocument(stream);
                 var sb = new StringBuilder();
-                foreach (PdfPageBase page in document.Pages) sb.Append(page.ExtractText());
+                //foreach (PdfPageBase page in document.Pages) sb.Append(page.ExtractText());
                 document.Close();
 
                 var ss = sb.ToString().Replace(EvaluationWarning, "").Trim().Split('\n').Select(a => a.Trim()).ToList();
@@ -142,7 +142,7 @@ namespace PdfTableExtractor
             {
                 var document = new PdfDocument(bytes);
                 var sb = new StringBuilder();
-                foreach (PdfPageBase page in document.Pages) sb.Append(page.ExtractText());
+                //foreach (PdfPageBase page in document.Pages) sb.Append(page.ExtractText());
                 document.Close();
 
                 var ss = sb.ToString().Replace(EvaluationWarning, "").Trim().Split('\n').Select(a => a.Trim()).ToList();

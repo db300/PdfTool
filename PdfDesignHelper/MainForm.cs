@@ -1,5 +1,7 @@
-﻿using System;
+﻿using PdfSharp.Pdf;
+using System;
 using System.Data;
+using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,6 +17,16 @@ namespace PdfDesignHelper
             InitializeComponent();
 
             InitUi();
+
+            var pfc = new PrivateFontCollection();
+            pfc.AddFontFile("HYQiHei_50S.ttf");
+
+            var pdf = new PdfDocument();
+            var page = pdf.AddPage();
+            var graphics = PdfSharp.Drawing.XGraphics.FromPdfPage(page);
+            graphics.DrawString("你好，我有一个帽衫", new PdfSharp.Drawing.XFont(pfc.Families[0], 12, PdfSharp.Drawing.XFontStyle.Regular), PdfSharp.Drawing.XBrushes.Black, 10, 10);
+            const string filename = "HelloWorld.pdf";
+            pdf.Save(filename);
         }
         #endregion
 
@@ -59,8 +71,7 @@ namespace PdfDesignHelper
                     var page = document.Pages[cellItem.PageNum];
                     using (var graphics = PdfSharp.Drawing.XGraphics.FromPdfPage(page))
                     {
-                        graphics.DrawString(cellItem.Content, new PdfSharp.Drawing.XFont(_pfc.Families[0], 9, PdfSharp.Drawing.XFontStyle.Regular), PdfSharp.Drawing.XBrushes.Black, cellItem.X,
-                            cellItem.Y);
+                        graphics.DrawString(cellItem.Content, new PdfSharp.Drawing.XFont(_pfc.Families[0], 9, PdfSharp.Drawing.XFontStyle.Regular), PdfSharp.Drawing.XBrushes.Black, cellItem.X, cellItem.Y);
                     }
 
                     page.Close();

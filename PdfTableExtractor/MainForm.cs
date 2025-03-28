@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,13 +40,15 @@ namespace PdfTableExtractor
                 if (result.Count > 0) list.AddRange(result);
             }
             System.Diagnostics.Debug.WriteLine(list);
-            list.RemoveRange(list.Count - 5, 5);
+            //list.RemoveRange(list.Count - 5, 5);
             var unicodeList = new List<string>();
             var chaList = new List<string>();
             foreach (var item in list)
             {
-                chaList.Add(item[1].Trim());
-                unicodeList.Add(item[2].Split('+')[1].Trim());
+                item.RemoveAll(x => x.Length == 2 || string.IsNullOrWhiteSpace(x.Trim()));
+                unicodeList.AddRange(item);
+                //chaList.Add(item[1].Trim());
+                //unicodeList.Add(item[2].Split('+')[1].Trim());
                 /*
                 foreach (var s in item)
                 {
@@ -59,6 +62,7 @@ namespace PdfTableExtractor
             System.Diagnostics.Debug.WriteLine(unicodeList);
             var a = string.Join("\r\n", unicodeList);
             var b = string.Join("", chaList);
+            File.WriteAllText("a.txt",a);
         }
         #endregion
 

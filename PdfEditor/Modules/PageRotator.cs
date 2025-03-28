@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using PdfEditor.Controls;
 
 namespace PdfEditor.Modules
 {
@@ -25,8 +27,48 @@ namespace PdfEditor.Modules
         #endregion
 
         #region property
-        private FlowLayoutPanel _flPanel;
+        private PdfHelperLibrary.ImagerHelper2 _helper;
+        private Stream _stream;
+        private PagePanel _pagePanel;
         private PictureBox _picBox;
+        #endregion
+
+        #region method
+        public void OpenPdf(string fileName)
+        {
+            _helper = new PdfHelperLibrary.ImagerHelper2(fileName);
+            var background = new BackgroundWorker { WorkerReportsProgress = true };
+            background.DoWork += (ww, ee) =>
+            {
+                var pageCount = _helper.PageCount;
+                for (var i = 0; i < pageCount; i++)
+                {
+                    var img = _helper.GetPageImage(i, 100);
+                    background.ReportProgress(i, img);
+                }
+            };
+            background.ProgressChanged += (ww, ee) =>
+            {
+                var pageNum = ee.ProgressPercentage;
+                var img = (Image)ee.UserState;
+                _pagePanel.AddPage(pageNum, img);
+                /*
+                var panel = new PagePreviewPanel { Dock = DockStyle.Top };
+                panel.SetPage(ee.ProgressPercentage, img);
+                panel.PageSelect += Panel_PageSelect;
+                _flPanel.Controls.Add(panel);
+                */
+            };
+            background.RunWorkerCompleted += (ww, ee) => { };
+            background.RunWorkerAsync();
+        }
+        #endregion
+
+        #region event handler
+        private void Panel_PageSelect(object sender, EventArgs e, int pageNum)
+        {
+            _picBox.Image = _helper.GetPageImage(pageNum, 100);
+        }
         #endregion
 
         #region ui
@@ -53,7 +95,7 @@ namespace PdfEditor.Modules
                 Text = "顺时针旋转"
             };
 
-            _flPanel = new FlowLayoutPanel
+            _pagePanel = new PagePanel
             {
                 Dock = DockStyle.Left,
                 Parent = this,
@@ -64,7 +106,8 @@ namespace PdfEditor.Modules
             {
                 BackColor = Color.White,
                 Dock = DockStyle.Fill,
-                Parent = this
+                Parent = this,
+                SizeMode = PictureBoxSizeMode.Zoom
             };
             _picBox.BringToFront();
         }

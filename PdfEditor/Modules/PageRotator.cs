@@ -52,12 +52,6 @@ namespace PdfEditor.Modules
                 var pageNum = ee.ProgressPercentage;
                 var img = (Image)ee.UserState;
                 _pagePanel.AddPage(pageNum, img);
-                /*
-                var panel = new PagePreviewPanel { Dock = DockStyle.Top };
-                panel.SetPage(ee.ProgressPercentage, img);
-                panel.PageSelect += Panel_PageSelect;
-                _flPanel.Controls.Add(panel);
-                */
             };
             background.RunWorkerCompleted += (ww, ee) => { };
             background.RunWorkerAsync();
@@ -65,7 +59,7 @@ namespace PdfEditor.Modules
         #endregion
 
         #region event handler
-        private void Panel_PageSelect(object sender, EventArgs e, int pageNum)
+        private void PagePanel_PageSelect(object sender, EventArgs e, int pageNum)
         {
             _picBox.Image = _helper.GetPageImage(pageNum, 100);
         }
@@ -101,6 +95,7 @@ namespace PdfEditor.Modules
                 Parent = this,
                 Width = 200
             };
+            _pagePanel.PageSelect += PagePanel_PageSelect;
 
             _picBox = new PictureBox
             {

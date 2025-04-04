@@ -45,6 +45,8 @@ namespace PdfEditor.Controls
             if (SelectedPageNum >= 0) _flPanel.Controls[SelectedPageNum].BackColor = SystemColors.Control;
             _flPanel.Controls[pageNum].BackColor = Color.AliceBlue;
             SelectedPageNum = pageNum;
+
+            PageSelect?.Invoke(sender, e, pageNum);
         }
         #endregion
 
@@ -58,6 +60,11 @@ namespace PdfEditor.Controls
                 Parent = this
             };
         }
+        #endregion
+
+        #region custom event
+        public delegate void PageSelectHandler(object sender, EventArgs e, int pageNum);
+        public event PageSelectHandler PageSelect;
         #endregion
     }
 }

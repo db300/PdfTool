@@ -24,7 +24,9 @@ namespace PdfTool
         private TextBox _txtFileList;
         private CheckBox _ckbAutoOpen;
         private CheckBox _ckbAddBookmarks;
+        private TextBox _txtOutputFileName;
         private TextBox _txtLog;
+        private string _outputFileName;
         #endregion
 
         #region method
@@ -46,6 +48,14 @@ namespace PdfTool
             OpenPdfs(openDlg.FileNames.ToList());
         }
 
+        private void BtnCustomOutputFile_Click(object sender, EventArgs e)
+        {
+            var saveDlg = new SaveFileDialog { Filter = "PDF文件(*.pdf)|*.pdf|所有文件(*.*)|*.*" };
+            if (saveDlg.ShowDialog() != DialogResult.OK) return;
+            _outputFileName = saveDlg.FileName;
+            _txtOutputFileName.Text = $"输出文件名：{_outputFileName}";
+        }
+
         private void BtnMerge_Click(object sender, EventArgs e)
         {
             var inputPdfFilenameList = _txtFileList.Lines.ToList();
@@ -55,9 +65,9 @@ namespace PdfTool
                 _txtLog.AppendText("未添加需要合并的PDF文件\r\n");
                 return;
             }
-            var s = PdfHelperLibrary.MergeHelper.MergePdf(inputPdfFilenameList, _ckbAutoOpen.Checked, _ckbAddBookmarks.Checked, out var outputPdfFilename);
-            if (string.IsNullOrWhiteSpace(s)) _txtLog.AppendText($"合并完成: {outputPdfFilename}\r\n");
-            else _txtLog.AppendText($"{s}\r\n");
+            var (msg, outputFileName) = PdfHelperLibrary.MergeHelper.MergePdf(inputPdfFilenameList, _ckbAutoOpen.Checked, _ckbAddBookmarks.Checked, _outputFileName);
+            if (string.IsNullOrWhiteSpace(msg)) _txtLog.AppendText($"合并完成: {outputFileName}\r\n");
+            else _txtLog.AppendText($"{msg}\r\n");
         }
         #endregion
 
@@ -73,31 +83,6 @@ namespace PdfTool
             };
             btnAddFile.Click += BtnAddFile_Click;
 
-            var btnMerge = new Button
-            {
-                AutoSize = true,
-                Location = new Point(btnAddFile.Right + Config.ControlPadding, btnAddFile.Top),
-                Parent = this,
-                Text = "开始合并"
-            };
-            btnMerge.Click += BtnMerge_Click;
-
-            _ckbAutoOpen = new CheckBox
-            {
-                AutoSize = true,
-                Parent = this,
-                Text = "合并后自动打开"
-            };
-            _ckbAutoOpen.Location = new Point(btnMerge.Right + Config.ControlPadding, btnMerge.Top + (btnMerge.Height - _ckbAutoOpen.Height) / 2);
-
-            _ckbAddBookmarks = new CheckBox
-            {
-                AutoSize = true,
-                Location = new Point(_ckbAutoOpen.Right + Config.ControlPadding, _ckbAutoOpen.Top),
-                Parent = this,
-                Text = "将每个文件名添加至书签"
-            };
-
             _txtLog = new TextBox
             {
                 Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom,
@@ -110,14 +95,56 @@ namespace PdfTool
                 WordWrap = false
             };
 
+            var btnCustomOutputFile = new Button
+            {
+                AutoSize = true,
+                Location = new Point(Config.ControlMargin, btnAddFile.Bottom + Config.ControlPadding),
+                Parent = this,
+                Text = "修改"
+            };
+            btnCustomOutputFile.Click += BtnCustomOutputFile_Click;
+            _txtOutputFileName = new TextBox
+            {
+                Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right,
+                Location = new Point(btnCustomOutputFile.Right + Config.ControlPadding, btnCustomOutputFile.Top + 2),
+                Parent = this,
+                ReadOnly = true,
+                Text = "默认输出文件名：MergedFile - 时间戳.pdf",
+                Width = ClientSize.Height - Config.ControlMargin - btnCustomOutputFile.Right - Config.ControlPadding
+            };
+
+            var btnMerge = new Button
+            {
+                AutoSize = true,
+                Location = new Point(Config.ControlMargin, btnCustomOutputFile.Bottom + Config.ControlPadding),
+                Parent = this,
+                Text = "开始合并"
+            };
+            btnMerge.Click += BtnMerge_Click;
+            _ckbAutoOpen = new CheckBox
+            {
+                AutoSize = true,
+                Parent = this,
+                Text = "合并后自动打开"
+            };
+            _ckbAutoOpen.Location = new Point(btnMerge.Right + Config.ControlPadding, btnMerge.Top + (btnMerge.Height - _ckbAutoOpen.Height) / 2);
+            _ckbAddBookmarks = new CheckBox
+            {
+                AutoSize = true,
+                Location = new Point(_ckbAutoOpen.Right + Config.ControlPadding, _ckbAutoOpen.Top),
+                Parent = this,
+                Text = "将每个文件名添加至书签"
+            };
+
+            var top = btnMerge.Bottom + Config.ControlPadding;
             _txtFileList = new TextBox
             {
                 Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
-                Location = new Point(btnAddFile.Left, btnAddFile.Bottom + Config.ControlPadding),
+                Location = new Point(btnAddFile.Left, top),
                 Multiline = true,
                 Parent = this,
                 ScrollBars = ScrollBars.Both,
-                Size = new Size(ClientSize.Width - Config.ControlMargin * 2, _txtLog.Top - btnAddFile.Bottom - 2 * Config.ControlPadding),
+                Size = new Size(ClientSize.Width - Config.ControlMargin * 2, _txtLog.Top - Config.ControlPadding - top),
                 WordWrap = false
             };
         }

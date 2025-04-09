@@ -161,6 +161,32 @@ namespace PdfTool
             //tabControl.TabPages["tpPdfCompressor"].Controls.Add(new PdfCompressor { Dock = DockStyle.Fill });
             tabControl.TabPages["tpPdfRepairer"].Controls.Add(new PdfRepairer { Dock = DockStyle.Fill });
             tabControl.TabPages["tpPdfPreviewer"].Controls.Add(new PdfPreviewer { Dock = DockStyle.Fill });
+
+#if DEBUG
+            tabControl.MouseDoubleClick += (sender, e) =>
+            {
+                for (var i = 0; i < tabControl.TabCount; i++)
+                {
+                    var tabRect = tabControl.GetTabRect(i);
+                    if (tabRect.Contains(e.Location))
+                    {
+                        tabControl.TabPages[i].Controls.Clear();
+                        switch (i)
+                        {
+                            case 0:
+                                tabControl.TabPages[i].Controls.Add(new PdfSplitter { Dock = DockStyle.Fill });
+                                break;
+                            case 1:
+                                tabControl.TabPages[i].Controls.Add(new PdfMerger { Dock = DockStyle.Fill });
+                                break;
+                            case 2:
+                                tabControl.TabPages[i].Controls.Add(new PdfImager { Dock = DockStyle.Fill });
+                                break;
+                        }
+                    }
+                }
+            };
+#endif
         }
         #endregion
     }

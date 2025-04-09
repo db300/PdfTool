@@ -41,7 +41,7 @@ namespace PdfHelperLibrary
             }
         }
 
-        public static string MergePdf(List<string> inputPdfFilenameList, string outputPdfFilename)
+        public static (string, string) MergePdf(List<string> inputPdfFilenameList, bool autoOpen, bool addBookmarks, string outputPdfFilename)
         {
             try
             {
@@ -52,15 +52,22 @@ namespace PdfHelperLibrary
                     var pageCount = inputDocument.PageCount;
                     for (var i = 0; i < pageCount; i++)
                     {
-                        outputDocument.AddPage(inputDocument.Pages[i]);
+                        var page = outputDocument.AddPage(inputDocument.Pages[i]);
+                        if (i == 0 && addBookmarks) outputDocument.Outlines.Add(Path.GetFileNameWithoutExtension(file), page);
                     }
                 }
+                if (string.IsNullOrEmpty(outputPdfFilename))
+                {
+                    var path = Path.GetDirectoryName(inputPdfFilenameList.First());
+                    outputPdfFilename = Path.Combine(path, $"MergedFile - {DateTime.Now:yyyyMMddHHmmssfff}.pdf");
+                }
                 outputDocument.Save(outputPdfFilename);
-                return "";
+                if (autoOpen) Process.Start(outputPdfFilename);
+                return ("", outputPdfFilename);
             }
             catch (Exception ex)
             {
-                return $"合并失败，原因：{ex.Message}";
+                return ($"合并失败，原因：{ex.Message}", "");
             }
         }
     }

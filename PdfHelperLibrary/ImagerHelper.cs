@@ -131,20 +131,31 @@ namespace PdfHelperLibrary
         public ImagerHelper2(string inputPdfFileName)
         {
             _file = PDFFile.Open(inputPdfFileName);
-            _dict = new Dictionary<int, Bitmap>();
+            _dict = new Dictionary<string, Bitmap>();
             PageCount = _file.PageCount;
         }
 
         private readonly PDFFile _file;
-        private readonly Dictionary<int, Bitmap> _dict;
+        private readonly Dictionary<string, Bitmap> _dict;
         public readonly int PageCount;
 
         public Bitmap GetPageImage(int pageNum, int dpi)
         {
-            if (_dict.ContainsKey(pageNum)) return _dict[pageNum];
+            var key = $"{pageNum}_{dpi}";
+            if (_dict.ContainsKey(key)) return _dict[key];
             var img = _file.GetPageImage(pageNum, dpi);
-            _dict.Add(pageNum, img);
+            _dict.Add(key, img);
             return img;
+        }
+
+        public Bitmap GetPageImage(int pageNum,int dpi,int rotationAngle)
+        {
+            var key = $"{pageNum}_{dpi}_{rotationAngle}";
+            if(_dict.ContainsKey(key)) return _dict[key];
+            var page = _file.GetPage(pageNum);
+            page.Rotate = rotationAngle; // 设置页面旋转角度
+            var image = page.GetImage(dpi);
+            return image;
         }
     }
 }

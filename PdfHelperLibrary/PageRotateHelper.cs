@@ -63,5 +63,32 @@ namespace PdfHelperLibrary
                 return ex.Message;
             }
         }
+
+        public static string RotatePdf(string inputFilePath, string outputFilePath, Dictionary<int, int> pageRotateDict)
+        {
+            try
+            {
+                // 打开现有的 PDF 文档
+                var document = PdfReader.Open(inputFilePath, PdfDocumentOpenMode.Modify);
+
+                var pageCount = document.PageCount;
+
+                foreach (var item in pageRotateDict)
+                {
+                    var pageNum = item.Key;
+                    var rotateAngle = item.Value * 90;
+                    if (pageNum < 0 || pageNum >= pageCount) continue;
+                    document.Pages[pageNum].Rotate = rotateAngle;
+                }
+
+                // 保存修改后的文档
+                document.Save(outputFilePath);
+                return "";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
     }
 }

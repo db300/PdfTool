@@ -37,13 +37,19 @@ namespace PdfEditor.Controls
             panel.PageSelect += Panel_PageSelect;
             _flPanel.Controls.Add(panel);
         }
+
+        public void UpdatePage(int pageNum, Image img)
+        {
+            if (pageNum < 0 || pageNum >= _flPanel.Controls.Count || !(_flPanel.Controls[pageNum] is PagePreviewPanel panel)) return;
+            panel.SetPage(pageNum, img);
+        }
         #endregion
 
         #region event handler
         private void Panel_PageSelect(object sender, EventArgs e, int pageNum)
         {
             if (SelectedPageNum >= 0) _flPanel.Controls[SelectedPageNum].BackColor = SystemColors.Control;
-            _flPanel.Controls[pageNum].BackColor = Color.AliceBlue;
+            _flPanel.Controls[pageNum].BackColor = /*Color.AliceBlue*/Color.FromArgb(249, 244, 255);
             SelectedPageNum = pageNum;
 
             PageSelect?.Invoke(sender, e, pageNum);

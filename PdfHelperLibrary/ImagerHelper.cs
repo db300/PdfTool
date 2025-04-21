@@ -148,14 +148,37 @@ namespace PdfHelperLibrary
             return img;
         }
 
-        public Bitmap GetPageImage(int pageNum,int dpi,int rotationAngle)
+        public Bitmap GetPageImage(int pageNum, int dpi, int rotationAngle)
         {
             var key = $"{pageNum}_{dpi}_{rotationAngle}";
-            if(_dict.ContainsKey(key)) return _dict[key];
-            var page = _file.GetPage(pageNum);
-            page.Rotate = rotationAngle; // 设置页面旋转角度
-            var image = page.GetImage(dpi);
-            return image;
+            if (_dict.ContainsKey(key)) return _dict[key];
+            var img = _file.GetPageImage(pageNum, dpi);
+            var rotatedImage = (Bitmap)img.Clone();
+
+            RotateFlipType rotateFlipType;
+            switch (rotationAngle)
+            {
+                case 0:
+                    rotateFlipType = RotateFlipType.RotateNoneFlipNone;
+                    break;
+                case 90:
+                case -270:// 逆时针 -270 等同于顺时针 90
+                    rotateFlipType = RotateFlipType.Rotate90FlipNone;
+                    break;
+                case 180:
+                case -180:// 逆时针 -180 等同于顺时针 180
+                    rotateFlipType = RotateFlipType.Rotate180FlipNone;
+                    break;
+                case 270:
+                case -90:// 逆时针 -90 等同于顺时针 270
+                    rotateFlipType = RotateFlipType.Rotate270FlipNone;
+                    break;
+                default:
+                    throw new ArgumentException($"Invalid rotation angle: {rotationAngle}");
+            }
+            rotatedImage.RotateFlip(rotateFlipType);
+            _dict.Add(key, rotatedImage);
+            return rotatedImage;
         }
     }
 }

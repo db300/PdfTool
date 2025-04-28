@@ -21,7 +21,7 @@ namespace PdfHelperLibrary
                 // 遍历每一页并设置旋转角度
                 foreach (var page in document.Pages)
                 {
-                    page.Rotate = rotationAngle;
+                    page.Rotate += rotationAngle;
                 }
 
                 // 保存修改后的文档
@@ -49,7 +49,7 @@ namespace PdfHelperLibrary
 
                 foreach (var pageNum in validPageNums)
                 {
-                    document.Pages[pageNum - 1].Rotate = rotationAngle;
+                    document.Pages[pageNum - 1].Rotate += rotationAngle;
                 }
 
                 // 保存修改后的文档
@@ -78,7 +78,7 @@ namespace PdfHelperLibrary
                     var pageNum = item.Key;
                     var rotateAngle = item.Value * 90;
                     if (pageNum < 0 || pageNum >= pageCount) continue;
-                    document.Pages[pageNum].Rotate = rotateAngle;
+                    document.Pages[pageNum].Rotate += rotateAngle;
                 }
 
                 // 保存修改后的文档

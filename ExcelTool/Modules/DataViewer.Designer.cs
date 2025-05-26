@@ -1,4 +1,4 @@
-﻿namespace ExcelTool
+﻿namespace ExcelTool.Modules
 {
     partial class DataViewer
     {

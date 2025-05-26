@@ -145,25 +145,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />
-    <Compile Include="DataExtracter.cs">
+    <Compile Include="Modules\DataExtracter.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DataExtracter.Designer.cs">
+    <Compile Include="Modules\DataExtracter.Designer.cs">
       <DependentUpon>DataExtracter.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataViewer.cs">
+    <Compile Include="Modules\DataViewer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="DataViewer.Designer.cs">
+    <Compile Include="Modules\DataViewer.Designer.cs">
       <DependentUpon>DataViewer.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\CommonHelper.cs" />
     <Compile Include="Helpers\DataExtractHelper.cs" />
     <Compile Include="Helpers\ImageExtractHelper.cs" />
-    <Compile Include="ImageExtracter.cs">
+    <Compile Include="Modules\ImageExtracter.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ImageExtracter.Designer.cs">
+    <Compile Include="Modules\ImageExtracter.Designer.cs">
       <DependentUpon>ImageExtracter.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">

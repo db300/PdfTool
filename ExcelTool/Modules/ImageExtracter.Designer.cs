@@ -1,6 +1,6 @@
-﻿namespace ExcelTool
+﻿namespace ExcelTool.Modules
 {
-    partial class DataExtracter
+    partial class ImageExtracter
     {
         /// <summary> 
         /// 必需的设计器变量。

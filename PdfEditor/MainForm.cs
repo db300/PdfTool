@@ -25,15 +25,46 @@ namespace PdfEditor
         private TabControl _tabControl;
         #endregion
 
+        #region method
+        private void OpenFile()
+        {
+
+        }
+        #endregion
+
         #region event handler
         private void BtnRotate_Click(object sender, EventArgs e)
         {
             var openDlg = new OpenFileDialog { Filter = "PDF文件(*.pdf)|*.pdf|所有文件(*.*)|*.*", Multiselect = false };
             if (openDlg.ShowDialog() != DialogResult.OK) return;
-            var tabPage = new TabPage($"旋转页面 - {Path.GetFileName(openDlg.FileName)}");
+            var tabPage = new TabPage($"页面旋转 - {Path.GetFileName(openDlg.FileName)}");
             var pageRotator = new Modules.PageRotator { Dock = DockStyle.Fill };
             pageRotator.OpenPdf(openDlg.FileName);
             tabPage.Controls.Add(pageRotator);
+            _tabControl.TabPages.Add(tabPage);
+            _tabControl.SelectedTab = tabPage;
+        }
+
+        private void BtnSort_Click(object sender, EventArgs e)
+        {
+            var openDlg = new OpenFileDialog { Filter = "PDF文件(*.pdf)|*.pdf|所有文件(*.*)|*.*", Multiselect = false };
+            if (openDlg.ShowDialog() != DialogResult.OK) return;
+            var tabPage = new TabPage($"页面排序 - {Path.GetFileName(openDlg.FileName)}");
+            var pageSorter = new Modules.PageSorter { Dock = DockStyle.Fill };
+            pageSorter.OpenPdf(openDlg.FileName);
+            tabPage.Controls.Add(pageSorter);
+            _tabControl.TabPages.Add(tabPage);
+            _tabControl.SelectedTab = tabPage;
+        }
+
+        private void BtnScan_Click(object sender, EventArgs e)
+        {
+            var folderDlg = new FolderBrowserDialog();
+            if (folderDlg.ShowDialog() != DialogResult.OK) return;
+            var tabPage = new TabPage($"PDF浏览 - {folderDlg.SelectedPath}");
+            var browser = new Modules.Browser { Dock = DockStyle.Fill };
+            browser.ScanPdf(folderDlg.SelectedPath);
+            tabPage.Controls.Add(browser);
             _tabControl.TabPages.Add(tabPage);
             _tabControl.SelectedTab = tabPage;
         }
@@ -101,6 +132,33 @@ namespace PdfEditor
                 Text = "旋转页面"
             };
             btnRotate.Click += BtnRotate_Click;
+
+            var btnSort = new Button
+            {
+                AutoSize = true,
+                Location = new Point(btnRotate.Right + Config.ControlPadding, btnRotate.Top),
+                Parent = tabPage4Home,
+                Text = "页面排序"
+            };
+            btnSort.Click += BtnSort_Click;
+
+            var picLine = new PictureBox
+            {
+                Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right,
+                BackColor = Color.LightGray,
+                Location = new Point(Config.ControlMargin, btnSort.Bottom + Config.ControlPadding),
+                Parent = tabPage4Home,
+                Size = new Size(tabPage4Home.ClientSize.Width - 2 * Config.ControlMargin, 1)
+            };
+
+            var btnScan = new Button
+            {
+                AutoSize = true,
+                Location = new Point(Config.ControlMargin, picLine.Bottom + Config.ControlPadding),
+                Parent = tabPage4Home,
+                Text = "扫描PDF"
+            };
+            btnScan.Click += BtnScan_Click;
         }
         #endregion
     }

@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using PdfEditor.Controls;
 
 namespace PdfEditor.Modules
 {
     /// <summary>
     /// 页面旋转器
     /// </summary>
-    public partial class PageRotator : UserControl
+    public partial class PageRotator : PageOperaBase
     {
         #region constructor
         public PageRotator()
@@ -22,39 +21,10 @@ namespace PdfEditor.Modules
         #endregion
 
         #region property
-        private string _inputPdfFileName;
-        private PdfHelperLibrary.ImagerHelper2 _helper;
         private readonly Dictionary<int, int> _dict4Rotate = new Dictionary<int, int>();
-        private int _currentPageNum = -1;
-        private PagePanel _pagePanel;
-        private PictureBox _picBox;
         #endregion
 
-        #region method
-        public void OpenPdf(string fileName)
-        {
-            _inputPdfFileName = fileName;
-            _helper = new PdfHelperLibrary.ImagerHelper2(fileName);
-            var background = new BackgroundWorker { WorkerReportsProgress = true };
-            background.DoWork += (ww, ee) =>
-            {
-                var pageCount = _helper.PageCount;
-                for (var i = 0; i < pageCount; i++)
-                {
-                    var img = _helper.GetPageImage(i, 100);
-                    background.ReportProgress(i, img);
-                }
-            };
-            background.ProgressChanged += (ww, ee) =>
-            {
-                var pageNum = ee.ProgressPercentage;
-                var img = (Image)ee.UserState;
-                _pagePanel.AddPage(pageNum, img);
-            };
-            background.RunWorkerCompleted += (ww, ee) => { };
-            background.RunWorkerAsync();
-        }
-
+        #region method       
         private void Rotate(int pageNum, int angleTag)
         {
             if (_dict4Rotate.ContainsKey(pageNum))
@@ -71,7 +41,7 @@ namespace PdfEditor.Modules
         #endregion
 
         #region event handler
-        private void PagePanel_PageSelect(object sender, EventArgs e, int pageNum)
+        protected override void PagePanel_PageSelect(object sender, EventArgs e, int pageNum)
         {
             _currentPageNum = pageNum;
             _picBox.Image = _dict4Rotate.ContainsKey(pageNum)
@@ -253,6 +223,7 @@ namespace PdfEditor.Modules
             btnClose.Location = new Point(Config.ControlMargin, panel.ClientSize.Height - Config.ControlMargin - btnClose.Height);
             btnClose.Click += BtnClose_Click;
 
+            /*
             _pagePanel = new PagePanel
             {
                 Dock = DockStyle.Left,
@@ -269,6 +240,7 @@ namespace PdfEditor.Modules
                 SizeMode = PictureBoxSizeMode.Zoom
             };
             _picBox.BringToFront();
+            */
         }
         #endregion
     }

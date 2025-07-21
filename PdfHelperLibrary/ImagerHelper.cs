@@ -130,9 +130,16 @@ namespace PdfHelperLibrary
     {
         public ImagerHelper2(string inputPdfFileName)
         {
-            _file = PDFFile.Open(inputPdfFileName);
-            _dict = new Dictionary<string, Bitmap>();
-            PageCount = _file.PageCount;
+            try
+            {
+                _file = PDFFile.Open(inputPdfFileName);
+                _dict = new Dictionary<string, Bitmap>();
+                PageCount = _file.PageCount;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         private readonly PDFFile _file;

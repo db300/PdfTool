@@ -1,12 +1,7 @@
 ﻿using PdfEditor.Controls;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PdfEditor.Modules
@@ -37,26 +32,33 @@ namespace PdfEditor.Modules
         #region method
         public void OpenPdf(string fileName)
         {
-            _inputPdfFileName = fileName;
-            _helper = new PdfHelperLibrary.ImagerHelper2(fileName);
-            var background = new BackgroundWorker { WorkerReportsProgress = true };
-            background.DoWork += (ww, ee) =>
+            try
             {
-                var pageCount = _helper.PageCount;
-                for (var i = 0; i < pageCount; i++)
+                _inputPdfFileName = fileName;
+                _helper = new PdfHelperLibrary.ImagerHelper2(fileName);
+                var background = new BackgroundWorker { WorkerReportsProgress = true };
+                background.DoWork += (ww, ee) =>
                 {
-                    var img = _helper.GetPageImage(i, 100);
-                    background.ReportProgress(i, img);
-                }
-            };
-            background.ProgressChanged += (ww, ee) =>
+                    var pageCount = _helper.PageCount;
+                    for (var i = 0; i < pageCount; i++)
+                    {
+                        var img = _helper.GetPageImage(i, 100);
+                        background.ReportProgress(i, img);
+                    }
+                };
+                background.ProgressChanged += (ww, ee) =>
+                {
+                    var pageNum = ee.ProgressPercentage;
+                    var img = (Image)ee.UserState;
+                    _pagePanel.AddPage(pageNum, img);
+                };
+                background.RunWorkerCompleted += (ww, ee) => { };
+                background.RunWorkerAsync();
+            }
+            catch (Exception ex)
             {
-                var pageNum = ee.ProgressPercentage;
-                var img = (Image)ee.UserState;
-                _pagePanel.AddPage(pageNum, img);
-            };
-            background.RunWorkerCompleted += (ww, ee) => { };
-            background.RunWorkerAsync();
+                throw ex;
+            }
         }
         #endregion
 

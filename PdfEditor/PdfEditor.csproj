@@ -65,6 +65,7 @@
     <Compile Include="Controls\PagePreviewPanel.Designer.cs">
       <DependentUpon>PagePreviewPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Entities\NodeTagItem.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -13,6 +13,9 @@ namespace PdfHelperLibrary3
         /// </summary>
         public static List<List<string>> Pdf2Table(string fileName, List<int> filterRowList, List<int> filterColList)
         {
+            var document = new PdfDocument(fileName);
+            if (document.Pages.Count == 1) return Pdf2Table4OnePage(document, filterRowList, filterColList);
+
             var streamList = SplitPdf(fileName);
             if (!(streamList?.Count > 0)) return null;
             return Pdf2Table(streamList, filterRowList, filterColList);
@@ -47,8 +50,21 @@ namespace PdfHelperLibrary3
         {
             try
             {
-                var result = new List<List<string>>();
                 var document = new PdfDocument(stream);
+                return Pdf2Table4OnePage(document, filterRowList, filterColList);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return null;
+            }
+        }
+
+        private static List<List<string>> Pdf2Table4OnePage(PdfDocument document, List<int> filterRowList, List<int> filterColList)
+        {
+            try
+            {
+                var result = new List<List<string>>();
                 var tableExtractor = new PdfTableExtractor(document);
                 PdfTable[] tableList = null;
                 for (var pageIndex = 0; pageIndex < document.Pages.Count; pageIndex++)
@@ -84,7 +100,7 @@ namespace PdfHelperLibrary3
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                System.Diagnostics.Debug.WriteLine($"PdfHelperLibrary3.TableHelper.Pdf2Table4OnePage 失败，原因：{ex}");
                 return null;
             }
         }

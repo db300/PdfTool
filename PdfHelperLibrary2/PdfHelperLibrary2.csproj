@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepairHelper.cs" />
+    <Compile Include="TextExtractHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

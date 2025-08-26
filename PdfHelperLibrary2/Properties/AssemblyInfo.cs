@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
 [assembly: AssemblyTitle("PdfHelperLibrary2")]
-[assembly: AssemblyDescription("PDF帮助类库2")]
+[assembly: AssemblyDescription("基于iTextSharp和PdfHelperLibrary的PDF帮助类库")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ColdDaddy")]
 [assembly: AssemblyProduct("PdfHelperLibrary2")]

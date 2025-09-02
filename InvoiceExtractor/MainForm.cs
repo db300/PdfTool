@@ -1,6 +1,6 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
-using InvoiceExtractor.Entities;
+using InvoiceHelperLibrary.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,6 +29,19 @@ namespace InvoiceExtractor
 
         private TextBox _txtLog;
 
+        private static readonly List<string> Columns = new List<string>
+        {
+            "发票类型",
+            "发票号码",
+            "开票日期",
+            "购买方名称",
+            "购买方税号",
+            "销售方名称",
+            "销售方税号",
+            "金额合计",
+            "税额合计"
+        };
+
         private const int ControlMargin = 20;
         private const int ControlPadding = 12;
         #endregion
@@ -47,19 +60,16 @@ namespace InvoiceExtractor
             using (var csv = new CsvWriter(writer, config))
             {
                 // 写表头
-                csv.WriteField("发票号码");
-                csv.WriteField("开票日期");
-                csv.WriteField("购买方名称");
-                csv.WriteField("购买方税号");
-                csv.WriteField("销售方名称");
-                csv.WriteField("销售方税号");
-                csv.WriteField("金额合计");
-                csv.WriteField("税额合计");
+                foreach (var column in Columns)
+                {
+                    csv.WriteField(column);
+                }
                 csv.NextRecord();
 
                 // 写数据
                 foreach (var item in list)
                 {
+                    csv.WriteField(item.InvoiceType);
                     csv.WriteField(item.InvoiceNumber);
                     csv.WriteField(item.InvoiceDate);
                     csv.WriteField(item.BuyerName);
@@ -102,7 +112,7 @@ namespace InvoiceExtractor
                 var list = new List<InvoiceItem>();
                 foreach (var fileName in _inputPdfFileList)
                 {
-                    var (success, msg, invoiceItem) = Helpers.ParseHelper.Extract(fileName);
+                    var (success, msg, invoiceItem) = InvoiceHelperLibrary.ParseHelper.Extract(fileName);
                     if (!success)
                     {
                         background.ReportProgress(0, $"{fileName} 提取失败: {msg}");
@@ -124,10 +134,10 @@ namespace InvoiceExtractor
                     _txtLog.AppendText($"{outputFileName} 生成完成\r\n");
 
                     var sb = new StringBuilder();
-                    sb.AppendLine("发票号码,开票日期,购买方名称,购买方税号,销售方名称,销售方税号,金额合计,税额合计");
+                    sb.AppendLine(string.Join(",", Columns));
                     foreach (var item in list)
                     {
-                        sb.AppendLine($"{item.InvoiceNumber},{item.InvoiceDate},{item.BuyerName},{item.BuyerTaxNumber},{item.SellerName},{item.SellerTaxNumber},{item.TotalAmount},{item.TotalTax}");
+                        sb.AppendLine($"{item.InvoiceType},{item.InvoiceNumber},{item.InvoiceDate},{item.BuyerName},{item.BuyerTaxNumber},{item.SellerName},{item.SellerTaxNumber},{item.TotalAmount},{item.TotalTax}");
                     }
                     /*
                     var csvFileName = outputFileName.Replace(".csv", "_summary.csv");

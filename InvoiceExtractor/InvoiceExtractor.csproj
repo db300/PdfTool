@@ -77,8 +77,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\InvoiceItem.cs" />
-    <Compile Include="Helpers\ParseHelper.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -111,9 +109,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PdfHelperLibrary3\PdfHelperLibrary3.csproj">
-      <Project>{39f082aa-3ebe-480d-bed5-b1076114291e}</Project>
-      <Name>PdfHelperLibrary3</Name>
+    <ProjectReference Include="..\InvoiceHelperLibrary\InvoiceHelperLibrary.csproj">
+      <Project>{b2f81410-5e74-41b8-8086-30639c9529c1}</Project>
+      <Name>InvoiceHelperLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

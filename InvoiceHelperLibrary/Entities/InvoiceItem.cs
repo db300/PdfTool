@@ -1,12 +1,16 @@
 ﻿using System.Collections.Generic;
 
-namespace InvoiceExtractor.Entities
+namespace InvoiceHelperLibrary.Entities
 {
     /// <summary>
     /// 发票实体
     /// </summary>
-    internal class InvoiceItem
+    public class InvoiceItem
     {
+        /// <summary>
+        /// 发票类型
+        /// </summary>
+        public string InvoiceType { get; set; }
         /// <summary>
         /// 发票号码
         /// </summary>
@@ -56,7 +60,7 @@ namespace InvoiceExtractor.Entities
     /// <summary>
     /// 开票内容实体
     /// </summary>
-    internal class InvoiceContentItem
+    public class InvoiceContentItem
     {
         /// <summary>
         /// 项目名称

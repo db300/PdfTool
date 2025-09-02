@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("InvoiceExtractor")]
-[assembly: AssemblyDescription("发票信息提取器")]
+[assembly: AssemblyTitle("InvoiceHelperLibrary")]
+[assembly: AssemblyDescription("发票帮助类库")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ColdDaddy")]
-[assembly: AssemblyProduct("InvoiceExtractor")]
+[assembly: AssemblyProduct("InvoiceHelperLibrary")]
 [assembly: AssemblyCopyright("Copyright © ColdDaddy 2025")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 如果此项目向 COM 公开，则下列 GUID 用于类型库的 ID
-[assembly: Guid("13876775-6e53-4349-87b8-0618ce32ba1a")]
+[assembly: Guid("b2f81410-5e74-41b8-8086-30639c9529c1")]
 
 // 程序集的版本信息由下列四个值组成: 
 //
@@ -29,5 +29,5 @@ using System.Runtime.InteropServices;
 //      生成号
 //      修订号
 //
-[assembly: AssemblyVersion("1.0.0.2")]
-[assembly: AssemblyFileVersion("1.0.0.2")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

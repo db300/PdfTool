@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace InvoiceHelperLibrary.Entities
+﻿namespace InvoiceHelperLibraryX.Entities
 {
     /// <summary>
     /// 发票实体

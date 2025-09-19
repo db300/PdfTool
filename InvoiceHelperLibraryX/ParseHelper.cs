@@ -1,9 +1,6 @@
-﻿using InvoiceHelperLibrary.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using InvoiceHelperLibraryX.Entities;
 
-namespace InvoiceHelperLibrary
+namespace InvoiceHelperLibraryX
 {
     /// <summary>
     /// 解析帮助类
@@ -18,13 +15,46 @@ namespace InvoiceHelperLibrary
         private const string InvoiceTypeTag5 = "电子发票（铁路电子客票）";
         private const string InvoiceTypeTag6 = "电子发票（航空运输电子客票行程单）";
 
-        public static (bool, string, InvoiceItem) Extract(string fileName)
+        /// <summary>
+        /// 提取发票信息(读取流)
+        /// 返回值: (是否成功, 错误信息, 发票实体)
+        /// </summary>
+        public static (bool, string, InvoiceItem?) Extract(Stream stream)
         {
             try
             {
-                var tables = PdfHelperLibrary3.TableHelper.Pdf2Table(fileName, new List<int>(), new List<int>());
-                var ss = PdfHelperLibrary3.TextHelper.Pdf2String(fileName);
+                var tables = PdfHelperLibraryX3.TableHelper.Pdf2Table(stream, new List<int>(), new List<int>());
+                var ss = PdfHelperLibraryX3.TextHelper.Pdf2String(stream);
+                return Extract(tables, ss);
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message, null);
+            }
+        }
 
+        /// <summary>
+        /// 提取发票信息(读取文件)
+        /// 返回值: (是否成功, 错误信息, 发票实体)
+        /// </summary>
+        public static (bool, string, InvoiceItem?) Extract(string fileName)
+        {
+            try
+            {
+                var tables = PdfHelperLibraryX3.TableHelper.Pdf2Table(fileName, new List<int>(), new List<int>());
+                var ss = PdfHelperLibraryX3.TextHelper.Pdf2String(fileName);
+                return Extract(tables, ss);
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message, null);
+            }
+        }
+
+        private static (bool, string, InvoiceItem?) Extract(List<List<string>> tables, List<string> ss)
+        {
+            try
+            {
                 var invoiceType = GetInvoiceType(ss);
                 var invoiceItem = new InvoiceItem { InvoiceType = invoiceType };
                 switch (invoiceType)
@@ -336,11 +366,6 @@ namespace InvoiceHelperLibrary
         private static double GetValueAmountAfterCNY(string s)
         {
             return double.Parse(s.Replace("CNY", "").Trim());
-        }
-
-        private static string RemoveInvalidBlank(string s)
-        {
-            return s.Replace("） ", "）");
         }
     }
 }

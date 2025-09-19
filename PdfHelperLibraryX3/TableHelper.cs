@@ -1,10 +1,7 @@
 ﻿using Spire.Pdf;
 using Spire.Pdf.Utilities;
-using System;
-using System.Collections.Generic;
-using System.IO;
 
-namespace PdfHelperLibrary3
+namespace PdfHelperLibraryX3
 {
     public static class TableHelper
     {
@@ -26,6 +23,9 @@ namespace PdfHelperLibrary3
         /// </summary>
         public static List<List<string>> Pdf2Table(Stream stream, List<int> filterRowList, List<int> filterColList)
         {
+            var document = new PdfDocument(stream);
+            if (document.Pages.Count == 1) return Pdf2Table4OnePage(document, filterRowList, filterColList);
+
             var streamList = SplitPdf(stream);
             if (!(streamList?.Count > 0)) return null;
             return Pdf2Table(streamList, filterRowList, filterColList);

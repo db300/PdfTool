@@ -1,6 +1,6 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
-using InvoiceHelperLibrary.Entities;
+using InvoiceHelperLibraryX.Entities;
 using System.Globalization;
 using System.Text;
 
@@ -15,7 +15,7 @@ namespace InvoiceHelperConsoleApp
             var list = new List<InvoiceItem>();
             foreach (var fileName in InputPdfFileList)
             {
-                var (success, msg, invoiceItem) = InvoiceHelperLibrary.ParseHelper.Extract(fileName);
+                var (success, msg, invoiceItem) = InvoiceHelperLibraryX.ParseHelper.Extract(fileName);
                 if (!success)
                 {
                     Console.Error.WriteLine($"{fileName} 提取失败: {msg}");

@@ -27,19 +27,20 @@ namespace InvoiceExtractor
         #region property
         private readonly List<string> _inputPdfFileList = new List<string>();
 
+        private DataGridView _dgvInvoice;
         private TextBox _txtLog;
 
-        private static readonly List<string> Columns = new List<string>
+        private static readonly List<(string, string)> Columns = new List<(string, string)>
         {
-            "发票类型",
-            "发票号码",
-            "开票日期",
-            "购买方名称",
-            "购买方税号",
-            "销售方名称",
-            "销售方税号",
-            "金额合计",
-            "税额合计"
+            ("发票类型", "InvoiceType"),
+            ("发票号码", "InvoiceNumber"),
+            ("开票日期", "InvoiceDate"),
+            ("购买方名称", "BuyerName"),
+            ("购买方税号", "BuyerTaxNumber"),
+            ("销售方名称", "SellerName"),
+            ("销售方税号", "SellerTaxNumber"),
+            ("金额合计", "TotalAmount"),
+            ("税额合计", "TotalTax")
         };
 
         private const int ControlMargin = 20;
@@ -62,7 +63,7 @@ namespace InvoiceExtractor
                 // 写表头
                 foreach (var column in Columns)
                 {
-                    csv.WriteField(column);
+                    csv.WriteField(column.Item1);
                 }
                 csv.NextRecord();
 
@@ -130,20 +131,15 @@ namespace InvoiceExtractor
                 _txtLog.AppendText($"提取完成\r\n");
                 if (ee.Result is List<InvoiceItem> list)
                 {
+                    _dgvInvoice.DataSource = list;
+                    for (var i = 0; i < list.Count; i++)
+                    {
+                        _dgvInvoice.Rows[i].Tag = list[i];
+                        _dgvInvoice.Rows[i].DefaultCellStyle.BackColor = i % 2 == 0 ? Color.White : Color.LightGray;
+                    }
+
                     ExportCsv(list, out var outputFileName);
                     _txtLog.AppendText($"{outputFileName} 生成完成\r\n");
-
-                    var sb = new StringBuilder();
-                    sb.AppendLine(string.Join(",", Columns));
-                    foreach (var item in list)
-                    {
-                        sb.AppendLine($"{item.InvoiceType},{item.InvoiceNumber},{item.InvoiceDate},{item.BuyerName},{item.BuyerTaxNumber},{item.SellerName},{item.SellerTaxNumber},{item.TotalAmount},{item.TotalTax}");
-                    }
-                    /*
-                    var csvFileName = outputFileName.Replace(".csv", "_summary.csv");
-                    File.WriteAllText(csvFileName, sb.ToString(), Encoding.UTF8);
-                    */
-                    _txtLog.AppendText($"{sb}\r\n");
                 }
             };
             background.RunWorkerAsync();
@@ -154,7 +150,7 @@ namespace InvoiceExtractor
         #region ui
         private void InitUi()
         {
-            ClientSize = new Size(1000, 800);
+            ClientSize = new Size(1200, 800);
             StartPosition = FormStartPosition.CenterScreen;
             Text = $"发票信息提取工具 v{System.Reflection.Assembly.GetExecutingAssembly().GetName().Version}";
 
@@ -176,19 +172,46 @@ namespace InvoiceExtractor
             };
             btnExtract.Click += BtnExtract_Click;
 
-            var top = btnOpen.Bottom + ControlPadding;
             _txtLog = new TextBox
             {
-                Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
+                Anchor = AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom,
                 Font = new Font(Font.FontFamily, 11F),
-                Location = new Point(ControlMargin, top),
+                Location = new Point(ControlMargin, ClientSize.Height - ControlMargin - 200),
                 Multiline = true,
                 Parent = this,
                 ReadOnly = true,
                 ScrollBars = ScrollBars.Both,
-                Size = new Size(ClientSize.Width - 2 * ControlMargin, ClientSize.Height - ControlMargin - top),
+                Size = new Size(ClientSize.Width - 2 * ControlMargin, 200),
                 WordWrap = false
             };
+
+            var top = btnOpen.Bottom + ControlPadding;
+            _dgvInvoice = new DataGridView
+            {
+                AllowUserToAddRows = false,
+                AllowUserToDeleteRows = false,
+                AllowUserToOrderColumns = false,
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right | AnchorStyles.Bottom,
+                AutoGenerateColumns = false,
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
+                Font = new Font(Font.FontFamily, 11F),
+                Location = new Point(ControlMargin, top),
+                Parent = this,
+                ReadOnly = true,
+                RowHeadersVisible = false,
+                SelectionMode = DataGridViewSelectionMode.FullRowSelect,
+                Size = new Size(ClientSize.Width - 2 * ControlMargin, _txtLog.Top - ControlPadding - top),
+            };
+            _dgvInvoice.RowTemplate.Height = 25;
+            _dgvInvoice.Columns.AddRange(Columns.Select(a => new DataGridViewTextBoxColumn
+            {
+                AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells,
+                DataPropertyName = a.Item2,
+                HeaderText = a.Item1,
+                MinimumWidth = 100,
+                Name = $"col{a.Item2}",
+                ReadOnly = true
+            }).ToArray());
         }
         #endregion
     }

@@ -13,6 +13,7 @@ namespace InvoiceHelperLibrary
     {
         private const string InvoiceTypeTag1 = "电子发票（普通发票）";
         private const string InvoiceTypeTag11 = "电⼦发票（普通发票）";
+        private const string InvoiceTypeTag12 = "电子发票(普通发票)";
         private const string InvoiceTypeTag2 = "电子发票（增值税专用发票）";
         private const string InvoiceTypeTag3 = "北京市社会团体会费统一票据（电子）";
         private const string InvoiceTypeTag4 = "北京市人民法院诉讼收费专用票据（电子）";
@@ -101,6 +102,7 @@ namespace InvoiceHelperLibrary
                 else if (s.Contains(InvoiceTypeTag1)) return InvoiceTypeTag1;
                 else if (s.Contains(InvoiceTypeTag2)) return InvoiceTypeTag2;
                 else if (s.Contains(InvoiceTypeTag11)) return InvoiceTypeTag1;
+                else if (s.Contains(InvoiceTypeTag12)) return InvoiceTypeTag1;
             }
             return "";
         }

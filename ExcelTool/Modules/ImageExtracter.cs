@@ -105,6 +105,7 @@ namespace ExcelTool.Modules
             _txtLog = new TextBox
             {
                 Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
+                Font = new Font(Font.FontFamily, 11F),
                 Location = new Point(Config.ControlMargin, btnAddFile.Bottom + Config.ControlPadding),
                 Multiline = true,
                 Parent = this,

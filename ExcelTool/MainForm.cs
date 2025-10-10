@@ -41,7 +41,10 @@ namespace ExcelTool
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 var files = ((string[])e.Data.GetData(DataFormats.FileDrop)).ToList();
-                var excelFiles = files.Where(a => a.EndsWith(".xls", StringComparison.OrdinalIgnoreCase) || a.EndsWith(".xlsx", StringComparison.OrdinalIgnoreCase)).ToList();
+                var excelFiles = files.Where(a =>
+                a.EndsWith(".xls", StringComparison.OrdinalIgnoreCase) ||
+                a.EndsWith(".xlsx", StringComparison.OrdinalIgnoreCase) ||
+                a.EndsWith(".csv", StringComparison.OrdinalIgnoreCase)).ToList();
                 var tabPage = Controls.OfType<TabControl>().FirstOrDefault().SelectedTab;
                 var control = tabPage.Controls[0];
                 if (control is IExcelHandler excelHandler)
@@ -71,6 +74,7 @@ namespace ExcelTool
         private void InitUi()
         {
             AllowDrop = true;
+            ClientSize = new Size(1200, 1000);
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = $"Excel工具 {System.Reflection.Assembly.GetExecutingAssembly().GetName().Version}";
@@ -112,11 +116,13 @@ namespace ExcelTool
             {
                 new TabPage("图片提取") { BorderStyle = BorderStyle.None, Name = "tpImageExtracter" },
                 new TabPage("数据提取") { BorderStyle = BorderStyle.None, Name = "tpDataExtracter" },
-                new TabPage("数据预览") { BorderStyle = BorderStyle.None, Name = "tpDataViewer" }
+                new TabPage("数据预览") { BorderStyle = BorderStyle.None, Name = "tpDataViewer" },
+                new TabPage("表格拆分") { BorderStyle = BorderStyle.None, Name = "tpTableSplitter"},
             });
             tabControl.TabPages["tpImageExtracter"].Controls.Add(new ImageExtracter { Dock = DockStyle.Fill });
             tabControl.TabPages["tpDataExtracter"].Controls.Add(new DataExtracter { Dock = DockStyle.Fill });
             tabControl.TabPages["tpDataViewer"].Controls.Add(new DataViewer { Dock = DockStyle.Fill });
+            tabControl.TabPages["tpTableSplitter"].Controls.Add(new TableSplitter { Dock = DockStyle.Fill });
 
 #if DEBUG
             tabControl.MouseDoubleClick += (sender, e) =>
@@ -138,7 +144,8 @@ namespace ExcelTool
                 {
                     () => new ImageExtracter { Dock = DockStyle.Fill },
                     () => new DataExtracter { Dock = DockStyle.Fill },
-                    () => new DataViewer { Dock = DockStyle.Fill }
+                    () => new DataViewer { Dock = DockStyle.Fill },
+                    () => new TableSplitter { Dock = DockStyle.Fill },
                 };
 
                 if (tabIndex < creators.Length)

@@ -11,6 +11,27 @@ namespace PdfConsoleApp
     {
         static void Main(string[] args)
         {
+            //批量检查异常文件
+            var dir = @"C:\GitHub\FileDownloader\FileDownloader\bin\Debug\Downloads";
+            var files = Directory.GetFiles(dir, "*.pdf", SearchOption.AllDirectories).ToList();
+            int errCount=0, okCount=0;
+            foreach (var file in files)
+            {
+                try
+                {
+                    PdfHelperLibrary.CommonHelper.GetPageCount(file);
+                    okCount++;
+                }
+                catch (Exception ex)
+                {
+                    errCount++;
+                    Console.Error.WriteLine(ex.Message);
+                }
+            }
+            Console.Out.WriteLine($"检查完成，共{files.Count}个文件，正常{okCount}个，异常{errCount}个");
+            Console.ReadLine();
+
+
             /*
             var path0 = @"C:\Users\冷怀晶\Downloads\B端字体著作权登记证书及更名说明（285份）\证书\";
             var path1 = @"C:\Users\冷怀晶\Downloads\B端字体著作权登记证书及更名说明（285份）\更名说明\";
@@ -39,6 +60,7 @@ namespace PdfConsoleApp
                 @"C:\Users\冷怀晶\Downloads\B端字体著作权登记证书及更名说明（285份）\更名说明\1-2009-F-020560-汉仪菱心体（简）.jpeg",
                 @"C:\Users\冷怀晶\Downloads\B端字体著作权登记证书及更名说明（285份）\证书\1-2009-F-020560-汉仪菱心体（简）.jpg"}, "a.pdf");
             */
+            /*
             var pathSrc = @"C:\Users\冷怀晶\source\repos\FileDownloader\FileDownloader\bin\Debug\temp";
             var dirs = Directory.GetDirectories(pathSrc);
             foreach (var dir in dirs)
@@ -52,6 +74,7 @@ namespace PdfConsoleApp
                     else Console.Out.WriteLine($"{file} {s}");
                 }
             }
+            */
         }
     }
 }

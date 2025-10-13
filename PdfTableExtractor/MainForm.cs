@@ -36,7 +36,7 @@ namespace PdfTableExtractor
             var list = new List<List<string>>();
             foreach (var file in openDlg.FileNames)
             {
-                var result = Common.Pdf2Table(file, new List<int>(), new List<int>());
+                var result = PdfHelperLibrary3.TableHelper.Pdf2Table(file, new List<int>(), new List<int>());
                 if (result.Count > 0) list.AddRange(result);
             }
             System.Diagnostics.Debug.WriteLine(list);
@@ -62,7 +62,7 @@ namespace PdfTableExtractor
             System.Diagnostics.Debug.WriteLine(unicodeList);
             var a = string.Join("\r\n", unicodeList);
             var b = string.Join("", chaList);
-            File.WriteAllText("a.txt",a);
+            File.WriteAllText("a.txt", a);
         }
         #endregion
 

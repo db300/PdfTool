@@ -138,7 +138,8 @@ namespace PdfEditor
                 AutoSize = true,
                 Location = new Point(btnRotate.Right + Config.ControlPadding, btnRotate.Top),
                 Parent = tabPage4Home,
-                Text = "页面排序"
+                Text = "页面排序",
+                Visible = false
             };
             btnSort.Click += BtnSort_Click;
 
@@ -156,7 +157,7 @@ namespace PdfEditor
                 AutoSize = true,
                 Location = new Point(Config.ControlMargin, picLine.Bottom + Config.ControlPadding),
                 Parent = tabPage4Home,
-                Text = "扫描PDF"
+                Text = "浏览PDF"
             };
             btnScan.Click += BtnScan_Click;
         }

@@ -13,7 +13,11 @@ namespace ExcelTool.Helpers
     {
         internal static void ExtractImages(string excelFilePath, CommonHelper.InfoHandler infoHandler)
         {
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            //TODO:可用于进行测试的EXCEL文件如下：
+            //C:\test\可用于测试EXCEL图片提取的文件.xlsx
+
+            //ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            ExcelPackage.License.SetNonCommercialPersonal("ColdDaddy");
 
             using (var package = new ExcelPackage(new FileInfo(excelFilePath)))
             {

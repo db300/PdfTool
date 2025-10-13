@@ -53,7 +53,16 @@ namespace ExcelTool.Modules
                 {
                     case ".xls":
                     case ".xlsx":
-                        // TODO: Excel文件拆分逻辑
+                        {
+                            Log("------------------------------------");
+                            Log($"开始拆分文件：{fileName}");
+                            var outputFiles = Helpers.TableSplitHelper4Excel.Split(fileName, headerRows, maxRows);
+                            foreach (var outputFile in outputFiles)
+                            {
+                                Log($"拆分进度：{outputFile}");
+                            }
+                            Log($"完成拆分文件：{fileName}");
+                        }
                         break;
                     case ".csv":
                         {

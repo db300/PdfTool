@@ -163,7 +163,7 @@
     <Compile Include="Config.cs" />
     <Compile Include="Helpers\DataReadHelper.cs" />
     <Compile Include="Helpers\DataReadHelper4Csv.cs" />
-    <Compile Include="Helpers\TableSplitHelper.cs" />
+    <Compile Include="Helpers\TableSplitHelper4Excel.cs" />
     <Compile Include="Helpers\TableSplitHelper4Csv.cs" />
     <Compile Include="Modules\DataExtracter.cs">
       <SubType>UserControl</SubType>

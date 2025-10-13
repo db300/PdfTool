@@ -80,7 +80,7 @@ namespace PdfTool
         {
             AllowDrop = true;
             ClientSize = new Size(1000, 800);
-            ShowIcon = false;
+            Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             StartPosition = FormStartPosition.CenterScreen;
             Text = $"PDF工具 {System.Reflection.Assembly.GetExecutingAssembly().GetName().Version}";
 

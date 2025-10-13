@@ -71,6 +71,12 @@
     <Compile Include="BatchRenamer.Designer.cs">
       <DependentUpon>BatchRenamer.cs</DependentUpon>
     </Compile>
+    <Compile Include="BulkDeleter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="BulkDeleter.Designer.cs">
+      <DependentUpon>BulkDeleter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Config.cs" />
     <Compile Include="ExactMatchFinder.cs">
       <SubType>UserControl</SubType>

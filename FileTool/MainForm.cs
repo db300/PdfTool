@@ -101,11 +101,13 @@ namespace FileTool
                 new TabPage("批量移动") { BorderStyle = BorderStyle.None, Name = "tpBatchMover" },
                 new TabPage("批量改名") { BorderStyle = BorderStyle.None, Name = "tpBatchRenamer" },
                 new TabPage("精确查找") { BorderStyle = BorderStyle.None, Name = "tpExactMatchFinder" },
+                new TabPage("批量删除") { BorderStyle = BorderStyle.None, Name = "tpBulkDeleter" },
                 //new TabPage("txt文件合并") { BorderStyle = BorderStyle.None, Name = "tpTxtMerger" }
             });
             tabControl.TabPages["tpBatchMover"].Controls.Add(new BatchMover { Dock = DockStyle.Fill });
             tabControl.TabPages["tpBatchRenamer"].Controls.Add(new BatchRenamer { Dock = DockStyle.Fill });
             tabControl.TabPages["tpExactMatchFinder"].Controls.Add(new ExactMatchFinder { Dock = DockStyle.Fill });
+            tabControl.TabPages["tpBulkDeleter"].Controls.Add(new BulkDeleter { Dock = DockStyle.Fill });
             //tabControl.TabPages["tpTxtMerger"].Controls.Add(new TxtMerger { Dock = DockStyle.Fill });
         }
         #endregion

@@ -196,21 +196,27 @@ namespace PdfEditor.Modules
                     case "DIR":
                         // 显示目录信息
                         var dirInfo = new DirectoryInfo(nodeTag.Path);
-                        _txtFileInfo.Text = $"目录名: {dirInfo.Name}\r\n" +
-                                            $"路径: {dirInfo.FullName}\r\n" +
-                                            $"创建时间: {dirInfo.CreationTime}\r\n" +
-                                            $"修改时间: {dirInfo.LastWriteTime}\r\n" +
-                                            $"文件数: {dirInfo.GetFiles().Length}\r\n" +
-                                            $"子目录数: {dirInfo.GetDirectories().Length}";
+                        if (!dirInfo.Exists)
+                            _txtFileInfo.Text = $"{dirInfo.FullName} 目录不存在。";
+                        else
+                            _txtFileInfo.Text = $"目录名: {dirInfo.Name}\r\n" +
+                                                $"路径: {dirInfo.FullName}\r\n" +
+                                                $"创建时间: {dirInfo.CreationTime}\r\n" +
+                                                $"修改时间: {dirInfo.LastWriteTime}\r\n" +
+                                                $"文件数: {dirInfo.GetFiles().Length}\r\n" +
+                                                $"子目录数: {dirInfo.GetDirectories().Length}";
                         break;
                     case "PDF":
                         // 显示PDF文件信息
                         var fileInfo = new FileInfo(nodeTag.Path);
-                        _txtFileInfo.Text = $"文件名: {fileInfo.Name}\r\n" +
-                                            $"路径: {fileInfo.FullName}\r\n" +
-                                            $"大小: {fileInfo.Length / 1024.0:F2} KB\r\n" +
-                                            $"创建时间: {fileInfo.CreationTime}\r\n" +
-                                            $"修改时间: {fileInfo.LastWriteTime}";
+                        if (!fileInfo.Exists)
+                            _txtFileInfo.Text = $"{fileInfo.FullName} 文件不存在。";
+                        else
+                            _txtFileInfo.Text = $"文件名: {fileInfo.Name}\r\n" +
+                                                $"路径: {fileInfo.FullName}\r\n" +
+                                                $"大小: {fileInfo.Length / 1024.0:F2} KB\r\n" +
+                                                $"创建时间: {fileInfo.CreationTime}\r\n" +
+                                                $"修改时间: {fileInfo.LastWriteTime}";
                         break;
                 }
             }

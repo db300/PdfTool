@@ -44,8 +44,8 @@ namespace FileTool
         private void InitUi()
         {
             ClientSize = new Size(1000, 800);
+            Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             MaximizeBox = false;
-            ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = $"文件工具 {System.Reflection.Assembly.GetExecutingAssembly().GetName().Version}";
 

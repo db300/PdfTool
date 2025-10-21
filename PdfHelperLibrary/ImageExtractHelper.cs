@@ -4,6 +4,7 @@ using PdfSharp.Pdf.IO;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 
 namespace PdfHelperLibrary
@@ -139,7 +140,7 @@ namespace PdfHelperLibrary
             // FlateDecode
             var flateDecodedData = new MemoryStream();
             using (var compressedStream = new MemoryStream(/*stream*/cutinput))
-            using (var deflateStream = new Ionic.Zlib.DeflateStream(compressedStream, Ionic.Zlib.CompressionMode.Decompress))
+            using (var deflateStream = new DeflateStream(compressedStream, CompressionMode.Decompress))
             {
                 deflateStream.CopyTo(flateDecodedData);
             }

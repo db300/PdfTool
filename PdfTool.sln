@@ -63,6 +63,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceHelperLibraryX", "In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceHelperConsoleApp", "InvoiceHelperConsoleApp\InvoiceHelperConsoleApp.csproj", "{F02A3E4C-3160-41D2-ACC6-68B7FCF22F15}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfConsoleAppX", "PdfConsoleAppX\PdfConsoleAppX.csproj", "{449BEE78-28E6-469A-81B1-384DE97FCDB8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -189,6 +191,10 @@ Global
 		{F02A3E4C-3160-41D2-ACC6-68B7FCF22F15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F02A3E4C-3160-41D2-ACC6-68B7FCF22F15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F02A3E4C-3160-41D2-ACC6-68B7FCF22F15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{449BEE78-28E6-469A-81B1-384DE97FCDB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{449BEE78-28E6-469A-81B1-384DE97FCDB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{449BEE78-28E6-469A-81B1-384DE97FCDB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{449BEE78-28E6-469A-81B1-384DE97FCDB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

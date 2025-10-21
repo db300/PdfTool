@@ -11,6 +11,13 @@ namespace PdfConsoleApp
     {
         static void Main(string[] args)
         {
+            //测试骑缝章方法
+            const string inputFileName = @"骑缝章测试文件.pdf";
+            const string stampFileName = @"骑缝章文件.png";
+            PdfHelperLibrary.SealHelper.CrossPageSeal(stampFileName, inputFileName, 0.4);
+            return;
+
+
             //批量检查异常文件
             var dir = @"C:\GitHub\FileDownloader\FileDownloader\bin\Debug\Downloads";
             var files = Directory.GetFiles(dir, "*.pdf", SearchOption.AllDirectories).ToList();

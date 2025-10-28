@@ -112,7 +112,8 @@ namespace InvoiceHelperLibrary
             //读取发票号码和开票日期
             ExtractInvoiceBaseInfo(ss, invoiceItem);
             //读取购买方信息和销售方信息
-            ExtractPartyInfo(tables.FirstOrDefault(), invoiceItem);
+            //ExtractPartyInfo(tables.FirstOrDefault(), invoiceItem);
+            ExtractPartyInfo(tables, invoiceItem);
             //读取发票内容项
             ExtractContentItems(ss, invoiceItem);
             //检查补充金额信息
@@ -255,6 +256,19 @@ namespace InvoiceHelperLibrary
                 {
                     ExtractSinglePartyInfo(table, i + 1, invoiceItem, false);
                     i++;
+                }
+            }
+        }
+
+        private static void ExtractPartyInfo(List<List<string>> tables, InvoiceItem invoiceItem)
+        {
+            if (!(tables?.Count > 0)) return;
+            foreach (var table in tables)
+            {
+                ExtractPartyInfo(table, invoiceItem);
+                if (!string.IsNullOrWhiteSpace(invoiceItem.BuyerName) && !string.IsNullOrWhiteSpace(invoiceItem.SellerName))
+                {
+                    break;
                 }
             }
         }

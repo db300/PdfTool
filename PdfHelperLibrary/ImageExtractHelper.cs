@@ -88,7 +88,7 @@ namespace PdfHelperLibrary
 
         private static string ExportImage(PdfDictionary image, string fileNameWithoutExt, ref int count)
         {
-            var filter = image.Elements["/Filter"].ToString().Replace("[", "").Replace("]", "").Trim();
+            var filter = image.Elements["/Filter"]?.ToString().Replace("[", "").Replace("]", "").Trim();
             switch (filter)
             {
                 case "/DCTDecode":

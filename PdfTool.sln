@@ -65,6 +65,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceHelperConsoleApp", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfConsoleAppX", "PdfConsoleAppX\PdfConsoleAppX.csproj", "{449BEE78-28E6-469A-81B1-384DE97FCDB8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioTool", "AudioTool\AudioTool.csproj", "{B2F75426-B660-4947-A349-6FC4E09BD620}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -195,6 +197,10 @@ Global
 		{449BEE78-28E6-469A-81B1-384DE97FCDB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{449BEE78-28E6-469A-81B1-384DE97FCDB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{449BEE78-28E6-469A-81B1-384DE97FCDB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2F75426-B660-4947-A349-6FC4E09BD620}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2F75426-B660-4947-A349-6FC4E09BD620}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2F75426-B660-4947-A349-6FC4E09BD620}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2F75426-B660-4947-A349-6FC4E09BD620}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,8 @@
 ﻿using AudioTool.Properties;
+using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace AudioTool
@@ -13,6 +15,9 @@ namespace AudioTool
             InitializeComponent();
 
             InitUi();
+
+            DragEnter += MainForm_DragEnter;
+            DragDrop += MainForm_DragDrop;
         }
         #endregion
 
@@ -23,11 +28,42 @@ namespace AudioTool
         #endregion
 
         #region event handler
+        private void MainForm_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+        }
+
+        private void MainForm_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                var files = ((string[])e.Data.GetData(DataFormats.FileDrop)).ToList();
+                var mp3Files = files.Where(a => a.EndsWith(".mp3", StringComparison.OrdinalIgnoreCase)).ToList();
+                var tabPage = Controls.OfType<TabControl>().FirstOrDefault().SelectedTab;
+                var control = tabPage.Controls[0];
+                if (control is IMp3Handler mp3Handler)
+                {
+                    mp3Handler.OpenMp3s(mp3Files);
+                }
+                /*
+                else if (control is ImageImporter imageImporter)
+                {
+                    var extList = new List<string> { ".bmp", ".jpg", ".tif", ".png" };
+                    var imgFiles = files.Where(a => extList.Contains(Path.GetExtension(a).ToLower())).ToList();
+                    imageImporter.OpenImages(imgFiles);
+                }
+                */
+            }
+        }
         #endregion
 
         #region ui
         private void InitUi()
         {
+            AllowDrop = true;
             ClientSize = new Size(1000, 800);
             StartPosition = FormStartPosition.CenterScreen;
             Text = $"音频工具 v{Application.ProductVersion}";

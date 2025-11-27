@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AudioTool.Helpers;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -11,7 +13,7 @@ namespace AudioTool
     /// <summary>
     /// 连接器(多个片段按顺序简单地首尾连接在一起)
     /// </summary>
-    public partial class Joiner : UserControl
+    public partial class Joiner : UserControl, IMp3Handler
     {
         #region constructor
         public Joiner()
@@ -29,6 +31,48 @@ namespace AudioTool
         #endregion
 
         #region method
+        public async void OpenMp3s(List<string> files)
+        {
+            if (!(files?.Count > 0)) return;
+
+            // 立即将路径显示到文件列表，并为每个文件启动时长查询任务（并发）
+            var durationTasks = new List<Task<(bool ok, TimeSpan dur, string file)>>();
+            foreach (var fileName in files)
+            {
+                _txtFileList.AppendText($"{fileName}\r\n");
+
+                // 启动异步时长获取任务，并附带文件名
+                var task = AudioHelper.TryGetMp3DurationByFfmpegAsync(fileName)
+                    .ContinueWith(t => (ok: t.Result.ok, dur: t.Result.duration, file: fileName));
+                durationTasks.Add(task);
+            }
+
+            // 以任务完成顺序逐条记录日志，尽快反馈每个文件的时长
+            var remaining = new List<Task<(bool ok, TimeSpan dur, string file)>>(durationTasks);
+            while (remaining.Count > 0)
+            {
+                var finished = await Task.WhenAny(remaining);
+                try
+                {
+                    var res = finished.Result;
+                    if (res.ok)
+                    {
+                        AppendLog($"已添加：{res.file}  时长：{res.dur}\r\n");
+                    }
+                    else
+                    {
+                        AppendLog($"已添加：{res.file}  时长：无法获取（请确保 ffmpeg.exe 存在）\r\n");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // 如果任务内部抛异常，也要记录
+                    AppendLog($"已添加：任务获取时长失败，异常：{ex.Message}\r\n");
+                }
+                remaining.Remove(finished);
+            }
+        }
+
         private void AppendLog(string message)
         {
             if (_txtLog.InvokeRequired)
@@ -41,7 +85,7 @@ namespace AudioTool
             }
         }
 
-        private void JoinAudioFiles(System.Collections.Generic.List<string> inputFileList)
+        private void JoinAudioFiles(List<string> inputFileList)
         {
             try
             {
@@ -96,6 +140,23 @@ namespace AudioTool
                     if (process.ExitCode == 0)
                     {
                         AppendLog($"拼接成功！输出文件：{outputFile}\r\n");
+                        try
+                        {
+                            var (ok, duration) = AudioHelper.TryGetMp3DurationByFfmpegAsync(outputFile).GetAwaiter().GetResult();
+                            if (ok)
+                            {
+                                var strDur = duration.ToString(@"hh\:mm\:ss");
+                                AppendLog($"输出文件时长：{strDur}\r\n");
+                            }
+                            else
+                            {
+                                AppendLog("输出文件时长：无法获取（请确认 ffmpeg.exe 可用或文件有效）\r\n");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            AppendLog($"获取输出文件时长异常：{ex.Message}\r\n");
+                        }
                     }
                     else
                     {
@@ -133,11 +194,7 @@ namespace AudioTool
         {
             var openDlg = new OpenFileDialog { Filter = "音频文件(*.mp3)|*.mp3|所有文件(*.*)|*.*", Multiselect = true };
             if (openDlg.ShowDialog() != DialogResult.OK) return;
-            var files = openDlg.FileNames.ToList();
-            foreach (var fileName in files)
-            {
-                _txtFileList.AppendText($"{fileName}\r\n");
-            }
+            OpenMp3s(openDlg.FileNames.ToList());
         }
 
         private void BtnJoin_Click(object sender, EventArgs e)

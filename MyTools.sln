@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.2.32526.322
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11222.15 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfHelperLibrary", "PdfHelperLibrary\PdfHelperLibrary.csproj", "{64485278-A143-453E-A1D6-2400D010FF61}"
 EndProject
@@ -42,8 +42,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelToolConsoleApp", "ExcelToolConsoleApp\ExcelToolConsoleApp.csproj", "{25CF6736-B2E9-4198-A896-99DA82395E2E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelTool", "ExcelTool\ExcelTool.csproj", "{82D7A5B3-B7FD-42B1-B37D-653F4E81AA31}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageViewer", "ImageViewer\ImageViewer.csproj", "{A9A870F3-AE89-46DD-95FC-698A1F4C9B37}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfHelperLibrary2", "PdfHelperLibrary2\PdfHelperLibrary2.csproj", "{80F2DF32-698B-4924-8E99-9594F4CB11FB}"
 EndProject
@@ -153,10 +151,6 @@ Global
 		{82D7A5B3-B7FD-42B1-B37D-653F4E81AA31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{82D7A5B3-B7FD-42B1-B37D-653F4E81AA31}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82D7A5B3-B7FD-42B1-B37D-653F4E81AA31}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A9A870F3-AE89-46DD-95FC-698A1F4C9B37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A9A870F3-AE89-46DD-95FC-698A1F4C9B37}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A9A870F3-AE89-46DD-95FC-698A1F4C9B37}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A9A870F3-AE89-46DD-95FC-698A1F4C9B37}.Release|Any CPU.Build.0 = Release|Any CPU
 		{80F2DF32-698B-4924-8E99-9594F4CB11FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{80F2DF32-698B-4924-8E99-9594F4CB11FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80F2DF32-698B-4924-8E99-9594F4CB11FB}.Release|Any CPU.ActiveCfg = Release|Any CPU

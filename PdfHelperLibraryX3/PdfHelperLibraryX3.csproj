@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="PDFsharp" Version="6.2.2" />
-    <PackageReference Include="Spire.PDF" Version="11.10.4" />
+    <PackageReference Include="PDFsharp" Version="6.2.3" />
+    <PackageReference Include="Spire.PDF" Version="11.11.5" />
   </ItemGroup>
 
 </Project>

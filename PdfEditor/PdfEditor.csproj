@@ -78,9 +78,7 @@
     <Compile Include="Modules\Browser.Designer.cs">
       <DependentUpon>Browser.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\BrowserPreviewer.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Modules\BrowserPreviewer.cs" />
     <Compile Include="Modules\BrowserPreviewer.Designer.cs">
       <DependentUpon>BrowserPreviewer.cs</DependentUpon>
     </Compile>
@@ -90,15 +88,11 @@
     <Compile Include="Modules\PageOperaBase.Designer.cs">
       <DependentUpon>PageOperaBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\PageRotator.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Modules\PageRotator.cs" />
     <Compile Include="Modules\PageRotator.Designer.cs">
       <DependentUpon>PageRotator.cs</DependentUpon>
     </Compile>
-    <Compile Include="Modules\PageSorter.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Modules\PageSorter.cs" />
     <Compile Include="Modules\PageSorter.Designer.cs">
       <DependentUpon>PageSorter.cs</DependentUpon>
     </Compile>

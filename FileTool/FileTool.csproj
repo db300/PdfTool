@@ -100,6 +100,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="TextEncodingConverter.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TextEncodingConverter.Designer.cs" />
     <Compile Include="TxtMerger.cs">
       <SubType>UserControl</SubType>
     </Compile>

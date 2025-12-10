@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.0.11222.15 d18.0
+VisualStudioVersion = 18.0.11222.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfHelperLibrary", "PdfHelperLibrary\PdfHelperLibrary.csproj", "{64485278-A143-453E-A1D6-2400D010FF61}"
 EndProject
@@ -64,6 +64,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfConsoleAppX", "PdfConsoleAppX\PdfConsoleAppX.csproj", "{449BEE78-28E6-469A-81B1-384DE97FCDB8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioTool", "AudioTool\AudioTool.csproj", "{B2F75426-B660-4947-A349-6FC4E09BD620}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UkuleleEditor", "UkuleleEditor\UkuleleEditor.csproj", "{8E6052C2-FDE8-476C-AC4C-BB6B6031735D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -195,6 +197,10 @@ Global
 		{B2F75426-B660-4947-A349-6FC4E09BD620}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2F75426-B660-4947-A349-6FC4E09BD620}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2F75426-B660-4947-A349-6FC4E09BD620}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E6052C2-FDE8-476C-AC4C-BB6B6031735D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E6052C2-FDE8-476C-AC4C-BB6B6031735D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E6052C2-FDE8-476C-AC4C-BB6B6031735D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E6052C2-FDE8-476C-AC4C-BB6B6031735D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

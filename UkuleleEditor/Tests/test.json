@@ -1,0 +1,112 @@
+{
+  "Lines": [
+    {
+      "Items": [
+        {
+          "String": 2,
+          "Fret": 2,
+          "Lyric": "我"
+        },
+        {
+          "String": 4,
+          "Fret": 0,
+          "Lyric": "明"
+        },
+        {
+          "String": 1,
+          "Fret": 0,
+          "Lyric": "白"
+        },
+        {
+          "String": 2,
+          "Fret": 2,
+          "Lyric": "太"
+        },
+        {
+          "String": 4,
+          "Fret": 0,
+          "Lyric": "放"
+        },
+        {
+          "String": 1,
+          "Fret": 0,
+          "Lyric": "不"
+        },
+        {
+          "String": 4,
+          "Fret": 0,
+          "Lyric": "开"
+        },
+        {
+          "String": 2,
+          "Fret": 2,
+          "Lyric": "你"
+        },
+        {
+          "String": 2,
+          "Fret": 0,
+          "Lyric": "的"
+        },
+        {
+          "String": 2,
+          "Fret": 2,
+          "Lyric": "爱"
+        }
+      ]
+    },
+    {
+      "Items": [
+        {
+          "String": 3,
+          "Fret": 2,
+          "Lyric": "太"
+        },
+        {
+          "String": 2,
+          "Fret": 0,
+          "Lyric": "熟"
+        },
+        {
+          "String": 2,
+          "Fret": 2,
+          "Lyric": "悉"
+        },
+        {
+          "String": 2,
+          "Fret": 0,
+          "Lyric": "你"
+        },
+        {
+          "String": 3,
+          "Fret": 2,
+          "Lyric": "的"
+        },
+        {
+          "String": 3,
+          "Fret": 1,
+          "Lyric": "关"
+        },
+        {
+          "String": 3,
+          "Fret": 2,
+          "Lyric": "怀"
+        },
+        {
+          "String": 3,
+          "Fret": 2,
+          "Lyric": "分"
+        },
+        {
+          "String": 3,
+          "Fret": 2,
+          "Lyric": "不"
+        },
+        {
+          "String": 1,
+          "Fret": 0,
+          "Lyric": "开"
+        }
+      ]
+    }
+  ]
+}

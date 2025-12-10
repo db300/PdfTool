@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PdfConsoleApp
 {
-    class Program
+    internal class PdfBuildParam
     {
-        static void Main(string[] args)
-        {
-            
-        }
+
     }
 }

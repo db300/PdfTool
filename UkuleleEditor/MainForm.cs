@@ -10,11 +10,11 @@ namespace UkuleleEditor
             InitializeComponent();
 
             StartPosition = FormStartPosition.CenterScreen;
-            // ÓÅÏÈÏÔÊ¾ AssemblyVersion (Í¨³£ÊÇ 1.0.0.0)£¬Èô²»¿ÉÓÃÔò»ØÍËµ½ Application.ProductVersion
+            // ä¼˜å…ˆæ˜¾ç¤º AssemblyVersion (é€šå¸¸æ˜¯ 1.0.0.0)ï¼Œè‹¥ä¸å¯ç”¨åˆ™å›é€€åˆ° Application.ProductVersion
             var asmVersion = Assembly.GetEntryAssembly()?.GetName().Version?.ToString() ?? Application.ProductVersion;
-            Text = $"ÓÈ¿ËÀïÀï±à¼­Æ÷ Ukulele Editor v{asmVersion}";
+            Text = $"å°¤å…‹é‡Œé‡Œç¼–è¾‘å™¨ Ukulele Editor v{asmVersion}";
 
-            // ÔÚ MainForm.cs ÖĞÊ¹ÓÃ
+            // åœ¨ MainForm.cs ä¸­ä½¿ç”¨
             var bitmap = SheetMusicRenderer.RenderSheetMusic("tests\\test.json");
             bitmap.Save("output.jpg");
         }

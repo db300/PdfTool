@@ -1,0 +1,6 @@
+{
+  "OutputFileName": "test_multiline.pdf",
+  "TextContent": "第一行文本\n第二行文本\n第三行文本\n第四行文本\n第五行文本\n\n空行后的文本\n\n又一个空行后的文本",
+  "FontName": "微软雅黑",
+  "FontSize": 14
+}

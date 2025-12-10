@@ -1,0 +1,12 @@
+{
+  "OutputFileName": "output.pdf",
+  "TextContent": "这是一个测试 PDF 文档。\n这是第二行文本。\n这是第三行文本。\n\n这是一个空行后的文本。",
+  "FontName": "宋体",
+  "FontSize": 12,
+  "PageWidth": 595,
+  "PageHeight": 842,
+  "MarginLeft": 40,
+  "MarginRight": 40,
+  "MarginTop": 40,
+  "MarginBottom": 40
+}

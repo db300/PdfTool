@@ -1,0 +1,12 @@
+{
+  "OutputFileName": "test_custom_page.pdf",
+  "TextContent": "这是一个自定义页面尺寸的测试。\n\n页面尺寸：Letter (612 x 792)\n字体：Arial\n字号：16",
+  "FontName": "Arial",
+  "FontSize": 16,
+  "PageWidth": 612,
+  "PageHeight": 792,
+  "MarginLeft": 50,
+  "MarginRight": 50,
+  "MarginTop": 50,
+  "MarginBottom": 50
+}

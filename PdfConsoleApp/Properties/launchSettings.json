@@ -1,0 +1,34 @@
+{
+  "profiles": {
+    "PdfConsoleApp": {
+      "commandName": "Project",
+      "commandLineArgs": "..\\..\\test_chinese.json",
+      "workingDirectory": "$(ProjectDir)bin\\Debug"
+    },
+    "PdfConsoleApp (Sample)": {
+      "commandName": "Project",
+      "commandLineArgs": "..\\..\\sample.json",
+      "workingDirectory": "$(ProjectDir)bin\\Debug"
+    },
+    "PdfConsoleApp (Simple)": {
+      "commandName": "Project",
+      "commandLineArgs": "..\\..\\test_simple.json",
+      "workingDirectory": "$(ProjectDir)bin\\Debug"
+    },
+    "PdfConsoleApp (Multiline)": {
+      "commandName": "Project",
+      "commandLineArgs": "..\\..\\test_multiline.json",
+      "workingDirectory": "$(ProjectDir)bin\\Debug"
+    },
+    "PdfConsoleApp (Custom Page)": {
+      "commandName": "Project",
+      "commandLineArgs": "..\\..\\test_custom_page.json",
+      "workingDirectory": "$(ProjectDir)bin\\Debug"
+    },
+    "PdfConsoleApp (No Args - Auto Debug)": {
+      "commandName": "Project",
+      "commandLineArgs": "",
+      "workingDirectory": "$(ProjectDir)bin\\Debug"
+    }
+  }
+}

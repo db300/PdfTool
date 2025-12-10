@@ -14,7 +14,7 @@ namespace UkuleleEditor
         private const int StringSpacing = 40; // 弦之间的间距（像素）
         private const int FretWidth = 50; // 每个品位单元宽度
         private const int Padding = 40; // 整体边距
-        private const int LineGap = 30; // 不同行之间的间隙
+        private const int LineGap = 60; // 不同行之间的间隙
         private const int LyricOffset = 12; // 从最下一根弦到歌词基线的偏移
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace UkuleleEditor
         /// </summary>
         private static void DrawStrings(Graphics graphics, int xStart, int xEnd, int yTop)
         {
-            using (var pen = new Pen(Color.Black, 2))
+            using (var pen = new Pen(Color.LightGray, 2))
             {
                 for (int i = 0; i < StringCount; i++)
                 {

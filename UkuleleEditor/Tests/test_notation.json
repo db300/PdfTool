@@ -1,0 +1,96 @@
+{
+  "Lines": [
+    {
+      "Items": [
+        {
+          "Notation": 1,
+          "String": 0,
+          "Fret": 0,
+          "Lyric": "我"
+        },
+        {
+          "Notation": 2,
+          "String": 0,
+          "Fret": 0,
+          "Lyric": "爱"
+        },
+        {
+          "Notation": 3,
+          "String": 0,
+          "Fret": 0,
+          "Lyric": "你"
+        },
+        {
+          "Notation": 4,
+          "String": 0,
+          "Fret": 0,
+          "Lyric": "啦"
+        },
+        {
+          "Notation": 5,
+          "String": 0,
+          "Fret": 0,
+          "Lyric": "多"
+        },
+        {
+          "Notation": 6,
+          "String": 0,
+          "Fret": 0,
+          "Lyric": "么"
+        },
+        {
+          "Notation": 7,
+          "String": 0,
+          "Fret": 0,
+          "Lyric": "深"
+        }
+      ]
+    },
+    {
+      "Items": [
+        {
+          "Notation": 5,
+          "String": 0,
+          "Fret": 0,
+          "Lyric": "太"
+        },
+        {
+          "Notation": 6,
+          "String": 0,
+          "Fret": 0,
+          "Lyric": "多"
+        },
+        {
+          "Notation": 1,
+          "String": 0,
+          "Fret": 0,
+          "Lyric": "无"
+        },
+        {
+          "Notation": 2,
+          "String": 0,
+          "Fret": 0,
+          "Lyric": "奈"
+        },
+        {
+          "Notation": 3,
+          "String": 0,
+          "Fret": 0,
+          "Lyric": "在"
+        },
+        {
+          "Notation": 4,
+          "String": 0,
+          "Fret": 0,
+          "Lyric": "你"
+        },
+        {
+          "Notation": 5,
+          "String": 0,
+          "Fret": 0,
+          "Lyric": "心"
+        }
+      ]
+    }
+  ]
+}

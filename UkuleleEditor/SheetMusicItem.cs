@@ -6,6 +6,11 @@
     internal class SheetMusicItem
     {
         /// <summary>
+        /// 简谱（1-7，0表示休止符）
+        /// </summary>
+        public int Notation { get; set; }
+
+        /// <summary>
         /// 弦
         /// </summary>
         public int String { get; set; }

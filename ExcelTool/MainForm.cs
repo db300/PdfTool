@@ -1,4 +1,5 @@
 ﻿using ExcelTool.Modules;
+using ExcelTool.Properties;
 using System;
 using System.Drawing;
 using System.Linq;
@@ -53,11 +54,6 @@ namespace ExcelTool
             }
         }
 
-        private void Lbl_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            System.Diagnostics.Process.Start(Url4Appreciate);
-        }
-
         private void Lbl_LinkClicked1(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(Url4Feedback);
@@ -67,13 +63,18 @@ namespace ExcelTool
         {
             System.Diagnostics.Process.Start(Url4Readme);
         }
+
+        private void Pic_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(Url4Appreciate);
+        }
         #endregion
 
         #region ui
         private void InitUi()
         {
             AllowDrop = true;
-            ClientSize = new Size(1200, 1000);
+            ClientSize = new Size(1200, 800);
             Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             StartPosition = FormStartPosition.CenterScreen;
             Text = $"Excel工具 {System.Reflection.Assembly.GetExecutingAssembly().GetName().Version}";
@@ -90,7 +91,7 @@ namespace ExcelTool
                 Anchor = AnchorStyles.Top | AnchorStyles.Right,
                 AutoSize = true,
                 Parent = panelFoot,
-                Text = "问题反馈",
+                Text = "问题和需求反馈",
             };
             lbl1.LinkClicked += Lbl_LinkClicked1;
             lbl1.Location = new Point(panelFoot.ClientSize.Width - 10 - lbl1.Width, (panelFoot.ClientSize.Height - lbl1.Height) / 2);
@@ -105,6 +106,20 @@ namespace ExcelTool
             lbl2.LinkClicked += Lbl_LinkClicked2;
             lbl2.Location = new Point(lbl1.Left - 10 - lbl2.Width, (panelFoot.ClientSize.Height - lbl2.Height) / 2);
 
+            var pic = new PictureBox
+            {
+                Cursor = Cursors.Hand,
+                Dock = DockStyle.Left,
+                Image = Resources.redheart,
+                Parent = panelFoot,
+                SizeMode = PictureBoxSizeMode.Zoom,
+                Width = 25
+            };
+            pic.Click += Pic_Click;
+            // 创建并设置ToolTip
+            var toolTip = new ToolTip();
+            toolTip.SetToolTip(pic, "点击进行赞赏");
+
             var tabControl = new TabControl
             {
                 Dock = DockStyle.Fill,
@@ -117,13 +132,13 @@ namespace ExcelTool
                 new TabPage("数据提取") { BorderStyle = BorderStyle.None, Name = "tpDataExtracter" },
                 new TabPage("数据预览") { BorderStyle = BorderStyle.None, Name = "tpDataViewer" },
                 new TabPage("表格拆分") { BorderStyle = BorderStyle.None, Name = "tpTableSplitter"},
-                new TabPage("数据转换") { BorderStyle = BorderStyle.None, Name = "tpDataConverter" },
+                new TabPage("数据转换JSON") { BorderStyle = BorderStyle.None, Name = "tpDataConverter4Json" },
             });
             tabControl.TabPages["tpImageExtracter"].Controls.Add(new ImageExtracter { Dock = DockStyle.Fill });
             tabControl.TabPages["tpDataExtracter"].Controls.Add(new DataExtracter { Dock = DockStyle.Fill });
             tabControl.TabPages["tpDataViewer"].Controls.Add(new DataViewer { Dock = DockStyle.Fill });
             tabControl.TabPages["tpTableSplitter"].Controls.Add(new TableSplitter { Dock = DockStyle.Fill });
-            tabControl.TabPages["tpDataConverter"].Controls.Add(new DataConverter { Dock = DockStyle.Fill });
+            tabControl.TabPages["tpDataConverter4Json"].Controls.Add(new DataConverter4Json { Dock = DockStyle.Fill });
 
 #if DEBUG
             tabControl.MouseDoubleClick += (sender, e) =>
@@ -147,7 +162,7 @@ namespace ExcelTool
                     () => new DataExtracter { Dock = DockStyle.Fill },
                     () => new DataViewer { Dock = DockStyle.Fill },
                     () => new TableSplitter { Dock = DockStyle.Fill },
-                    () => new DataConverter { Dock=DockStyle.Fill },
+                    () => new DataConverter4Json { Dock = DockStyle.Fill },
                 };
 
                 if (tabIndex < creators.Length)

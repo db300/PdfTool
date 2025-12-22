@@ -169,11 +169,11 @@
     <Compile Include="Helpers\DataReadHelper4Csv.cs" />
     <Compile Include="Helpers\TableSplitHelper4Excel.cs" />
     <Compile Include="Helpers\TableSplitHelper4Csv.cs" />
-    <Compile Include="Modules\DataConverter.cs">
+    <Compile Include="Modules\DataConverter4Json.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Modules\DataConverter.Designer.cs">
-      <DependentUpon>DataConverter.cs</DependentUpon>
+    <Compile Include="Modules\DataConverter4Json.Designer.cs">
+      <DependentUpon>DataConverter4Json.cs</DependentUpon>
     </Compile>
     <Compile Include="Modules\DataExtracter.cs">
       <SubType>UserControl</SubType>
@@ -218,6 +218,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

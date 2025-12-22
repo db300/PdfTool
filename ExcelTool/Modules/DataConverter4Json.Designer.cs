@@ -1,6 +1,6 @@
 ﻿namespace ExcelTool.Modules
 {
-    partial class DataConverter
+    partial class DataConverter4Json
     {
         /// <summary> 
         /// 必需的设计器变量。

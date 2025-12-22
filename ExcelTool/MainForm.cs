@@ -1,6 +1,5 @@
 ﻿using ExcelTool.Modules;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -75,7 +74,7 @@ namespace ExcelTool
         {
             AllowDrop = true;
             ClientSize = new Size(1200, 1000);
-            ShowIcon = false;
+            Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             StartPosition = FormStartPosition.CenterScreen;
             Text = $"Excel工具 {System.Reflection.Assembly.GetExecutingAssembly().GetName().Version}";
 
@@ -118,11 +117,13 @@ namespace ExcelTool
                 new TabPage("数据提取") { BorderStyle = BorderStyle.None, Name = "tpDataExtracter" },
                 new TabPage("数据预览") { BorderStyle = BorderStyle.None, Name = "tpDataViewer" },
                 new TabPage("表格拆分") { BorderStyle = BorderStyle.None, Name = "tpTableSplitter"},
+                new TabPage("数据转换") { BorderStyle = BorderStyle.None, Name = "tpDataConverter" },
             });
             tabControl.TabPages["tpImageExtracter"].Controls.Add(new ImageExtracter { Dock = DockStyle.Fill });
             tabControl.TabPages["tpDataExtracter"].Controls.Add(new DataExtracter { Dock = DockStyle.Fill });
             tabControl.TabPages["tpDataViewer"].Controls.Add(new DataViewer { Dock = DockStyle.Fill });
             tabControl.TabPages["tpTableSplitter"].Controls.Add(new TableSplitter { Dock = DockStyle.Fill });
+            tabControl.TabPages["tpDataConverter"].Controls.Add(new DataConverter { Dock = DockStyle.Fill });
 
 #if DEBUG
             tabControl.MouseDoubleClick += (sender, e) =>
@@ -146,6 +147,7 @@ namespace ExcelTool
                     () => new DataExtracter { Dock = DockStyle.Fill },
                     () => new DataViewer { Dock = DockStyle.Fill },
                     () => new TableSplitter { Dock = DockStyle.Fill },
+                    () => new DataConverter { Dock=DockStyle.Fill },
                 };
 
                 if (tabIndex < creators.Length)

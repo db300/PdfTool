@@ -28,10 +28,6 @@ namespace ExcelTool.Helpers
         /// <param name="columnMapping">列名映射字典，将Excel列名映射为JSON的key，为null时使用原列名</param>
         internal static void ConvertExcelToJson(string excelFilePath, string outputJsonPath, bool skipEmptyRows = true, Dictionary<string, string> columnMapping = null)
         {
-            // Temporary code: Excel to JSON conversion
-            //ConvertExcelToJson("C:\\Users\\db300\\Downloads\\H5页面素材\\中文学生组.xlsx", "C:\\Users\\db300\\Downloads\\H5页面素材\\中文学生组.json");
-            //ConvertExcelToJson("C:\\Users\\db300\\Downloads\\H5页面素材\\多文种.xlsx", "C:\\Users\\db300\\Downloads\\H5页面素材\\多文种.json");
-
             ExcelPackage.License.SetNonCommercialPersonal("ColdDaddy");
 
             try
@@ -75,8 +71,6 @@ namespace ExcelTool.Helpers
                 // Build JSON manually
                 var jsonContent = BuildJsonFromDictionaries(jsonList);
                 File.WriteAllText(outputJsonPath, jsonContent, Encoding.UTF8);
-
-                MessageBox.Show($"Excel文件已转换为JSON格式，保存到: {outputJsonPath}", "转换成功");
             }
             catch (Exception ex)
             {

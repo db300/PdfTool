@@ -7,10 +7,10 @@ namespace UkuleleEditor
     {
         /// <summary>
         /// 尤克里里弦的开放弦音（标准调弦：G4、C4、E4、A4）
-        /// 从低到高：第4弦(A4=9)、第3弦(E4=4)、第2弦(C4=0)、第1弦(G4=7)
-        /// 使用MIDI音符编号表示
+        /// 第1弦(A4=9)、第2弦(E4=4)、第3弦(C4=0)、第4弦(G4=7)
+        /// 使用MIDI音高的十二平均律半音序号（C=0, ..., B=11）表示，仅使用音高类不含具体八度。
         /// </summary>
-        private static readonly int[] OpenStringNotes = { 9, 4, 0, 7 }; // 从第4弦到第1弦
+        private static readonly int[] OpenStringNotes = { 9, 4, 0, 7 }; // 从第1弦到第4弦
 
         /// <summary>
         /// C调简谱对应的MIDI音符（C=0, D=2, E=4, F=5, G=7, A=9, B=11）
@@ -19,9 +19,9 @@ namespace UkuleleEditor
         private static readonly int[] NotationToMidiInC = { -1, 0, 2, 4, 5, 7, 9, 11 }; // 索引0未使用
 
         /// <summary>
-        /// 最大可播放的品位数
+        /// 最大可播放的品位数（根据常见尤克里里设为15，可覆盖到第14品）
         /// </summary>
-        private const int MaxFret = 12;
+        private const int MaxFret = 15;
 
         /// <summary>
         /// 将简谱转换为尤克里里指法

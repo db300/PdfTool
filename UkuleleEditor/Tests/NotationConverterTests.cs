@@ -16,7 +16,14 @@ namespace UkuleleEditor.Tests
             for (int notation = 1; notation <= 7; notation++)
             {
                 var (stringNum, fret) = NotationConverter.Convert(notation, key: 0, octaveOffset: 0);
-                Console.WriteLine($"简谱 {notation} -> 尤克里里第{stringNum}弦第{fret}品");
+                if (stringNum == 0 || fret < 0)
+                {
+                    Console.WriteLine($"简谱 {notation} -> 不可演奏");
+                }
+                else
+                {
+                    Console.WriteLine($"简谱 {notation} -> 尤克里里第{stringNum}弦第{fret}品");
+                }
             }
 
             Console.WriteLine();
@@ -26,7 +33,14 @@ namespace UkuleleEditor.Tests
             for (int notation = 1; notation <= 7; notation++)
             {
                 var (stringNum, fret) = NotationConverter.Convert(notation, key: 2, octaveOffset: 0);
-                Console.WriteLine($"简谱 {notation} (D调) -> 尤克里里第{stringNum}弦第{fret}品");
+                if (stringNum == 0 || fret < 0)
+                {
+                    Console.WriteLine($"简谱 {notation} (D调) -> 不可演奏");
+                }
+                else
+                {
+                    Console.WriteLine($"简谱 {notation} (D调) -> 尤克里里第{stringNum}弦第{fret}品");
+                }
             }
 
             Console.WriteLine();
@@ -36,7 +50,14 @@ namespace UkuleleEditor.Tests
             for (int notation = 1; notation <= 7; notation++)
             {
                 var (stringNum, fret) = NotationConverter.Convert(notation, key: 0, octaveOffset: 1);
-                Console.WriteLine($"简谱 {notation} (高八度) -> 尤克里里第{stringNum}弦第{fret}品");
+                if (stringNum == 0 || fret < 0)
+                {
+                    Console.WriteLine($"简谱 {notation} (高八度) -> 不可演奏");
+                }
+                else
+                {
+                    Console.WriteLine($"简谱 {notation} (高八度) -> 尤克里里第{stringNum}弦第{fret}品");
+                }
             }
 
             Console.WriteLine();
@@ -44,7 +65,9 @@ namespace UkuleleEditor.Tests
             // 测试休止符
             Console.WriteLine("=== 休止符测试 ===");
             var (s0, f0) = NotationConverter.Convert(0);
-            Console.WriteLine($"简谱 0 (休止符) -> 第{s0}弦第{f0}品");
+            Console.WriteLine(s0 == 0 && f0 < 0
+                ? "简谱 0 (休止符) -> 休止符"
+                : $"简谱 0 (休止符) -> 第{s0}弦第{f0}品");
         }
 
         /// <summary>
@@ -73,7 +96,14 @@ namespace UkuleleEditor.Tests
             {
                 if (item.Notation > 0)
                 {
-                    Console.WriteLine($"项 {index}: 简谱{item.Notation} -> 第{item.String}弦第{item.Fret}品 ({item.Lyric})");
+                    if (item.String == 0 || item.Fret < 0)
+                    {
+                        Console.WriteLine($"项 {index}: 简谱{item.Notation} -> 不可演奏 ({item.Lyric})");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"项 {index}: 简谱{item.Notation} -> 第{item.String}弦第{item.Fret}品 ({item.Lyric})");
+                    }
                 }
                 else
                 {

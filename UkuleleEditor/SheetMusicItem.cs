@@ -11,6 +11,11 @@
         public int Notation { get; set; }
 
         /// <summary>
+        /// 八度标记（0=标准八度，1=高一八度，-1=低一八度）
+        /// </summary>
+        public int Octave { get; set; }
+
+        /// <summary>
         /// 弦
         /// </summary>
         public int String { get; set; }

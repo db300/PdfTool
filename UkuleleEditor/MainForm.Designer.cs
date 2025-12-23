@@ -39,6 +39,8 @@
             btnAddLine = new Button();
             groupBoxItemEditor = new GroupBox();
             dgvItems = new DataGridView();
+            colNotation = new DataGridViewTextBoxColumn();
+            colOctave = new DataGridViewTextBoxColumn();
             colString = new DataGridViewTextBoxColumn();
             colFret = new DataGridViewTextBoxColumn();
             colLyric = new DataGridViewTextBoxColumn();
@@ -197,7 +199,7 @@
             // 
             dgvItems.AllowUserToResizeRows = false;
             dgvItems.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvItems.Columns.AddRange(new DataGridViewColumn[] { colString, colFret, colLyric });
+            dgvItems.Columns.AddRange(new DataGridViewColumn[] { colNotation, colOctave, colString, colFret, colLyric });
             dgvItems.Dock = DockStyle.Fill;
             dgvItems.Location = new Point(8, 24);
             dgvItems.Name = "dgvItems";
@@ -206,6 +208,22 @@
             dgvItems.Size = new Size(474, 393);
             dgvItems.TabIndex = 0;
             dgvItems.CellValueChanged += DgvItems_CellValueChanged;
+            // 
+            // colNotation
+            // 
+            colNotation.DataPropertyName = "Notation";
+            colNotation.HeaderText = "简谱 (1-7)";
+            colNotation.MinimumWidth = 6;
+            colNotation.Name = "colNotation";
+            colNotation.Width = 90;
+            // 
+            // colOctave
+            // 
+            colOctave.DataPropertyName = "Octave";
+            colOctave.HeaderText = "八度 (0/1)";
+            colOctave.MinimumWidth = 6;
+            colOctave.Name = "colOctave";
+            colOctave.Width = 90;
             // 
             // colString
             // 
@@ -218,7 +236,7 @@
             // colFret
             // 
             colFret.DataPropertyName = "Fret";
-            colFret.HeaderText = "品 (0-12)";
+            colFret.HeaderText = "品 (0-15)";
             colFret.MinimumWidth = 6;
             colFret.Name = "colFret";
             colFret.Width = 80;
@@ -449,6 +467,8 @@
         private Panel panelPreviewButtons;
         private Button btnRefresh;
         private Button btnExport;
+        private DataGridViewTextBoxColumn colNotation;
+        private DataGridViewTextBoxColumn colOctave;
         private DataGridViewTextBoxColumn colString;
         private DataGridViewTextBoxColumn colFret;
         private DataGridViewTextBoxColumn colLyric;

@@ -91,7 +91,7 @@ namespace UkuleleEditor
             {
                 if (item.Notation > 0)
                 {
-                    var (stringNum, fret) = Convert(item.Notation, key, octaveOffset);
+                    var (stringNum, fret) = Convert(item.Notation, key, octaveOffset + item.Octave);
                     if (fret >= 0)
                     {
                         item.String = stringNum;

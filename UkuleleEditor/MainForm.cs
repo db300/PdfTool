@@ -10,6 +10,7 @@ namespace UkuleleEditor
         private SheetMusic _sheetMusic;
         private string? _currentFilePath;
         private bool _isModified;
+        private bool _isUpdatingGrid;
         #endregion
 
         #region Constructor
@@ -45,6 +46,7 @@ namespace UkuleleEditor
                     PropertyNameCaseInsensitive = true
                 }) ?? new SheetMusic();
 
+                NotationConverter.ConvertSheetMusic(_sheetMusic);
                 RefreshLineList();
                 if (_sheetMusic.Lines.Count > 0)
                 {
@@ -156,13 +158,19 @@ namespace UkuleleEditor
         #region Item Management
         private void LoadItemsToGrid(SheetMusicLine line)
         {
+            _isUpdatingGrid = true;
             var bindingList = new BindingList<SheetMusicItem>(line.Items);
             bindingList.ListChanged += (s, e) =>
             {
+                if (_isUpdatingGrid)
+                {
+                    return;
+                }
                 _isModified = true;
                 UpdateTitle();
             };
             dgvItems.DataSource = bindingList;
+            _isUpdatingGrid = false;
         }
 
         private void BtnAddItem_Click(object? sender, EventArgs e)
@@ -171,7 +179,8 @@ namespace UkuleleEditor
             if (lineIndex >= 0 && lineIndex < _sheetMusic.Lines.Count)
             {
                 var line = _sheetMusic.Lines[lineIndex];
-                line.Items.Add(new SheetMusicItem { String = 1, Fret = 0, Lyric = "" });
+                line.Items.Add(new SheetMusicItem { Notation = 1, Octave = 0, Lyric = "" });
+                NotationConverter.ConvertLine(line);
                 LoadItemsToGrid(line);
                 RefreshLineList();
                 listBoxLines.SelectedIndex = lineIndex;
@@ -245,12 +254,44 @@ namespace UkuleleEditor
 
         private void DgvItems_CellValueChanged(object? sender, DataGridViewCellEventArgs e)
         {
+            if (_isUpdatingGrid)
+            {
+                return;
+            }
+
             if (e.RowIndex >= 0)
             {
+                if (e.ColumnIndex >= 0)
+                {
+                    var dataName = dgvItems.Columns[e.ColumnIndex].DataPropertyName;
+                    if (dataName == nameof(SheetMusicItem.Notation) || dataName == nameof(SheetMusicItem.Octave))
+                    {
+                        ConvertCurrentLineFromNotation();
+                    }
+                }
                 RefreshLineList();
                 RefreshPreview();
                 _isModified = true;
                 UpdateTitle();
+            }
+        }
+
+        private void ConvertCurrentLineFromNotation()
+        {
+            int lineIndex = listBoxLines.SelectedIndex;
+            if (lineIndex >= 0 && lineIndex < _sheetMusic.Lines.Count)
+            {
+                var line = _sheetMusic.Lines[lineIndex];
+                int selectedRow = dgvItems.CurrentCell?.RowIndex ?? -1;
+
+                NotationConverter.ConvertLine(line);
+                LoadItemsToGrid(line);
+                RefreshLineList();
+
+                if (selectedRow >= 0 && selectedRow < dgvItems.Rows.Count)
+                {
+                    dgvItems.Rows[selectedRow].Selected = true;
+                }
             }
         }
         #endregion
@@ -360,6 +401,7 @@ namespace UkuleleEditor
                         PropertyNameCaseInsensitive = true
                     }) ?? new SheetMusic();
 
+                    NotationConverter.ConvertSheetMusic(_sheetMusic);
                     _currentFilePath = ofd.FileName;
                     _isModified = false;
                     RefreshLineList();

@@ -29,35 +29,6 @@ namespace UkuleleEditor
 
             // 设置 DataGridView
             dgvItems.AutoGenerateColumns = false;
-
-            // 加载测试数据（可选）
-            LoadTestData();
-        }
-        #endregion
-
-        #region Test Data
-        private void LoadTestData()
-        {
-            try
-            {
-                var jsonContent = File.ReadAllText("tests\\test.json");
-                _sheetMusic = JsonSerializer.Deserialize<SheetMusic>(jsonContent, new JsonSerializerOptions
-                {
-                    PropertyNameCaseInsensitive = true
-                }) ?? new SheetMusic();
-
-                NotationConverter.ConvertSheetMusic(_sheetMusic);
-                RefreshLineList();
-                if (_sheetMusic.Lines.Count > 0)
-                {
-                    listBoxLines.SelectedIndex = 0;
-                }
-                RefreshPreview();
-            }
-            catch
-            {
-                // 如果加载失败，保持空白曲谱
-            }
         }
         #endregion
 

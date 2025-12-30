@@ -24,8 +24,8 @@ namespace InvoiceHelperLibraryX
         {
             try
             {
-                var tables = PdfHelperLibraryX3.TableHelper.Pdf2Table(stream, new List<int>(), new List<int>());
-                var ss = PdfHelperLibraryX3.TextHelper.Pdf2String(stream);
+                var tables = PdfHelperLibrary3.TableHelper.Pdf2Table(stream, new List<int>(), new List<int>());
+                var ss = PdfHelperLibrary3.TextHelper.Pdf2String(stream);
                 return Extract(tables, ss);
             }
             catch (Exception ex)
@@ -42,8 +42,8 @@ namespace InvoiceHelperLibraryX
         {
             try
             {
-                var tables = PdfHelperLibraryX3.TableHelper.Pdf2Table(fileName, new List<int>(), new List<int>());
-                var ss = PdfHelperLibraryX3.TextHelper.Pdf2String(fileName);
+                var tables = PdfHelperLibrary3.TableHelper.Pdf2Table(fileName, new List<int>(), new List<int>());
+                var ss = PdfHelperLibrary3.TextHelper.Pdf2String(fileName);
                 return Extract(tables, ss);
             }
             catch (Exception ex)

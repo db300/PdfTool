@@ -2,7 +2,7 @@
 using Spire.Pdf.Texts;
 using System.Text;
 
-namespace PdfHelperLibraryX3
+namespace PdfHelperLibrary3
 {
     public static class TextHelper
     {

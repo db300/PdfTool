@@ -1,7 +1,7 @@
 ﻿using Spire.Pdf;
 using Spire.Pdf.Utilities;
 
-namespace PdfHelperLibraryX3
+namespace PdfHelperLibrary3
 {
     public static class TableHelper
     {

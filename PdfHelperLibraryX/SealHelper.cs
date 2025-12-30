@@ -77,6 +77,7 @@ namespace PdfHelperLibrary
             double y = (page.MediaBox.Height - xImg.PointHeight) / 2 - 100;
             using (var gfx = XGraphics.FromPdfPage(page, XGraphicsPdfPageOptions.Append))
             {
+                gfx.SmoothingMode = XSmoothingMode.HighQuality;
                 gfx.DrawImage(xImg, x, y, xImg.PointWidth, xImg.PointHeight);
             }
         }

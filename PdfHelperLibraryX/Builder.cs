@@ -1,8 +1,6 @@
 ﻿using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using PdfSharp.Pdf.IO;
-using System;
-using System.Collections.Generic;
 
 namespace PdfHelperLibrary
 {
@@ -23,7 +21,7 @@ namespace PdfHelperLibrary
                     var image = XImage.FromFile(imgFileList[i]);
                     if (image.PixelWidth > image.PixelHeight) page.Orientation = PdfSharp.PageOrientation.Landscape;
 
-                    graphics.DrawImage(image, 0, 0, page.Width, page.Height);
+                    graphics.DrawImage(image, 0, 0, page.Width.Point, page.Height.Point);
                     //graphics.DrawImage(image, 0, 0);
                 }
                 pdf.Save(outFileName);
@@ -42,7 +40,7 @@ namespace PdfHelperLibrary
                     var image = XImage.FromFile(imgFileList[i]);
                     if (image.PixelWidth > image.PixelHeight) page.Orientation = PdfSharp.PageOrientation.Landscape;
 
-                    graphics.DrawImage(image, 0, 0, page.Width, page.Height);
+                    graphics.DrawImage(image, 0, 0, page.Width.Point, page.Height.Point);
                     //graphics.DrawImage(image, 0, 0);
                 }
                 pdf.Save(outFileName);
@@ -68,7 +66,7 @@ namespace PdfHelperLibrary
 
                 // 创建字体 - 使用 XPdfFontOptions.UnicodeDefault 支持中文
                 var options = new XPdfFontOptions(PdfFontEncoding.Unicode);
-                var font = new XFont(fontName, fontSize, XFontStyle.Regular, options);
+                var font = new XFont(fontName, fontSize, XFontStyleEx.Regular, options);
 
                 // 计算可用区域
                 var maxWidth = pageWidth - marginLeft - marginRight;

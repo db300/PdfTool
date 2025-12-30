@@ -9,12 +9,30 @@ namespace PdfHelperLibrary
     /// </summary>
     public static class TableExtractHelper
     {
+        public static (bool, string, List<PdfExtractTable>) ExtractTable(Stream inputPdfStrean)
+        {
+            using (var document = PdfDocument.Open(inputPdfStrean, new ParsingOptions() { ClipPaths = true }))
+            {
+                var extractTables = ExtractTable(document);
+                return (true, "", extractTables);
+            }
+        }
+
         public static (bool, string, List<PdfExtractTable>) ExtractTable(string inputPdfFileName)
         {
             using (var document = PdfDocument.Open(inputPdfFileName, new ParsingOptions() { ClipPaths = true }))
             {
                 var extractTables = ExtractTable(document);
                 return (true, "", extractTables);
+            }
+        }
+
+        public static (bool, string, List<PdfExtractRow>) ExtractTableRows(Stream inputPdfStrean)
+        {
+            using (var document = PdfDocument.Open(inputPdfStrean, new ParsingOptions() { ClipPaths = true }))
+            {
+                var extractTableRows = ExtractTableRows(document);
+                return (true, "", extractTableRows);
             }
         }
 

@@ -34,5 +34,34 @@ namespace PdfHelperLibrary
                 return $"合并失败，原因：{ex.Message}";
             }
         }
+
+        public static (string, string) MergePdf(List<string> inputPdfFilenameList, bool addBookmarks, string outputPdfFilename)
+        {
+            try
+            {
+                var outputDocument = new PdfDocument();
+                foreach (var file in inputPdfFilenameList)
+                {
+                    var inputDocument = PdfReader.Open(file, PdfDocumentOpenMode.Import);
+                    var pageCount = inputDocument.PageCount;
+                    for (var i = 0; i < pageCount; i++)
+                    {
+                        var page = outputDocument.AddPage(inputDocument.Pages[i]);
+                        if (i == 0 && addBookmarks) outputDocument.Outlines.Add(Path.GetFileNameWithoutExtension(file), page);
+                    }
+                }
+                if (string.IsNullOrEmpty(outputPdfFilename))
+                {
+                    var path = Path.GetDirectoryName(inputPdfFilenameList.First());
+                    outputPdfFilename = Path.Combine(path, $"MergedFile - {DateTime.Now:yyyyMMddHHmmssfff}.pdf");
+                }
+                outputDocument.Save(outputPdfFilename);
+                return ("", outputPdfFilename);
+            }
+            catch (Exception ex)
+            {
+                return ($"合并失败，原因：{ex.Message}", "");
+            }
+        }
     }
 }

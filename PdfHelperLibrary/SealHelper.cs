@@ -1,5 +1,6 @@
 ﻿using PdfSharp.Drawing;
 using PdfSharp.Pdf.IO;
+using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -42,7 +43,7 @@ namespace PdfHelperLibrary
 
                 string outputFile = Path.Combine(
                     Path.GetDirectoryName(intputPdfFileName),
-                    $"{Path.GetFileNameWithoutExtension(intputPdfFileName)}_sealed.pdf");
+                    $"{Path.GetFileNameWithoutExtension(intputPdfFileName)}_sealed_{DateTime.Now.Ticks}.pdf");
                 pdf.Save(outputFile);
             }
         }

@@ -16,11 +16,11 @@ namespace PdfHelperLibrary
             }
             catch (PdfReaderException ex)
             {
-                throw ex;
+                throw new PdfReaderException($"{inputPdfFileName}, {ex.Message}", ex);
             }
             catch (Exception ex)
             {
-                throw ex;
+                throw new Exception($"{inputPdfFileName}, {ex.Message}", ex);
             }
         }
     }
